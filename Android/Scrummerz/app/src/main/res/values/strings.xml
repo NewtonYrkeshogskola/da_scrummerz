@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Scrummerz</string>
+    <string name="logIn">Log in</string>
 </resources>
