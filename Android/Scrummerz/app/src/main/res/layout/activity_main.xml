@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@mipmap/bglogin"
+    android:background="@drawable/bglogin"
     tools:context="se.newton.scrummerz.MainActivity">
 
     <TextView
@@ -49,5 +49,29 @@
         app:layout_constraintLeft_toLeftOf="@+id/emailField"
         app:layout_constraintRight_toRightOf="@+id/emailField"
         app:layout_constraintTop_toBottomOf="@+id/emailField" />
+
+    <Button
+        android:id="@+id/loginBtn"
+        android:layout_width="215dp"
+        android:layout_height="51dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="0dp"
+        android:layout_marginTop="20dp"
+        android:text="@string/logIn"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintLeft_toLeftOf="@+id/passwordField"
+        app:layout_constraintRight_toRightOf="@+id/passwordField"
+        app:layout_constraintTop_toBottomOf="@+id/passwordField" />
+
+    <TextView
+        android:id="@+id/forgotLink"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:linksClickable="true"
+        android:text="Forgot password?"
+        app:layout_constraintLeft_toLeftOf="@+id/loginBtn"
+        app:layout_constraintTop_toBottomOf="@+id/loginBtn" />
 
 </android.support.constraint.ConstraintLayout>
