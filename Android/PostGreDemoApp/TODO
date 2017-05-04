@@ -1,0 +1,5 @@
+* Make work against PostgreSQL versions older than 8.2.
+* Put together a list of statistics to show.
+* Document why some statistics won't be shown.
+* Add support for pg_proctab to show more system stats.
+* Follow Android guidelines for making a launcher icon.
