@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bglogin"
+    android:background="@android:color/background_light"
     tools:context="se.newton.scrummerz.MainActivity">
 
     <TextView
@@ -22,8 +22,8 @@
 
     <EditText
         android:id="@+id/emailField"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="244dp"
+        android:layout_height="45dp"
         android:layout_marginLeft="0dp"
         android:layout_marginRight="0dp"
         android:layout_marginTop="41dp"
@@ -33,12 +33,14 @@
         app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintLeft_toLeftOf="@+id/textView"
         app:layout_constraintRight_toRightOf="@+id/textView"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        tools:layout_editor_absoluteY="137dp"
+        tools:layout_editor_absoluteX="56dp" />
 
     <EditText
         android:id="@+id/passwordField"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="247dp"
+        android:layout_height="42dp"
         android:layout_marginLeft="0dp"
         android:layout_marginRight="0dp"
         android:layout_marginTop="14dp"
@@ -48,17 +50,18 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="@+id/emailField"
         app:layout_constraintRight_toRightOf="@+id/emailField"
-        app:layout_constraintTop_toBottomOf="@+id/emailField" />
+        app:layout_constraintTop_toBottomOf="@+id/emailField"
+        tools:layout_editor_absoluteY="199dp"
+        tools:layout_editor_absoluteX="39dp" />
 
     <Button
         android:id="@+id/loginBtn"
-        android:layout_width="215dp"
-        android:layout_height="51dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="0dp"
+        android:layout_width="247dp"
+        android:layout_height="52dp"
+        android:layout_marginEnd="0dp"
         android:layout_marginTop="20dp"
         android:text="@string/logIn"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="@+id/passwordField"
         app:layout_constraintRight_toRightOf="@+id/passwordField"
         app:layout_constraintTop_toBottomOf="@+id/passwordField" />
@@ -67,7 +70,7 @@
         android:id="@+id/forgotLink"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
+        android:layout_marginStart="7dp"
         android:layout_marginTop="8dp"
         android:linksClickable="true"
         android:text="Forgot password?"
