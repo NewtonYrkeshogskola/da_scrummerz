@@ -2,80 +2,118 @@
 <html lang="sv">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Välkommen till studentportalen!</title>
-    <link rel="stylesheet" type="text/css" href="css/style.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Välkommen till studentportalen!</title>
+  <link rel="stylesheet" type="text/css" href="css/style.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <!-- Import and configure the Firebase SDK -->
+  <!-- These scripts are made available when the app is served or deployed on Firebase Hosting -->
+  <!-- If you do not serve/host your project using Firebase Hosting see https://firebase.google.com/docs/web/setup -->
+  <script src="https://www.gstatic.com/firebasejs/3.9.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/3.9.0/firebase-auth.js"></script>
+  <script src="/__/firebase/init.js"></script>
+
+  <script type="text/javascript" src="js/index.js"></script>
+
+
+  <script src="https://www.gstatic.com/firebasejs/3.9.0/firebase.js"></script>
+  <script>
+    // Initialize Firebase
+    var config = {
+      apiKey: "AIzaSyCzIv9ECgSeBxgu_p8oJLDpzoLp4YydvEg",
+      authDomain: "scrummerz-2e3f3.firebaseapp.com",
+      databaseURL: "https://scrummerz-2e3f3.firebaseio.com",
+      projectId: "scrummerz-2e3f3",
+      storageBucket: "scrummerz-2e3f3.appspot.com",
+      messagingSenderId: "936353564933"
+    };
+    firebase.initializeApp(config);
+  </script>
 </head>
 
 <body>
-    <nav class="navbar navbar-inverse">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <a class="navbar-brand" href="#">Studentportalen</a>
-            </div>
-            <ul class="nav navbar-nav navbar-right">
-                <li><a href="#" data-toggle="modal" data-target="#login-modal"><span class="glyphicon glyphicon-log-in"></span> Logga in</a></li>
-            </ul>
-        </div>
-    </nav>
+  <nav class="navbar navbar-inverse">
     <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="#">Studentportalen</a>
+      </div>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="#" data-toggle="modal" data-target="#login-modal"><span class="glyphicon glyphicon-log-in"></span> Logga in</a></li>
+      </ul>
+    </div>
+  </nav>
+  <div class="container-fluid">
     <div class="row">
-        <div class="col-sm-3 side">Bacon ipsum dolor sit amet salami ham hock ham, hamburger corned beef short ribs kielbasa biltong t-bone drumstick
-            tri-tip tail sirloin pork chop. Kielbasa turducken turkey cow shoulder pig prosciutto hamburger corned beef short
-            loin, meatloaf tri-tip drumstick. Shankle sirloin ground round fatback, cow pancetta boudin t-bone pig. Ham short
-            ribs cow tri-tip ribeye beef ribs boudin. Short ribs pork belly leberkas salami chuck, pork loin ball tip tenderloin
-            turkey chicken pork chop filet mignon biltong. Heisenberg Ipsum</div>
-        <div class="col-sm-6">
-            Lorem Ipsum "Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit..." "There is no
-            one who loves pain itself, who seeks after it and wants to have it, simply because it is pain..." Lorem ipsum
-            dolor sit amet, consectetur adipiscing elit. Quisque mollis varius tristique. Donec euismod, felis sed tincidunt
-            lobortis, urna enim viverra elit, quis bibendum dui ex ut nisi. Morbi auctor cursus sapien, id tincidunt augue.
-            Praesent quis molestie dolor. Proin ac quam lorem. Nulla feugiat congue felis sit amet mollis. Lorem ipsum dolor
-            sit amet, consectetur adipiscing elit. Nam cursus justo gravida lectus fringilla feugiat. Proin leo eros, tempor
-            in dignissim id, vestibulum eget arcu. Pellentesque consectetur velit orci, non ullamcorper risus malesuada a.
-            Quisque sit amet elementum justo. Donec non metus venenatis, consectetur risus eu, tincidunt erat. Nam ac convallis
-            tortor. In non leo quis urna pulvinar imperdiet eu a sapien. Morbi eget ex tellus. Duis sit amet nisl sed lorem
-            euismod pulvinar eu vel lorem. Pellentesque ornare vel libero eget lobortis. Maecenas ultrices turpis ut mi euismod
-            ultricies. Integer interdum tortor ligula, non pharetra ante auctor vel. Suspendisse semper metus ac dolor dapibus,
-            eu congue tortor accumsan. Sed enim tellus, fermentum quis tortor non, blandit laoreet eros. Sed maximus metus
-            orci, consectetur ultricies mauris dignissim sed. Duis posuere augue quis congue volutpat. Morbi purus metus,
-            malesuada et urna sed, volutpat commodo ex. Suspendisse id elit maximus, varius est ac, ornare dolor. Praesent
-            id leo lectus. Curabitur id sem augue. Praesent id fringilla nulla, at pellentesque orci. Aenean blandit risus
-            ligula, porta consectetur ante commodo in. Quisque luctus felis sed neque molestie, id congue mi gravida. Sed
-            congue erat nec erat ullamcorper commodo. Etiam vel metus diam. Mauris vel tempus purus, nec finibus odio. Maecenas
-            eget quam at tortor ullamcorper congue. Phasellus cursus tortor congue libero bibendum, sed dignissim augue sollicitudin.
-            Donec placerat elit sed tincidunt condimentum. Integer venenatis eleifend ligula ac tempus.
-        </div>
-        <div class="col-sm-3 side">Disrupt jean shorts viral hella meh, plaid cupidatat magna art party. Echo Park adipisicing literally narwhal. Williamsburg
-            leggings church-key, craft beer forage cornhole jean shorts blue bottle pariatur. Officia sapiente bespoke, locavore
-            plaid cray voluptate deep v ex vinyl tote bag chillwave swag occaecat. Sed banh mi 3 wolf moon single-origin
-            coffee quis tempor. Hoodie pitchfork pork belly aliqua, shabby chic elit consequat freegan ethical try-hard mixtape.
-            Schlitz banjo deep v ullamco blog, umami nulla sint elit skateboard Godard odio.</div>
+      <div class="col-sm-3 side">Bacon ipsum dolor sit amet salami ham hock ham, hamburger corned beef short ribs kielbasa biltong t-bone drumstick
+        tri-tip tail sirloin pork chop. Kielbasa turducken turkey cow shoulder pig prosciutto hamburger corned beef short
+        loin, meatloaf tri-tip drumstick. Shankle sirloin ground round fatback, cow pancetta boudin t-bone pig. Ham short
+        ribs cow tri-tip ribeye beef ribs boudin. Short ribs pork belly leberkas salami chuck, pork loin ball tip tenderloin
+        turkey chicken pork chop filet mignon biltong. Heisenberg Ipsum</div>
+      <div class="col-sm-6">
+        Lorem Ipsum "Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit..." "There is no
+        one who loves pain itself, who seeks after it and wants to have it, simply because it is pain..." Lorem ipsum dolor
+        sit amet, consectetur adipiscing elit. Quisque mollis varius tristique. Donec euismod, felis sed tincidunt lobortis,
+        urna enim viverra elit, quis bibendum dui ex ut nisi. Morbi auctor cursus sapien, id tincidunt augue. Praesent quis
+        molestie dolor. Proin ac quam lorem. Nulla feugiat congue felis sit amet mollis. Lorem ipsum dolor sit amet, consectetur
+        adipiscing elit. Nam cursus justo gravida lectus fringilla feugiat. Proin leo eros, tempor in dignissim id, vestibulum
+        eget arcu. Pellentesque consectetur velit orci, non ullamcorper risus malesuada a. Quisque sit amet elementum justo.
+        Donec non metus venenatis, consectetur risus eu, tincidunt erat. Nam ac convallis tortor. In non leo quis urna pulvinar
+        imperdiet eu a sapien. Morbi eget ex tellus. Duis sit amet nisl sed lorem euismod pulvinar eu vel lorem. Pellentesque
+        ornare vel libero eget lobortis. Maecenas ultrices turpis ut mi euismod ultricies. Integer interdum tortor ligula,
+        non pharetra ante auctor vel. Suspendisse semper metus ac dolor dapibus, eu congue tortor accumsan. Sed enim tellus,
+        fermentum quis tortor non, blandit laoreet eros. Sed maximus metus orci, consectetur ultricies mauris dignissim sed.
+        Duis posuere augue quis congue volutpat. Morbi purus metus, malesuada et urna sed, volutpat commodo ex. Suspendisse
+        id elit maximus, varius est ac, ornare dolor. Praesent id leo lectus. Curabitur id sem augue. Praesent id fringilla
+        nulla, at pellentesque orci. Aenean blandit risus ligula, porta consectetur ante commodo in. Quisque luctus felis
+        sed neque molestie, id congue mi gravida. Sed congue erat nec erat ullamcorper commodo. Etiam vel metus diam. Mauris
+        vel tempus purus, nec finibus odio. Maecenas eget quam at tortor ullamcorper congue. Phasellus cursus tortor congue
+        libero bibendum, sed dignissim augue sollicitudin. Donec placerat elit sed tincidunt condimentum. Integer venenatis
+        eleifend ligula ac tempus.
+      </div>
+      <div class="col-sm-3 side">Disrupt jean shorts viral hella meh, plaid cupidatat magna art party. Echo Park adipisicing literally narwhal. Williamsburg
+        leggings church-key, craft beer forage cornhole jean shorts blue bottle pariatur. Officia sapiente bespoke, locavore
+        plaid cray voluptate deep v ex vinyl tote bag chillwave swag occaecat. Sed banh mi 3 wolf moon single-origin coffee
+        quis tempor. Hoodie pitchfork pork belly aliqua, shabby chic elit consequat freegan ethical try-hard mixtape. Schlitz
+        banjo deep v ullamco blog, umami nulla sint elit skateboard Godard odio.</div>
     </div>
-    </div>
+  </div>
+
+  <footer>Made by da_scrummerz &copy;</footer>
     <div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
-        <div class="modal-dialog">
-            <div class="loginmodal-container">
-                <h1>Logga in till Studentportalen</h1><br>
-                <form action="#" method="post">
-                    <label for="user">E-mail*</label><br>
-                    <input type="email" name="user" required><br><br>
-                    <label for="pass">Lösenord*</label><br>
-                    <input type="password" name="pass" required><br><br>
-                    <input type="submit" name="login" class="login loginmodal-submit" value="Logga in">
-                </form>
-                <div class="login-help">
-                    <a href="#">Glömt lösenord?</a>
-                </div>
-            </div>
+    <div class="modal-dialog">
+      <div class="loginmodal-container">
+        <h1>Logga in till Studentportalen</h1><br>
+        <label for="user">E-mail*</label><br>
+        <input type="email" name="user" id="email" required><br><br>
+        <label for="pass">Lösenord*</label><br>
+        <input type="password" name="pass" id="password" required><br><br>
+        <button name="login" id="quickstart-sign-in" value="Logga in">Logga in</button>
+        <div class="login-help">
+          <a onclick="document.getElementById('login-modal').style.display='none'" data-toggle="modal" data-target="#password-modal">Glömt lösenord?</a>
         </div>
+        <div class="quickstart-user-details-container">
+            Firebase sign-in status: <span id="quickstart-sign-in-status">Unknown</span>
+            <div>Firebase auth <code>currentUser</code> object value:</div>
+            <pre><code id="quickstart-account-details">null</code></pre>
+          </div>
+      </div>
     </div>
-    <footer>Made by da_scrummerz &copy;</footer>
+  </div>
+  <div class="modal fade" id="password-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+    style="display: none;">
+    <div class="modal-dialog">
+      <div class="loginmodal-container">
+        <h1>Glömt lösenord</h1><br>
+        <label for="user">E-mail*</label><br>
+        <input type="email" name="user" id="emailRestore" required><br><br>
+        <button id="quickstart-password-reset">Skicka nytt lösenord</button>
+      </div>
+    </div>
+  </div>
 </body>
 
 </html>
