@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/background_light"
     tools:context="se.newton.scrummerz.MainActivity">
 
     <TextView
@@ -34,8 +33,8 @@
         app:layout_constraintLeft_toLeftOf="@+id/textView"
         app:layout_constraintRight_toRightOf="@+id/textView"
         app:layout_constraintTop_toBottomOf="@+id/textView"
-        tools:layout_editor_absoluteY="137dp"
-        tools:layout_editor_absoluteX="56dp" />
+        tools:layout_editor_absoluteX="56dp"
+        tools:layout_editor_absoluteY="137dp" />
 
     <EditText
         android:id="@+id/passwordField"
@@ -51,8 +50,8 @@
         app:layout_constraintLeft_toLeftOf="@+id/emailField"
         app:layout_constraintRight_toRightOf="@+id/emailField"
         app:layout_constraintTop_toBottomOf="@+id/emailField"
-        tools:layout_editor_absoluteY="199dp"
-        tools:layout_editor_absoluteX="39dp" />
+        tools:layout_editor_absoluteX="39dp"
+        tools:layout_editor_absoluteY="199dp" />
 
     <Button
         android:id="@+id/loginBtn"
@@ -76,5 +75,18 @@
         android:text="Forgot password?"
         app:layout_constraintLeft_toLeftOf="@+id/loginBtn"
         app:layout_constraintTop_toBottomOf="@+id/loginBtn" />
+
+    <TextView
+        android:id="@+id/mStatusTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/forgotLink" />
 
 </android.support.constraint.ConstraintLayout>
