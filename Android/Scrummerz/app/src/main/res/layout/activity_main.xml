@@ -4,89 +4,40 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/bglogin"
     tools:context="se.newton.scrummerz.MainActivity">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="0dp"
-        android:layout_marginRight="0dp"
-        android:layout_marginTop="62dp"
-        android:text="Welcome"
-        android:textSize="30sp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <EditText
-        android:id="@+id/emailField"
-        android:layout_width="244dp"
-        android:layout_height="45dp"
-        android:layout_marginLeft="0dp"
-        android:layout_marginRight="0dp"
-        android:layout_marginTop="41dp"
-        android:ems="10"
-        android:hint="Email"
-        android:inputType="textEmailAddress"
-        app:layout_constraintHorizontal_bias="0.494"
-        app:layout_constraintLeft_toLeftOf="@+id/textView"
-        app:layout_constraintRight_toRightOf="@+id/textView"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
-        tools:layout_editor_absoluteX="56dp"
-        tools:layout_editor_absoluteY="137dp" />
-
-    <EditText
-        android:id="@+id/passwordField"
-        android:layout_width="247dp"
-        android:layout_height="42dp"
-        android:layout_marginLeft="0dp"
-        android:layout_marginRight="0dp"
-        android:layout_marginTop="14dp"
-        android:ems="10"
-        android:hint="Password"
-        android:inputType="textPassword"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintLeft_toLeftOf="@+id/emailField"
-        app:layout_constraintRight_toRightOf="@+id/emailField"
-        app:layout_constraintTop_toBottomOf="@+id/emailField"
-        tools:layout_editor_absoluteX="39dp"
-        tools:layout_editor_absoluteY="199dp" />
-
     <Button
-        android:id="@+id/loginBtn"
-        android:layout_width="247dp"
-        android:layout_height="52dp"
-        android:layout_marginEnd="0dp"
-        android:layout_marginTop="20dp"
-        android:text="@string/logIn"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintLeft_toLeftOf="@+id/passwordField"
-        app:layout_constraintRight_toRightOf="@+id/passwordField"
-        app:layout_constraintTop_toBottomOf="@+id/passwordField" />
-
-    <TextView
-        android:id="@+id/forgotLink"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="7dp"
+        android:id="@+id/goToLogin"
+        android:layout_width="156dp"
+        android:layout_height="63dp"
         android:layout_marginTop="8dp"
-        android:linksClickable="true"
-        android:text="Forgot password?"
-        app:layout_constraintLeft_toLeftOf="@+id/loginBtn"
-        app:layout_constraintTop_toBottomOf="@+id/loginBtn" />
-
-    <TextView
-        android:id="@+id/mStatusTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginTop="8dp"
+        android:background="@color/common_google_signin_btn_text_dark_default"
+        android:text="Go to login"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/forgotLink" />
+        app:layout_constraintTop_toBottomOf="@+id/mainWelcome"
+        app:layout_constraintVertical_bias="0.25"
+        tools:layout_constraintBottom_creator="1"
+        tools:layout_constraintLeft_creator="1"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintTop_creator="1" />
 
+    <TextView
+        android:id="@+id/mainWelcome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="152dp"
+        android:text="Studentportalen"
+        android:textColor="@color/common_google_signin_btn_text_dark_default"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_constraintLeft_creator="1"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintTop_creator="1" />
 </android.support.constraint.ConstraintLayout>
