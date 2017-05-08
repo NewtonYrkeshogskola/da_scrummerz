@@ -27,8 +27,12 @@ function initApp() {
         var providerData = user.providerData;
         var data = document.getElementById("data");
         var dataRef = firebase.database().ref().child('test1');
-        dataRef.on('value', snap => {
-            data.innerText = snap.child('test22').val();
+        dataRef.on('child_added', snap => {
+            var klass = snap.child('class').val();
+            var name = snap.child('name').val();
+            var pnr = snap.child('pnr').val();
+
+            $("#table").append("<tr><td>" + name + "</td><td>" + pnr + "</td><td>" + klass + "</td></tr>");
         });
         document.getElementById('quickstart-account-details').textContent = JSON.stringify(user, null, '  ');
     });
