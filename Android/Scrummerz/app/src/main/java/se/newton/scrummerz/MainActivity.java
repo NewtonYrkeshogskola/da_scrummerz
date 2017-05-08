@@ -1,42 +1,56 @@
 package se.newton.scrummerz;
 
-import android.support.v7.app.AppCompatActivity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.view.Window;
 import android.widget.Button;
-import android.widget.EditText;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity {
 
-    @BindView(R.id.emailField)      EditText emailField;
-    @BindView(R.id.passwordField)   EditText passwordField;
-    @BindView(R.id.loginBtn)        Button loginBtn;
+    private FirebaseAuth mAuth;
+    Intent signedIn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ButterKnife.bind(this);
+        signedIn = new Intent(MainActivity.this, signedInStart.class);
 
-//        @BindView(R.id.loginBtn)        Button loginBtn;
-//        Button button = (Button) findViewById(R.id.emailField);
+        // Initiera Firebase-inloggning
+        mAuth = FirebaseAuth.getInstance();
 
-//        En annan bra sak med butterknife är att man kan initiera buttons utanför onCreate metoden.
-//        Om man inte kör butterknife så kan man endast deklarera utanför onCreate.
-
-
-        loginBtn.setOnClickListener(new View.OnClickListener() {
+        // Om ingen är inloggad, hantera knapptryck för att logga in
+        Button signIn = (Button) findViewById(R.id.goToLogin);
+        signIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(MainActivity.this, login.class);
+                startActivity(intent);
             }
         });
+    }
 
+    // Kontrollera om användaren redan är inloggad
+    @Override
+    public void onStart() {
+        super.onStart();
+        // Kontrollera om användaren är inloggad (non-null).
+        // Om så är fallet, flytta direkt till inloggat läge.
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        updateUI(currentUser);
+    }
 
-
+    // Hantera användaren vid inloggning
+    private void updateUI(FirebaseUser user) {
+        if (user != null) {
+            // Användaren är redan inloggad, skicka vidare
+            startActivity(signedIn);
+        } else {
+            // Användaren är inte inloggad, så gör inget
+        }
     }
 }

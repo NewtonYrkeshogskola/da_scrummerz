@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">Scrummerz</string>
     <string name="logIn">Log in</string>
+    <string name="auth_failed">Autensiering misslyckades</string>
+
+    <string name="title_activity_login">login</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
 </resources>
