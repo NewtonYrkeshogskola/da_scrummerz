@@ -1,5 +1,7 @@
 body{
-    background-image: url('../images/bglogin.png');
+    background-image: url('../images/webb-bg.svg');
+    background-size: cover;
+
 }
 .loginmodal-container {
   padding: 30px;
@@ -17,6 +19,10 @@ body{
   text-align: center;
   font-size: 1.8em;
   font-family: roboto;
+}
+
+.modal-backdrop{
+  display: none;
 }
 
 .loginmodal-container input[type=submit] {
@@ -106,3 +112,12 @@ footer {
   text-align: center;
 }
 
+a:hover
+{
+  cursor: pointer;
+}
+
+#email, #password{
+  display: inline;
+  width: auto;
+}
