@@ -14,24 +14,19 @@ function toggleSignIn() {
     window.location = "index.html";
 }
 
-var email;
-var uid;
+var email = "inget@tomt.se";
 var providerData;
-var userId
-
+var uid
 
 function initApp() {
     firebase.auth().onAuthStateChanged(function (user) {
         if (user) {
             // User is signed in.
-            displayName = user.displayName;
+            var displayName = user.displayName;
             email = user.email;
-            emailVerified = user.emailVerified;
-            photoURL = user.photoURL;
-            isAnonymous = user.isAnonymous;
+            var isAnonymous = user.isAnonymous;
             uid = user.uid;
-            userId = user.uid;
-            providerData = user.providerData;
+            var providerData = user.providerData;
             // ...
         } else {
             // User is signed out.
@@ -51,4 +46,15 @@ function initApp() {
 
 window.onload = function () {
     initApp();
+<<<<<<< HEAD
 }
+=======
+}
+
+var app = angular.module("LoggedIn", []);
+app.controller("loggedInUser", function ($scope) {
+    $scope.uid = uid;
+    $scope.email = email;
+
+});
+>>>>>>> origin/Gio-test
