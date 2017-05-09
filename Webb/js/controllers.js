@@ -2,11 +2,10 @@
 
     angular
         .module('LoggedIn', ['firebase'])
-        .controller('personCtrl', function($firebaseObject){
-            const rootRef = firebase.database().ref().child('scrummerz-2e3f3');
-            const ref = rootRef.child('object');
-            const test = ref.child('name');
-            this.object = $firebaseObject(test);
-        });
-
+        .controller('personCtrl', ["$scope", "$firebaseObject",
+        function($scope, $firebaseObject){
+            var ref = firebase.database().ref();
+            $scope.data = $firebaseObject(ref.child('courses').child('2017'));
+            
+        }]);
 }());
