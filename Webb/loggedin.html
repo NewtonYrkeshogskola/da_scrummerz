@@ -1,44 +1,65 @@
 <!DOCTYPE html>
 <html lang="sv">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    
-
     <title>Logged in</title>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/3.9.0/firebase.js"></script>
     <script src="https://www.gstatic.com/firebasejs/3.9.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/3.9.0/firebase-database.js"></script>
     <script src="https://www.gstatic.com/firebasejs/3.9.0/firebase-auth.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
-
-
-<!-- Firebase -->
-<script src="https://www.gstatic.com/firebasejs/3.6.6/firebase.js"></script>
-
-<!-- AngularFire -->
-<script src="https://cdn.firebase.com/libs/angularfire/2.3.0/angularfire.min.js"></script>
-  
+    <script src="https://www.gstatic.com/firebasejs/3.6.6/firebase.js"></script>
+    <script src="https://cdn.firebase.com/libs/angularfire/2.3.0/angularfire.min.js"></script>
     <script type="text/javascript" src="js/loggedin.js"></script>
     <script type="text/javascript" src="js/controllers.js"></script>
 </head>
-<body ng-app="LoggedIn">
 
-    <button name="login" id="quickstart-sign-in" value="Logga in">Logga ut</button>
+<body ng-app="LoggedIn" ng-controller="personCtrl as ctrl">
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">Studentportalen</a>
+            </div>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#"><span class="glyphicon glyphicon-user"></span> {{user.Name}}</a></li>
+                <li><a href="#" id="quickstart-sign-in" data-toggle="modal" data-target="#login-modal"><span class="glyphicon glyphicon-log-out"></span> Logga ut</a></li>
+            </ul>
+        </div>
+    </nav>
     <h1>Kursöversikt</h1>
-    <h2>information om användaren: </h2>
-
-    
-    <div ng-controller="personCtrl as ctrl">
-        <h2>Hello, {{firebaseUser.email}}</h2>
-        <h2>Hello, {{user.Name}}</h2>
-        <h3>Din klass är {{user.Class}}</h3>
-        <h4>Ditt personnummer är {{user.Pnr}}</h4>
-        <pre>
+    <!-- <h2>information om användaren: </h2>-->
+    <div>
+        <!-- ta bort -->
+        <h6>Hello, {{firebaseUser.email}}</h6>
+        <h6>Hello, {{user.Name}}</h6>
+        <h6>Din klass är {{user.Class}}</h6>
+        <h6>Ditt personnummer är {{user.Pnr}}</h6>
+    <!-- <pre>
         {{data | json}}
-        </pre>
+        </pre>-->
+    <h3>Aktiva kurser</h3>
+    <!-- jQuery för animation? hide/show detaljer. Hur kopplas då varje <p> till <h5>? -->
+    <ul ng-repeat="course in data">
+        <li ng-show="{{course.active === true}}">
+            <h5>{{course.name}}</h5>
+            <p>{{course.details}}</p>
+        </li>
+    </ul>
+    <h3>Avslutade kurser</h3>
+    <ul ng-repeat="course in data">
+        <li ng-show="{{course.active === false}}">
+            <h5>{{course.name}}</h5>
+            <p>{{course.details}}</p>
+        </li>
+    </ul>
     </div>
-
 </body>
+
 </html>
