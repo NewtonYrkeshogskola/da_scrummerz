@@ -6,23 +6,22 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     
     <title>Logged in</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/3.9.0/firebase.js"></script>
     <script src="https://www.gstatic.com/firebasejs/3.9.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/3.9.0/firebase-database.js"></script>
     <script src="https://www.gstatic.com/firebasejs/3.9.0/firebase-auth.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
     <script type="text/javascript" src="js/loggedin.js"></script>
   
 
 </head>
-<body ng-app="LoggedIn" ng-controller="personCtrl">
+<body ng-app="LoggedIn" ng-controller="loggedInUser">
     <button name="login" id="quickstart-sign-in" value="Logga in">Logga ut</button>
     <h1>Kursöversikt</h1>
     <h2>information om användaren: </h2>
 
     <h3 id="object"></h3>
     
-    <input ng-model="name" type="text">
     <h2>Hej {{email}}</h2>
 
 </body>
