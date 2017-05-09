@@ -44,17 +44,3 @@ function initApp() {
     document.getElementById('quickstart-sign-in').addEventListener('click', toggleSignIn, false);
 }
 
-window.onload = function () {
-    initApp();
-<<<<<<< HEAD
-}
-=======
-}
-
-var app = angular.module("LoggedIn", []);
-app.controller("loggedInUser", function ($scope) {
-    $scope.uid = uid;
-    $scope.email = email;
-
-});
->>>>>>> origin/Gio-test
