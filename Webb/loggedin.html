@@ -32,6 +32,9 @@
     
     <div ng-controller="personCtrl as ctrl">
         <h2>Hello, {{firebaseUser.email}}</h2>
+        <h2>Hello, {{user.Name}}</h2>
+        <h3>Din klass är {{user.Class}}</h3>
+        <h4>Ditt personnummer är {{user.Pnr}}</h4>
         <pre>
         {{data | json}}
         </pre>

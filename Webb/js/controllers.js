@@ -15,8 +15,10 @@ var guid;
                 $scope.auth = Auth;
                 $scope.data = $firebaseObject(ref.child('courses').child('2017'));
                 $scope.auth.$onAuthStateChanged(function (firebaseUser) {
+                    var userId = firebaseUser.uid;
                     $scope.firebaseUser = firebaseUser;
-                    guid = firebaseUser.uid;
+                    $scope.user = $firebaseObject(ref.child('users').child('Pupils/'+ userId));
                 });
+
             }]);
 }());

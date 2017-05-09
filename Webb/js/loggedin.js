@@ -28,7 +28,7 @@ function initApp() {
         } else {
         }
     });
-
+    
     document.getElementById('quickstart-sign-in').addEventListener('click', toggleSignIn, false);
 }
 
