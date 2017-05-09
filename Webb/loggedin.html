@@ -11,19 +11,28 @@
     <script src="https://www.gstatic.com/firebasejs/3.9.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/3.9.0/firebase-database.js"></script>
     <script src="https://www.gstatic.com/firebasejs/3.9.0/firebase-auth.js"></script>
-    <script type="text/javascript" src="js/loggedin.js"></script>
-  
 
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/3.6.6/firebase.js"></script>
+
+<!-- AngularFire -->
+<script src="https://cdn.firebase.com/libs/angularfire/2.3.0/angularfire.min.js"></script>
+  
+    <script type="text/javascript" src="js/loggedin.js"></script>
+    <script type="text/javascript" src="js/controllers.js"></script>
 </head>
-<body ng-app="LoggedIn" ng-controller="personCtrl">
+<body ng-app="LoggedIn">
     <button name="login" id="quickstart-sign-in" value="Logga in">Logga ut</button>
     <h1>Kursöversikt</h1>
     <h2>information om användaren: </h2>
 
     <h3 id="object"></h3>
     
-    <input ng-model="name" type="text">
-    <h2>Hej {{email}}</h2>
+    <div ng-controller="personCtrl as ctrl">
+        <pre>
+        {{ctrl.object}}
+        </pre>
+    </div>
 
 </body>
 </html>

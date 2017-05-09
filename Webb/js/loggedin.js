@@ -52,10 +52,3 @@ function initApp() {
 window.onload = function () {
     initApp();
 }
-
-  var app = angular.module("LoggedIn", []);
-        app.controller("personCtrl", function($scope){
-            $scope.uid = uid;
-            $scope.email = email;
-            
-        });
