@@ -1,3 +1,4 @@
+
 // Firebase configuration
 var config = {
     apiKey: "AIzaSyCzIv9ECgSeBxgu_p8oJLDpzoLp4YydvEg",
@@ -8,6 +9,7 @@ var config = {
     messagingSenderId: "936353564933"
 };
 firebase.initializeApp(config);
+
 
 function toggleSignIn() {
     firebase.auth().signOut();
@@ -39,6 +41,7 @@ function initApp() {
             var pnr = snapshot.val().Pnr;
 
         });
+
     });
 
     document.getElementById('quickstart-sign-in').addEventListener('click', toggleSignIn, false);
