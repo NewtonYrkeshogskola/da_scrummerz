@@ -5,46 +5,37 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     
-    <title>Document</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <title>Logged in</title>
+    <script src="https://www.gstatic.com/firebasejs/3.9.0/firebase.js"></script>
     <script src="https://www.gstatic.com/firebasejs/3.9.0/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/3.9.0/firebase-auth.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/3.9.0/firebase-database.js"></script>
-  <script src="/__/firebase/init.js"></script>
-
-  <script type="text/javascript" src="js/loggedin.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/3.9.0/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/3.9.0/firebase-auth.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
 
 
-  <script src="https://www.gstatic.com/firebasejs/3.9.0/firebase.js"></script>
-  <script>
-    // Initialize Firebase
-    var config = {
-      apiKey: "AIzaSyCzIv9ECgSeBxgu_p8oJLDpzoLp4YydvEg",
-      authDomain: "scrummerz-2e3f3.firebaseapp.com",
-      databaseURL: "https://scrummerz-2e3f3.firebaseio.com",
-      projectId: "scrummerz-2e3f3",
-      storageBucket: "scrummerz-2e3f3.appspot.com",
-      messagingSenderId: "936353564933"
-    };
-    firebase.initializeApp(config);
-  </script>
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/3.6.6/firebase.js"></script>
+
+<!-- AngularFire -->
+<script src="https://cdn.firebase.com/libs/angularfire/2.3.0/angularfire.min.js"></script>
+  
+    <script type="text/javascript" src="js/loggedin.js"></script>
+    <script type="text/javascript" src="js/controllers.js"></script>
 </head>
-<body>
+<body ng-app="LoggedIn">
+
     <button name="login" id="quickstart-sign-in" value="Logga in">Logga ut</button>
     <h1>Kursöversikt</h1>
     <h2>information om användaren: </h2>
-    <div class="quickstart-user-details-container">
-            <div>Firebase auth <code>currentUser</code> object value:</div>
-            <pre><code id="quickstart-account-details">null</code></pre>
-          </div>
-          <h3 id="data">firebase</h3>
-          <table> 
-            <thead>
-              <tr>
-                <td></td>
-              </tr>
-              <tbody id="table"></tbody>
-            </thead>
-          </table>
+
+    <h3 id="object"></h3>
+    
+    <div ng-controller="personCtrl as ctrl">
+        <pre>
+        {{data | json}}
+        </pre>
+    </div>
+
 </body>
 </html>
