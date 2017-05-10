@@ -42,15 +42,15 @@ public class signedInStart extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         String uid = currentUser.getUid();
-        nameTextView.setText(uid);
 
         DatabaseReference mStudent = mRoot.child("users").child("Pupils").child(uid);
 
         mStudent.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                String test = dataSnapshot.getValue().toString();
-                Log.i("TEST", test);
+                Student student = new Student();
+                student = dataSnapshot.getValue(Student.class);
+                nameTextView.setText(student.Name);
             }
 
             @Override
