@@ -13,7 +13,7 @@ var guid;
             function ($scope, $firebaseObject, Auth) {
                 var ref = firebase.database().ref();
                 $scope.auth = Auth;
-                $scope.data = $firebaseObject(ref.child('courses').child('2017'));
+                $scope.data = $firebaseObject(ref.child('courses'));
                 $scope.auth.$onAuthStateChanged(function (firebaseUser) {
                     var userId = firebaseUser.uid;
                     $scope.firebaseUser = firebaseUser;
