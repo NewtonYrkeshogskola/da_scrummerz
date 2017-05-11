@@ -22,7 +22,8 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_login"
             android:theme="@style/FullscreenTheme" />
-        <activity android:name=".signedInStart"></activity>
+        <activity android:name=".signedInStart" />
+        <activity android:name=".activity_courses"></activity>
     </application>
 
 </manifest>

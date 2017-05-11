@@ -1,8 +1,11 @@
 package se.newton.scrummerz;
 
+
+
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -14,8 +17,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
+import se.newton.scrummerz.model.Student;
 
 public class signedInStart extends AppCompatActivity {
 
@@ -35,7 +37,15 @@ public class signedInStart extends AppCompatActivity {
         currentUser = mAuth.getCurrentUser();
 
         nameTextView = (TextView) findViewById(R.id.nameTextView);
+        TextView coursesTextView = (TextView) findViewById(R.id.myCoursesTextView);
 
+        coursesTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(signedInStart.this, activity_courses.class);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override

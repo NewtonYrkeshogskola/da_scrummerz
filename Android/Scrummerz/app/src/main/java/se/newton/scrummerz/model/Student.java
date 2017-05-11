@@ -1,4 +1,4 @@
-package se.newton.scrummerz;
+package se.newton.scrummerz.model;
 
 import com.google.firebase.database.IgnoreExtraProperties;
 

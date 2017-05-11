@@ -51,13 +51,14 @@
         android:id="@+id/myCoursesTextView"
         android:layout_width="154dp"
         android:layout_height="31dp"
+        android:layout_marginLeft="-8dp"
+        android:layout_marginTop="9dp"
+        android:clickable="true"
         android:text="Mina kurser"
         android:textColor="@color/common_google_signin_btn_text_dark_default"
         android:textSize="24sp"
-        android:layout_marginTop="9dp"
-        app:layout_constraintTop_toBottomOf="@+id/feedbackTextView"
-        android:layout_marginLeft="-8dp"
-        app:layout_constraintLeft_toLeftOf="@+id/feedbackTextView" />
+        app:layout_constraintLeft_toLeftOf="@+id/feedbackTextView"
+        app:layout_constraintTop_toBottomOf="@+id/feedbackTextView" />
 
     <TextView
         android:id="@+id/textView4"
