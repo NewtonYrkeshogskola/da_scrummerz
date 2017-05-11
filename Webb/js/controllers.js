@@ -18,15 +18,19 @@ var guid;
                     var userId = firebaseUser.uid;
                     $scope.firebaseUser = firebaseUser;
                     $scope.user = $firebaseObject(ref.child('users').child('Pupils/' + userId));
+                    $scope.userClass = $firebaseObject(ref.child('users').child('Pupils/' + userId));
+                    $scope.user.$loaded().then(function () {
+                        $scope.myClass = $scope.user.Class;
+                        var klass = $scope.myClass;
+                        $scope.myCourses = $firebaseObject(ref.child('classes/' + klass).child('Courses'));
+                    });                   
                 });
-
             }])
         .controller("AdminUserCtrl", ["$scope", "Auth",
             function ($scope, Auth) {
                 $scope.createUser = function () {
                     $scope.message = null;
                     $scope.error = null;
-
                     // Create a new user
                     Auth.$createUserWithEmailAndPassword($scope.email, $scope.password)
                         .then(function (firebaseUser) {

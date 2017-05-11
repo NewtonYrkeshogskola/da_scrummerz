@@ -42,24 +42,29 @@
         <h6>Hello, {{user.Name}}</h6>
         <h6>Din klass är {{user.Class}}</h6>
         <h6>Ditt personnummer är {{user.Pnr}}</h6>
-    <!-- <pre>
-        {{data | json}}
-        </pre>-->
-    <h3>Aktiva kurser</h3>
-    <!-- jQuery för animation? hide/show detaljer. Hur kopplas då varje <p> till <h5>? -->
-    <ul ng-repeat="course in data">
-        <li ng-show="{{course.active === true}}">
-            <h5>{{course.name}}</h5>
-            <p>{{course.details}}</p>
-        </li>
-    </ul>
-    <h3>Avslutade kurser</h3>
-    <ul ng-repeat="course in data">
-        <li ng-show="{{course.active === false}}">
-            <h5>{{course.name}}</h5>
-            <p>{{course.details}}</p>
-        </li>
-    </ul>
+        <h6>{{myClass}}</h6>
+        <ul ng-repeat="course in myCourses">
+            <li>
+                {{course}}
+            </li>
+        </ul>
+       
+
+        <h3>Aktiva kurser</h3>
+        <!-- jQuery för animation? hide/show detaljer. Hur kopplas då varje <p> till <h5>? -->
+        <ul ng-repeat="course in data">
+            <li ng-show="{{course.active === true}}">
+                <h5>{{course.name}}</h5>
+                <p>{{course.details}}</p>
+            </li>
+        </ul>
+        <h3>Avslutade kurser</h3>
+        <ul ng-repeat="course in data">
+            <li ng-show="{{course.active === false}}">
+                <h5>{{course.name}}</h5>
+                <p>{{course.details}}</p>
+            </li>
+        </ul>
     </div>
 </body>
 
