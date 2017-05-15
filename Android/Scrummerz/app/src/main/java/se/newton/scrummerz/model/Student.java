@@ -32,14 +32,20 @@ public class Student {
     }
 
 
-
-    public setPnr(String Pnr) {
-        this.Pnr = Pnr;
+    public void setPnr(String pnr) {
+        Pnr = pnr;
     }
 
-    public setName(String Name) {
-        this.Name = Name;
+    public void setName(String name) {
+        Name = name;
     }
 
+    public String getMyClass() {
+        return myClass;
+    }
+
+    public void setMyClass(String myClass) {
+        this.myClass = myClass;
+    }
 }
 

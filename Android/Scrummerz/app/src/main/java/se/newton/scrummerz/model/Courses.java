@@ -41,22 +41,26 @@ public class Courses {
         return myClass;
     }
 
-
-
-    public setTeacher(String Teacher) {
-        this.Teacher = Teacher;
+    public void setMyClass(String myClass) {
+        this.myClass = myClass;
     }
 
-    public setName(String Name) {
-        this.Name = Name;
+    public void setActive(Boolean active) {
+        Active = active;
     }
 
-    public setActive(Boolean Active) {
-        this.Active = Active;
+    public void setCourseCode(String courseCode) {
+        CourseCode = courseCode;
     }
 
-    public setCourseCode(String CourseCode) {
-        this.CourseCode = CourseCode;
+    public void setName(String name) {
+        Name = name;
     }
+
+    public void setTeacher(String teacher) {
+        Teacher = teacher;
+    }
+
+
 
 }
