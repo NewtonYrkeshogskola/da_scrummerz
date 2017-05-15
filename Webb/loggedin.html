@@ -15,11 +15,13 @@
     <script src="https://www.gstatic.com/firebasejs/3.9.0/firebase-database.js"></script>
     <script src="https://www.gstatic.com/firebasejs/3.9.0/firebase-auth.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-animate.js"></script>
     <script src="https://www.gstatic.com/firebasejs/3.6.6/firebase.js"></script>
     <script src="https://cdn.firebase.com/libs/angularfire/2.3.0/angularfire.min.js"></script>
     <script type="text/javascript" src="js/loggedin.js"></script>
     <script type="text/javascript" src="js/database.js"></script>
     <script type="text/javascript" src="js/controllers.js"></script>
+   
 </head>
 
 <body ng-app="LoggedIn" ng-controller="personCtrl as ctrl">
@@ -46,22 +48,22 @@
         <h4>Pågående kurser</h4>
         <ul ng-repeat="course in myCourses">
             <li ng-show="{{course.status === 'progress'}}">
-                <h6>{{course.name}}</h6>
-                <p>{{course.description}}</p>
+               <h6 ng-click="value = true">{{course.name}}</h6>
+                <p class='animate-hide' ng-show="value">{{course.description}}</p>
             </li>
         </ul>
         <h4>Kommande kurser</h4>
         <ul ng-repeat="course in myCourses">
             <li ng-show="{{course.status === 'comming'}}">
-                <h6>{{course.name}}</h6>
-                <p>{{course.description}}</p>
+                <h6 ng-click="value = true">{{course.name}}</h6>
+                <p class='animate-hide' ng-show="value">{{course.description}}</p>
             </li>
         </ul>
         <h4>Avslutade kurser</h4>
         <ul ng-repeat="course in myCourses">
             <li ng-show="{{course.status === 'finished'}}">
-              <h6>{{course.name}}</h6>
-                <p>{{course.description}}</p>
+              <h6 ng-click="value = true">{{course.name}}</h6>
+                <p class='animate-hide' ng-show="value">{{course.description}}</p>
             </li>
         </ul>
     </div>

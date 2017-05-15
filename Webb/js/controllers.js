@@ -1,7 +1,7 @@
 var guid;
 
 
-var app = angular.module('LoggedIn', ['firebase']);
+var app = angular.module('LoggedIn', ['firebase', 'ngAnimate']);
 
 app.factory("Auth", ["$firebaseAuth",
     function ($firebaseAuth) {
@@ -25,12 +25,13 @@ app.controller('personCtrl', ["$scope", "$firebaseObject", "$firebaseArray", "Au
                 var data1 = $scope.data1;
                 var klass = $scope.myClass;
                 $scope.myCourses = $firebaseObject(ref.child('coursesByClass/' + klass));
-                var query = firebase.database().ref().child('coursesByClass/' + klass);
-                query.once('value', snap => console.log(snap.val()));
+                
+                //var query = firebase.database().ref().child('coursesByClass/' + klass);
+/*                query.once('value', snap => console.log(snap.val()));
                 query.once('value', function (snap) {
                     console.log(snap.val())
                 });
-                var list = $firebaseArray(query);
+            $scope.list = $firebaseArray(query);
                 console.log(list);
                 $scope.klassCoursedetails = function () {
                     query.on('child_added', snap => {
@@ -50,7 +51,7 @@ app.controller('personCtrl', ["$scope", "$firebaseObject", "$firebaseArray", "Au
                 return firebase.database().ref('courses').once('value').then(function (snapshot) {
                     var username = snapshot.val();
                     console.log(username);
-                });
+                });*/
             });
         });
     }]);
