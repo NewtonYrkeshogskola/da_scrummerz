@@ -21,7 +21,7 @@
     <script type="text/javascript" src="js/loggedin.js"></script>
     <script type="text/javascript" src="js/database.js"></script>
     <script type="text/javascript" src="js/controllers.js"></script>
-   
+
 </head>
 
 <body ng-app="LoggedIn" ng-controller="personCtrl as ctrl">
@@ -36,37 +36,48 @@
             </ul>
         </div>
     </nav>
-    <h1>Kursöversikt</h1>
-    <!-- <h2>information om användaren: </h2>-->
-    <div>
-        <!-- ta bort -->
-        <h6>Hello, {{firebaseUser.email}}</h6>
-        <h6>Hello, {{user.Name}}</h6>
-        <h6>Din klass är {{user.myClass}}</h6>
-        <h6>Ditt personnummer är {{user.Pnr}}</h6>
-
-        <h4>Pågående kurser</h4>
-        <ul ng-repeat="course in myCourses">
-            <li ng-show="{{course.status === 'progress'}}">
-               <h6 ng-click="value = !value" ng-class="{ active: value }">{{course.name}}</h6>
-                <p class='animate-hide' ng-show="value">{{course.description}}</p>
-            </li>
-        </ul>
-        <h4>Kommande kurser</h4>
-        <ul ng-repeat="course in myCourses">
-            <li ng-show="{{course.status === 'comming'}}">
-                <h6 ng-click="value = !value" ng-class="{ active: value }">{{course.name}}</h6>
-                <p class='animate-hide' ng-show="value">{{course.description}}</p>
-            </li>
-        </ul>
-        <h4>Avslutade kurser</h4>
-        <ul ng-repeat="course in myCourses">
-            <li ng-show="{{course.status === 'finished'}}">
-              <h6 ng-click="value = !value" ng-class="{ active: value }">{{course.name}}</h6>
-                <p class='animate-hide' ng-show="value">{{course.description}}</p>
-            </li>
-        </ul>
+    <h1 class="text-center">Kursöversikt</h1>
+    <div class="row">
+        <div class="col-sm-12  well well-sm">
+            <h4 class="text-center">Pågående kurser</h4>
+            <div ng-repeat="course in myCourses" class="panel panel-default" ng-show="{{course.status === 'progress'}}">
+                <div ng-click="value = !value" ng-class="{ active: value }" class="panel-heading">{{course.name}}</div>
+                <div class="panel-body animate-hide" ng-show="value">
+                    <p><em>BESKRIVNING: </em><samp>{{course.description}}</samp></p>
+                    <p><em>KURSKOD: </em><samp>{{course.courseCode}}</samp></p>
+                    <p><em>LÄRARE: </em><samp>{{course.teacher}}</samp></p>
+                </div>
+            </div>
+        </div>
     </div>
+    <div class="row">
+        <div class="col-sm-12 well well-sm">
+            <h4 class="text-center">Kommande kurser</h4>
+            <div ng-repeat="course in myCourses" class="panel panel-default" ng-show="{{course.status === 'comming'}}">
+                <div ng-click="value = !value" ng-class="{ active: value }" class="panel-heading">{{course.name}}</div>
+                <div class="panel-body animate-hide" ng-show="value">
+                    <p><em>BESKRIVNING: </em><samp>{{course.description}}</samp></p>
+                    <p><em>KURSKOD: </em><samp>{{course.courseCode}}</samp></p>
+                    <p><em>LÄRARE: </em><samp>{{course.teacher}}</samp></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12 well well-sm">
+            <h4 class="text-center">Avslutade kurser</h4>
+            <div ng-repeat="course in myCourses" class="panel panel-default" ng-show="{{course.status === 'finished'}}">
+                <div ng-click="value = !value" ng-class="{ active: value }" class="panel-heading">{{course.name}}</div>
+                <div class="panel-body animate-hide" ng-show="value">
+                    <p><em>BESKRIVNING: </em><samp>{{course.description}}</samp></p>
+                    <p><em>KURSKOD: </em><samp>{{course.courseCode}}</samp></p>
+                    <p><em>LÄRARE: </em><samp>{{course.teacher}}</samp></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
 </body>
 
 </html>
