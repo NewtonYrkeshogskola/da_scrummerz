@@ -11,9 +11,7 @@
         android:id="@+id/line"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="0dp"
-        android:layout_marginLeft="0dp"
-        android:layout_marginRight="0dp"
+        android:layout_marginBottom="46dp"
         card_view:layout_constraintBottom_toBottomOf="parent"
         card_view:layout_constraintHorizontal_bias="0.0"
         card_view:layout_constraintLeft_toLeftOf="parent"
@@ -27,5 +25,11 @@
         android:text="TextView"
         tools:layout_editor_absoluteX="162dp"
         tools:layout_editor_absoluteY="45dp" />
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_width="0dp"
+        android:layout_height="46dp"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="8dp" />
 
 </android.support.constraint.ConstraintLayout>
