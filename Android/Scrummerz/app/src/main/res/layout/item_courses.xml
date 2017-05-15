@@ -14,7 +14,7 @@
         android:padding="3dp">
 
         <include
-            layout="@layout/include_courses_text"
+            layout="@layout/item_courses_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="5dp" />
