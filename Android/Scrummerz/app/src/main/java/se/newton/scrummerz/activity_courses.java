@@ -1,12 +1,9 @@
 package se.newton.scrummerz;
 
-import android.provider.ContactsContract;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -28,15 +25,14 @@ public class activity_courses extends AppCompatActivity {
 
         getUid();
         getMyClass(userId);
-        getCourses();
+
 
 
     }
 
 
     public void getCourses(){
-        DatabaseReference localRef = dbRef.child("classes").child(myClass).child("TestKurser");
-
+        DatabaseReference localRef = dbRef.child("coursesByClass").child(myClass);
 
     }
 
@@ -55,7 +51,8 @@ public class activity_courses extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Student student = new Student();
                 student = dataSnapshot.getValue(Student.class);
-                myClass = student.Class;
+                myClass = student.myClass;
+                getCourses();
             }
 
             @Override

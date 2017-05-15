@@ -6,17 +6,17 @@ import com.google.firebase.database.IgnoreExtraProperties;
 public class Student {
     private String Pnr;
     private String Name;
-    public String Class;
+    public String myClass;
 
 
     public Student() {
         // Default constructor required for calls to DataSnapshot.getValue(Student.class)
     }
 
-    public Student(String Class, String Name, String Pnr) {
+    public Student(String myClass, String Name, String Pnr) {
         this.Pnr = Pnr;
         this.Name = Name;
-        this.Class = Class;
+        this.myClass = myClass;
     }
 
     public String getPnr() {
@@ -25,6 +25,10 @@ public class Student {
 
     public String getName() {
         return Name;
+    }
+
+    public String getmyClass() {
+        return myClass;
     }
 
 }
