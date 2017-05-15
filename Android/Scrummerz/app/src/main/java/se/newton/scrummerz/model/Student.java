@@ -33,11 +33,11 @@ public class Student {
 
 
 
-    public String setPnr(String Pnr) {
+    public setPnr(String Pnr) {
         this.Pnr = Pnr;
     }
 
-    public String setName(String Name) {
+    public setName(String Name) {
         this.Name = Name;
     }
 

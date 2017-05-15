@@ -43,19 +43,19 @@ public class Courses {
 
 
 
-    public String setTeacher(String Teacher) {
+    public setTeacher(String Teacher) {
         this.Teacher = Teacher;
     }
 
-    public String setName(String Name) {
+    public setName(String Name) {
         this.Name = Name;
     }
 
-    public Boolean setActive(Boolean Active) {
+    public setActive(Boolean Active) {
         this.Active = Active;
     }
 
-    public String setCourseCode(String CourseCode) {
+    public setCourseCode(String CourseCode) {
         this.CourseCode = CourseCode;
     }
 
