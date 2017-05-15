@@ -1,57 +1,83 @@
 var guid;
 
-(function () {
 
-    angular
-        .module('LoggedIn', ['firebase'])
-        .factory("Auth", ["$firebaseAuth",
-            function ($firebaseAuth) {
-                return $firebaseAuth();
-            }
-        ])
-        .controller('personCtrl', ["$scope", "$firebaseObject", "Auth",
-            function ($scope, $firebaseObject, Auth) {
-                var ref = firebase.database().ref();
-                $scope.auth = Auth;
-                $scope.data = $firebaseObject(ref.child('courses'));
-                $scope.auth.$onAuthStateChanged(function (firebaseUser) {
-                    var userId = firebaseUser.uid;
-                    $scope.firebaseUser = firebaseUser;
-                    $scope.user = $firebaseObject(ref.child('users').child('Pupils/' + userId));
-                    $scope.userClass = $firebaseObject(ref.child('users').child('Pupils/' + userId));
-                    $scope.user.$loaded().then(function () {
-                        $scope.myClass = $scope.user.Class;
-                        var klass = $scope.myClass;
-                        $scope.myCourses = $firebaseObject(ref.child('classes/' + klass).child('Courses'));
-                    });                   
+var app = angular.module('LoggedIn', ['firebase']);
+
+app.factory("Auth", ["$firebaseAuth",
+    function ($firebaseAuth) {
+        return $firebaseAuth();
+    }
+]);
+
+app.controller('personCtrl', ["$scope", "$firebaseObject", "$firebaseArray", "Auth",
+    function ($scope, $firebaseObject, $firebaseArray, Auth) {
+        var ref = firebase.database().ref();
+        $scope.auth = Auth;
+        $scope.data = $firebaseObject(ref.child('courses'));
+        $scope.auth.$onAuthStateChanged(function (firebaseUser) {
+            var userId = firebaseUser.uid;
+            $scope.firebaseUser = firebaseUser;
+            $scope.user = $firebaseObject(ref.child('users').child('Pupils/' + userId));
+            $scope.userClass = $firebaseObject(ref.child('users').child('Pupils/' + userId));
+            $scope.user.$loaded().then(function () {
+                $scope.data1 = firebase.database().ref().child('courses');
+                $scope.myClass = $scope.user.Class;
+                var data1 = $scope.data1;
+                var klass = $scope.myClass;
+                $scope.myCourses = $firebaseObject(ref.child('coursesByClass/' + klass));
+                var query = firebase.database().ref().child('coursesByClass/' + klass);
+                query.once('value', snap => console.log(snap.val()));
+                query.once('value', function (snap) {
+                    console.log(snap.val())
                 });
-            }])
-        .controller("AdminUserCtrl", ["$scope", "Auth",
-            function ($scope, Auth) {
-                $scope.createUser = function () {
-                    $scope.message = null;
-                    $scope.error = null;
-                    // Create a new user
-                    Auth.$createUserWithEmailAndPassword($scope.email, $scope.password)
-                        .then(function (firebaseUser) {
-                            $scope.message = "Användare skapad med UID: " + firebaseUser.uid;
-                        }).catch(function (error) {
-                            $scope.error = error;
-                        });
-                };
+                var list = $firebaseArray(query);
+                console.log(list);
+                $scope.klassCoursedetails = function () {
+                    query.on('child_added', snap => {
+                        var courseref = data1.child(snap.key);
+                        console.log(courseref.once('value'));
 
-                $scope.deleteUser = function () {
-                    $scope.message = null;
-                    $scope.error = null;
-
-                    // Delete the currently signed-in user
-                    Auth.$deleteUser().then(function () {
-                        $scope.message = "Användare raderad";
-                    }).catch(function (error) {
-                        $scope.error = error;
                     });
-                };
-            }
-        ]);
+                }
+                var query444 = $scope.klassCoursedetails($scope.myClass);
+                console.log(query444);
+                var query2 = firebase.database().ref().child('courses');
+                var list2 = $firebaseArray(query2);
+                // console.log(list2);
+                console.log("loaded record:", list2.$getRecord("Courses"));
+                var rec = $scope.myCourses.$id;
+                console.log(rec);
+                return firebase.database().ref('courses').once('value').then(function (snapshot) {
+                    var username = snapshot.val();
+                    console.log(username);
+                });
+            });
+        });
+    }]);
 
-}());
+app.controller("AdminUserCtrl", ["$scope", "Auth",
+    function ($scope, Auth) {
+        $scope.createUser = function () {
+            $scope.message = null;
+            $scope.error = null;
+            // Create a new user
+            Auth.$createUserWithEmailAndPassword($scope.email, $scope.password)
+                .then(function (firebaseUser) {
+                    $scope.message = "Användare skapad med UID: " + firebaseUser.uid;
+                }).catch(function (error) {
+                    $scope.error = error;
+                });
+        };
+
+        $scope.deleteUser = function () {
+            $scope.message = null;
+            $scope.error = null;
+            // Delete the currently signed-in user
+            Auth.$deleteUser().then(function () {
+                $scope.message = "Användare raderad";
+            }).catch(function (error) {
+                $scope.error = error;
+            });
+        };
+    }
+]);
