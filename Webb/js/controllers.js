@@ -21,7 +21,7 @@ app.controller('personCtrl', ["$scope", "$firebaseObject", "$firebaseArray", "Au
             $scope.userClass = $firebaseObject(ref.child('users').child('Pupils/' + userId));
             $scope.user.$loaded().then(function () {
                 $scope.data1 = firebase.database().ref().child('courses');
-                $scope.myClass = $scope.user.Class;
+                $scope.myClass = $scope.user.myClass;
                 var data1 = $scope.data1;
                 var klass = $scope.myClass;
                 $scope.myCourses = $firebaseObject(ref.child('coursesByClass/' + klass));
