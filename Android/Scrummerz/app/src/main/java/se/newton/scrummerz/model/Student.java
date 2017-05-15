@@ -31,5 +31,15 @@ public class Student {
         return myClass;
     }
 
+
+
+    public String setPnr(String Pnr) {
+        this.Pnr = Pnr;
+    }
+
+    public String setName(String Name) {
+        this.Name = Name;
+    }
+
 }
 
