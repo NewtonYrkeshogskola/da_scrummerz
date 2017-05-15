@@ -5,6 +5,7 @@
       if (firebase.auth().currentUser) {
         // [START signout]
         firebase.auth().signOut();
+        window.location = "index.html";
         // [END signout]
       } else {
         var email = document.getElementById('email').value;

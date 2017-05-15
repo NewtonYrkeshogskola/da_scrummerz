@@ -1,39 +1,72 @@
 <!DOCTYPE html>
 <html lang="sv">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    
-    <title>Document</title>
+    <title>Logged in</title>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/3.9.0/firebase.js"></script>
     <script src="https://www.gstatic.com/firebasejs/3.9.0/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/3.9.0/firebase-auth.js"></script>
-  <script src="/__/firebase/init.js"></script>
-
-  <script type="text/javascript" src="js/loggedin.js"></script>
-
-
-  <script src="https://www.gstatic.com/firebasejs/3.9.0/firebase.js"></script>
-  <script>
-    // Initialize Firebase
-    var config = {
-      apiKey: "AIzaSyCzIv9ECgSeBxgu_p8oJLDpzoLp4YydvEg",
-      authDomain: "scrummerz-2e3f3.firebaseapp.com",
-      databaseURL: "https://scrummerz-2e3f3.firebaseio.com",
-      projectId: "scrummerz-2e3f3",
-      storageBucket: "scrummerz-2e3f3.appspot.com",
-      messagingSenderId: "936353564933"
-    };
-    firebase.initializeApp(config);
-  </script>
+    <script src="https://www.gstatic.com/firebasejs/3.9.0/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/3.9.0/firebase-auth.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-animate.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/3.6.6/firebase.js"></script>
+    <script src="https://cdn.firebase.com/libs/angularfire/2.3.0/angularfire.min.js"></script>
+    <script type="text/javascript" src="js/loggedin.js"></script>
+    <script type="text/javascript" src="js/database.js"></script>
+    <script type="text/javascript" src="js/controllers.js"></script>
+   
 </head>
-<body>
-    <button name="login" id="quickstart-sign-in" value="Logga in">Logga ut</button>
+
+<body ng-app="LoggedIn" ng-controller="personCtrl as ctrl">
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#">Studentportalen</a>
+            </div>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#"><span class="glyphicon glyphicon-user"></span> {{user.Name}}</a></li>
+                <li><a href="#" id="quickstart-sign-in" data-toggle="modal" data-target="#login-modal"><span class="glyphicon glyphicon-log-out"></span> Logga ut</a></li>
+            </ul>
+        </div>
+    </nav>
     <h1>Kursöversikt</h1>
-    <h2>information om användaren: </h2>
-    <div class="quickstart-user-details-container">
-            <div>Firebase auth <code>currentUser</code> object value:</div>
-            <pre><code id="quickstart-account-details">null</code></pre>
-          </div>
+    <!-- <h2>information om användaren: </h2>-->
+    <div>
+        <!-- ta bort -->
+        <h6>Hello, {{firebaseUser.email}}</h6>
+        <h6>Hello, {{user.Name}}</h6>
+        <h6>Din klass är {{user.myClass}}</h6>
+        <h6>Ditt personnummer är {{user.Pnr}}</h6>
+
+        <h4>Pågående kurser</h4>
+        <ul ng-repeat="course in myCourses">
+            <li ng-show="{{course.status === 'progress'}}">
+               <h6 ng-click="value = !value" ng-class="{ active: value }">{{course.name}}</h6>
+                <p class='animate-hide' ng-show="value">{{course.description}}</p>
+            </li>
+        </ul>
+        <h4>Kommande kurser</h4>
+        <ul ng-repeat="course in myCourses">
+            <li ng-show="{{course.status === 'comming'}}">
+                <h6 ng-click="value = !value" ng-class="{ active: value }">{{course.name}}</h6>
+                <p class='animate-hide' ng-show="value">{{course.description}}</p>
+            </li>
+        </ul>
+        <h4>Avslutade kurser</h4>
+        <ul ng-repeat="course in myCourses">
+            <li ng-show="{{course.status === 'finished'}}">
+              <h6 ng-click="value = !value" ng-class="{ active: value }">{{course.name}}</h6>
+                <p class='animate-hide' ng-show="value">{{course.description}}</p>
+            </li>
+        </ul>
+    </div>
 </body>
+
 </html>
