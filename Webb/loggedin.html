@@ -48,21 +48,21 @@
         <h4>Pågående kurser</h4>
         <ul ng-repeat="course in myCourses">
             <li ng-show="{{course.status === 'progress'}}">
-               <h6 ng-click="value = true">{{course.name}}</h6>
+               <h6 ng-click="value = !value" ng-class="{ active: value }">{{course.name}}</h6>
                 <p class='animate-hide' ng-show="value">{{course.description}}</p>
             </li>
         </ul>
         <h4>Kommande kurser</h4>
         <ul ng-repeat="course in myCourses">
             <li ng-show="{{course.status === 'comming'}}">
-                <h6 ng-click="value = true">{{course.name}}</h6>
+                <h6 ng-click="value = !value" ng-class="{ active: value }">{{course.name}}</h6>
                 <p class='animate-hide' ng-show="value">{{course.description}}</p>
             </li>
         </ul>
         <h4>Avslutade kurser</h4>
         <ul ng-repeat="course in myCourses">
             <li ng-show="{{course.status === 'finished'}}">
-              <h6 ng-click="value = true">{{course.name}}</h6>
+              <h6 ng-click="value = !value" ng-class="{ active: value }">{{course.name}}</h6>
                 <p class='animate-hide' ng-show="value">{{course.description}}</p>
             </li>
         </ul>
