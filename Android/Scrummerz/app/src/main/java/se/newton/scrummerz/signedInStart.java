@@ -60,7 +60,7 @@ public class signedInStart extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Student student = new Student();
                 student = dataSnapshot.getValue(Student.class);
-                nameTextView.setText(student.Name);
+                nameTextView.setText(student.getName());
             }
 
             @Override

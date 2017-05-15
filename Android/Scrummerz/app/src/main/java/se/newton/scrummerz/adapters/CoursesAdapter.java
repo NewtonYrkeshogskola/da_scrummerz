@@ -17,7 +17,7 @@ public class CoursesAdapter extends RecyclerView.Adapter<Item> {
 
     private Context context;
     private ArrayList<Courses> coursesList;
-    String[] items;
+    String[] items = {"hej", "youo", "nisse", "hult"};
 
 
     public CoursesAdapter(Context context, String[] items) {
@@ -35,6 +35,7 @@ public class CoursesAdapter extends RecyclerView.Adapter<Item> {
     public void onBindViewHolder(Item holder, int position) {
         Courses courses = coursesList.get(position);
 
+
     }
 
 
@@ -46,7 +47,7 @@ public class CoursesAdapter extends RecyclerView.Adapter<Item> {
 
 class Item extends RecyclerView.ViewHolder{
     TextView textView;
-    Item(View itemView,Context context) {
+    Item(View itemView, Context context) {
         super(itemView);
         textView = (TextView) itemView.findViewById(R.id.myCoursesTextView);
     }
