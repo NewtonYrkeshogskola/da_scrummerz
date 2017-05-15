@@ -9,6 +9,8 @@ import android.widget.Button;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import butterknife.ButterKnife;
+
 public class MainActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
