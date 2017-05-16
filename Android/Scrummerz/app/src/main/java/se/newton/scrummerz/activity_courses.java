@@ -78,15 +78,13 @@ public class activity_courses extends AppCompatActivity {
 
                     @Override
                     public void onClick(View v) {
-                        // Launch BoxItem view
-                        final Intent intent = new Intent(activity_courses.this, CourseInfo.class);
+                        // Launch CourseInfo class
+                        final Intent intent = new Intent(activity_courses.this, MainActivity.class);
 
-                        String boxkey = model.getBoxkey();
-                        String boxName = model.getTitle();
+                        String courseKey = model.getCourseCode();
 
-                        intent.putExtra("CreatedBoxId", postKey);
-                        intent.putExtra("BoxKey", boxkey);
-                        intent.putExtra("BoxName", boxName);
+                        intent.putExtra("courseKey", courseKey);
+                        intent.putExtra("classKey", myClass);
                         startActivity(intent);
 
                     }

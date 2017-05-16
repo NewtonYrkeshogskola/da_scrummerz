@@ -9,8 +9,6 @@ import android.widget.Button;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-import butterknife.ButterKnife;
-
 public class MainActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
@@ -39,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
     // Kontrollera om användaren redan är inloggad
     @Override
     public void onStart() {
+        
         super.onStart();
         // Kontrollera om användaren är inloggad (non-null).
         // Om så är fallet, flytta direkt till inloggat läge.

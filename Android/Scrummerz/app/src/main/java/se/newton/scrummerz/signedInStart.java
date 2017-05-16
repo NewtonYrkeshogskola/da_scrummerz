@@ -6,7 +6,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -84,10 +83,9 @@ public class signedInStart extends AppCompatActivity {
         super.onSaveInstanceState(savedInstanceState);
 
         savedInstanceState.putString("name", student.getName());
-        Log.i("TEST", " " + student.getName());
         savedInstanceState.putString("pnr", student.getPnr());
-        Log.i("TEST", " " + student.getPnr());
         savedInstanceState.putString("class", student.getmyClass());
+        savedInstanceState.putString("uid", currentUser.getUid());
         super.onSaveInstanceState(savedInstanceState);
     }
 
