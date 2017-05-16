@@ -20,7 +20,7 @@
     <TextView
         android:id="@+id/Item_title_courseTitle"
         android:layout_width="0dp"
-        android:layout_height="19dp"
+        android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
@@ -44,18 +44,6 @@
         tools:layout_conversion_absoluteX="47dp"
         tools:layout_conversion_absoluteY="21dp"
         tools:text="Info about the course" />
-
-    <View
-        android:layout_width="0dp"
-        android:layout_height="1dp"
-        android:layout_marginLeft="0dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginTop="0dp"
-        android:background="@android:color/darker_gray"
-        app:layout_constraintLeft_toLeftOf="@+id/open_box"
-        app:layout_constraintRight_toRightOf="@+id/Item_title_courseTitle"
-        app:layout_constraintTop_toBottomOf="@+id/Item_category"
-        app:layout_constraintHorizontal_bias="0.0" />
 
 
 </android.support.constraint.ConstraintLayout>
