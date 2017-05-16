@@ -59,7 +59,7 @@ public class signedInStart extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        DatabaseReference mStudent = mRoot.child("users").child("Pupils").child(uid);
+        DatabaseReference mStudent = mRoot.child("users").child("students").child(uid).child("details");
 
         mStudent.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -78,29 +78,14 @@ public class signedInStart extends AppCompatActivity {
 
     }
 
-    @Override
-    public void onSaveInstanceState(Bundle savedInstanceState) {
-        super.onSaveInstanceState(savedInstanceState);
-
-        savedInstanceState.putString("name", student.getName());
-        savedInstanceState.putString("pnr", student.getPnr());
-        savedInstanceState.putString("class", student.getmyClass());
-        savedInstanceState.putString("uid", currentUser.getUid());
-        super.onSaveInstanceState(savedInstanceState);
-    }
 
     @Override
     protected void onPause() {
         super.onPause();
         studentInfo.edit().putString("studentName", student.getName()).apply();
         studentInfo.edit().putString("studentClass", student.getmyClass()).apply();
+        studentInfo.edit().putString("studentPnr", student.getPnr()).apply();
+        studentInfo.edit().putString("studentUid",currentUser.getUid()).apply();
     }
 
-
-
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-    }
 }
