@@ -55,3 +55,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 }
+
+
+//TODO: Bättre felhantering vid inloggningsproblem (t.ex. ingen internetanslutning)

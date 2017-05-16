@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -16,6 +17,10 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 import se.newton.scrummerz.model.Student;
 
@@ -41,7 +46,7 @@ public class signedInStart extends AppCompatActivity {
 
 
 
-        nameTextView = (TextView) findViewById(R.id.nameTextView);
+        nameTextView = (TextView) findViewById(R.id.welcome);
         TextView coursesTextView = (TextView) findViewById(R.id.myCoursesTextView);
 
         coursesTextView.setOnClickListener(new View.OnClickListener() {
@@ -53,6 +58,35 @@ public class signedInStart extends AppCompatActivity {
             }
         });
 
+        Button minus = (Button) findViewById(R.id.minus);
+        Button neutral = (Button) findViewById(R.id.neutral);
+        Button plus = (Button) findViewById(R.id.plus);
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd", Locale.getDefault());
+        String currentDate = sdf.format(new Date());
+        String classRef = studentInfo.getString("studentClass", "");
+        final DatabaseReference dateData = mRoot.child("feelings").child(classRef).child(currentDate).child(uid);
+
+        minus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dateData.setValue(-1);
+            }
+        });
+
+        neutral.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dateData.setValue(0);
+            }
+        });
+
+        plus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dateData.setValue(1);
+            }
+        });
     }
 
     @Override
@@ -66,7 +100,7 @@ public class signedInStart extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 student = dataSnapshot.getValue(Student.class);
-                nameTextView.setText(student.getName());
+                nameTextView.setText("Välkommen " + student.getName());
             }
 
             @Override

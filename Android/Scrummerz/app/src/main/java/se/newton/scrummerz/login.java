@@ -24,12 +24,6 @@ public class login extends AppCompatActivity {
     private FirebaseAuth.AuthStateListener mAuthListener;
     private String email, password;
 
-    // TODO: Butterknife fungerar inte än, vi får kika mer på det
-    //@BindView(R.id.emailField)      EditText emailField;
-    //@BindView(R.id.passwordField)   EditText passwordField;
-    //@BindView(R.id.loginBtn)        Button loginBtn;
-    //@BindView(R.id.mStatusTextView) TextView mStatusTextView;
-
     Button loginBtn;
     EditText emailField, passwordField;
     TextView mStatusTextView;

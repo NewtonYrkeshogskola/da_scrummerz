@@ -2,6 +2,7 @@ package se.newton.scrummerz;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
@@ -9,6 +10,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -18,6 +20,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import java.util.Objects;
 
 import se.newton.scrummerz.model.Courses;
 import se.newton.scrummerz.model.Student;
@@ -75,6 +79,18 @@ public class activity_courses extends AppCompatActivity {
                 viewHolder.setTitle(model.getName());
                 viewHolder.setBody(model.getStatus());
 
+                if (Objects.equals(model.getStatus(), "finished")) {
+                    Drawable id = getResources().getDrawable(R.drawable.finished);
+                    viewHolder.setImage(id);
+                } else if (Objects.equals(model.getStatus(), "comming")) {
+                    Drawable id = getResources().getDrawable(R.drawable.future);
+                    viewHolder.setImage(id);
+                } else if (Objects.equals(model.getStatus(), "progress")) {
+                    Drawable id = getResources().getDrawable(R.drawable.ongoing);
+                    viewHolder.setImage(id);
+                }
+
+
                 viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
 
                     @Override
@@ -125,6 +141,12 @@ public class activity_courses extends AppCompatActivity {
             TextView itemBody = (TextView) mView.findViewById(R.id.Item_category);
             itemBody.setText(body);
         }
+
+        void setImage (Drawable image) {
+            ImageView imageView = (ImageView) mView.findViewById(R.id.course_status);
+            imageView.setImageDrawable(image);
+        }
+
     }
 
 

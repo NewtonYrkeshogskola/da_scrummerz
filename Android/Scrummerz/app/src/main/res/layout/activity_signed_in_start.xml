@@ -8,22 +8,6 @@
     tools:context="se.newton.scrummerz.signedInStart">
 
     <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="SUCCESS"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_constraintBottom_creator="1"
-        tools:layout_constraintLeft_creator="1"
-        tools:layout_constraintRight_creator="1"
-        tools:layout_constraintTop_creator="1"
-        app:layout_constraintHorizontal_bias="0.049"
-        app:layout_constraintVertical_bias="0.029" />
-
-    <TextView
         android:id="@+id/myGradesTextView"
         android:layout_width="154dp"
         android:layout_height="30dp"
@@ -42,10 +26,10 @@
         android:text="Ge feedback"
         android:textColor="@color/common_google_signin_btn_text_dark_default"
         android:textSize="24sp"
-        android:layout_marginLeft="0dp"
-        app:layout_constraintLeft_toLeftOf="@+id/textView4"
-        android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/nameTextView" />
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="@+id/welcome"
+        android:layout_marginTop="32dp"
+        app:layout_constraintTop_toBottomOf="@+id/welcome" />
 
     <TextView
         android:id="@+id/myCoursesTextView"
@@ -61,25 +45,91 @@
         app:layout_constraintTop_toBottomOf="@+id/feedbackTextView" />
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/welcome"
+        android:layout_width="361dp"
+        android:layout_height="0dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
+        android:text="Välkommen"
+        android:textAlignment="center"
+        android:textColor="@color/common_google_signin_btn_text_dark_default"
+        android:textSize="24sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView"
+        app:layout_constraintHorizontal_bias="0.571" />
+
+    <Button
+        android:id="@+id/minus"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="0dp"
+        android:layout_marginLeft="55dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@android:color/background_light"
+        android:text="Blä"
+        app:layout_constraintBottom_toBottomOf="@+id/neutral"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/neutral"
+        app:layout_constraintTop_toTopOf="@+id/neutral"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <Button
+        android:id="@+id/neutral"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="61dp"
-        android:text="Välkommen"
-        android:textColor="@color/common_google_signin_btn_text_dark_default"
-        android:textSize="35sp"
-        app:layout_constraintLeft_toLeftOf="@+id/textView2"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+        android:layout_marginRight="8dp"
+        android:background="@android:color/background_light"
+        android:text="Bra"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <Button
+        android:id="@+id/plus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="0dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@android:color/background_light"
+        android:text="Toppen"
+        app:layout_constraintBottom_toBottomOf="@+id/neutral"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toRightOf="@+id/neutral"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/neutral"
+        app:layout_constraintVertical_bias="1.0" />
 
     <TextView
-        android:id="@+id/nameTextView"
-        android:layout_width="332dp"
-        android:layout_height="58dp"
-        android:layout_marginLeft="8dp"
-        android:text="Namn"
-        app:layout_constraintLeft_toLeftOf="@+id/textView4"
-        android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+        android:id="@+id/textView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="0dp"
+        android:text="Hur känner du dig idag?"
+        android:textColor="@android:color/white"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/minus"
+        app:layout_constraintLeft_toLeftOf="@+id/minus" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="0dp"
+        android:layout_height="190dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginRight="0dp"
+        android:layout_marginTop="0dp"
+        android:scaleType="fitStart"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/students" />
 
 </android.support.constraint.ConstraintLayout>
