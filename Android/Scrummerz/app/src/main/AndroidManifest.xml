@@ -23,7 +23,8 @@
             android:label="@string/title_activity_login"
             android:theme="@style/FullscreenTheme" />
         <activity android:name=".signedInStart" />
-        <activity android:name=".activity_courses"></activity>
+        <activity android:name=".activity_courses" />
+        <activity android:name=".CourseInfo"></activity>
     </application>
 
 </manifest>
