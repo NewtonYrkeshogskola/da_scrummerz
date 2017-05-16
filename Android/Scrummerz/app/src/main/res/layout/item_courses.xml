@@ -9,15 +9,15 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="54dp"
+        android:layout_height="wrap_content"
         android:elevation="0dp"
-        android:padding="3dp">
+        android:paddingBottom="10dp">
 
         <include
             layout="@layout/item_courses_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="5dp" />
+            android:layout_marginStart="8dp" />
 
     </RelativeLayout>
 

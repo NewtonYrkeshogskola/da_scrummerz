@@ -1,16 +1,17 @@
 package se.newton.scrummerz;
 
 
-
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -23,10 +24,11 @@ public class signedInStart extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     private FirebaseUser currentUser;
-
     private DatabaseReference mRoot;
-
     TextView nameTextView;
+    String uid;
+    Student student = new Student();
+    SharedPreferences studentInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +37,10 @@ public class signedInStart extends AppCompatActivity {
         mRoot = FirebaseDatabase.getInstance().getReference();
         mAuth = FirebaseAuth.getInstance();
         currentUser = mAuth.getCurrentUser();
+        uid = currentUser.getUid();
+        studentInfo = PreferenceManager.getDefaultSharedPreferences(this);
+
+
 
         nameTextView = (TextView) findViewById(R.id.nameTextView);
         TextView coursesTextView = (TextView) findViewById(R.id.myCoursesTextView);
@@ -43,22 +49,23 @@ public class signedInStart extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(signedInStart.this, activity_courses.class);
+                intent.putExtra("class", student.myClass);
                 startActivity(intent);
             }
         });
+
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        String uid = currentUser.getUid();
 
         DatabaseReference mStudent = mRoot.child("users").child("Pupils").child(uid);
 
         mStudent.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                Student student = new Student();
+
                 student = dataSnapshot.getValue(Student.class);
                 nameTextView.setText(student.getName());
             }
@@ -70,5 +77,32 @@ public class signedInStart extends AppCompatActivity {
         });
 
 
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+
+        savedInstanceState.putString("name", student.getName());
+        Log.i("TEST", " " + student.getName());
+        savedInstanceState.putString("pnr", student.getPnr());
+        Log.i("TEST", " " + student.getPnr());
+        savedInstanceState.putString("class", student.getmyClass());
+        super.onSaveInstanceState(savedInstanceState);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        studentInfo.edit().putString("studentName", student.getName()).apply();
+        studentInfo.edit().putString("studentClass", student.getmyClass()).apply();
+    }
+
+
+
+
+    @Override
+    protected void onStop() {
+        super.onStop();
     }
 }
