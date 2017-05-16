@@ -128,7 +128,7 @@ public class activity_courses extends AppCompatActivity {
 
 
     public void getMyClass(String user){
-        DatabaseReference localRef = dbRef.child("users").child("Pupils").child(user);
+        DatabaseReference localRef = dbRef.child("users").child("students").child(user).child("details");
 
         localRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
