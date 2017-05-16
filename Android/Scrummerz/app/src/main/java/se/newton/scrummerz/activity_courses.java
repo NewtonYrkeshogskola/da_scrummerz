@@ -139,7 +139,12 @@ public class activity_courses extends AppCompatActivity {
 
         void setBody(String body) {
             TextView itemBody = (TextView) mView.findViewById(R.id.Item_category);
-            itemBody.setText(body);
+            if (Objects.equals(body, "progress"))
+                itemBody.setText("Kursen är påbörjad");
+            if (Objects.equals(body, "finished"))
+                itemBody.setText("Kursen är avslutad");
+            if (Objects.equals(body, "comming"))
+                itemBody.setText("Kursen är ännu inte startad");
         }
 
         void setImage (Drawable image) {
