@@ -80,10 +80,18 @@ public class activity_courses extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         // Launch CourseInfo class
-                        final Intent intent = new Intent(activity_courses.this, MainActivity.class);
+                        final Intent intent = new Intent(activity_courses.this, CourseInfo.class);
 
                         String courseKey = model.getCourseCode();
+                        String details = model.getDescription();
+                        String teacher = model.getTeacher();
+                        String status = model.getStatus();
+                        String courseName = model.getName();
 
+                        intent.putExtra("courseName", courseName);
+                        intent.putExtra("status", status);
+                        intent.putExtra("teacher", teacher);
+                        intent.putExtra("description", details);
                         intent.putExtra("courseKey", courseKey);
                         intent.putExtra("classKey", myClass);
                         startActivity(intent);
@@ -133,8 +141,7 @@ public class activity_courses extends AppCompatActivity {
         localRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                Student student = new Student();
-                student = dataSnapshot.getValue(Student.class);
+                Student student = dataSnapshot.getValue(Student.class);
                 myClass = student.myClass;
                 mAdapter.notifyDataSetChanged();
             }

@@ -4,30 +4,32 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/bglogin"
     tools:context="se.newton.scrummerz.CourseInfo">
 
     <TextView
         android:id="@+id/courseName"
-        android:layout_width="wrap_content"
+        android:layout_width="360dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
+        android:layout_marginLeft="16dp"
         android:layout_marginRight="8dp"
         android:layout_marginTop="16dp"
         android:text="Kursnamn"
-        android:textSize="35sp"
-        app:layout_constraintHorizontal_bias="0.042"
+        android:textSize="30sp"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/detailsView"
-        android:layout_width="344dp"
-        android:layout_height="166dp"
+        android:layout_width="333dp"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="0dp"
         android:layout_marginRight="0dp"
-        android:layout_marginTop="9dp"
+        android:layout_marginTop="12dp"
         android:text="Spicy jalapeno bacon ipsum dolor amet rump kielbasa pancetta tongue picanha. Cupim pork belly prosciutto jerky sirloin kielbasa brisket beef chuck corned beef jowl tenderloin drumstick ball tip. Andouille ham hock chicken hamburger. Cupim short ribs pig, rump burgdoggen bresaola swine. Venison ham burgdoggen kielbasa drumstick porchetta strip steak chicken boudin bresaola flank picanha turkey. Pancetta turkey ham corned beef bacon. Spare ribs cow beef ribs pork belly andouille bresaola kielbasa shoulder burgdoggen tenderloin pork chop rump."
+        app:layout_constraintHorizontal_bias="0.418"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/courseName" />
@@ -36,22 +38,22 @@
         android:id="@+id/teacherboldView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="0dp"
+        android:layout_marginTop="8dp"
         android:text="Teacher: "
         android:textStyle="bold"
-        android:layout_marginTop="8dp"
-        app:layout_constraintTop_toBottomOf="@+id/detailsView"
-        android:layout_marginLeft="0dp"
-        app:layout_constraintLeft_toLeftOf="@+id/detailsView" />
+        app:layout_constraintLeft_toLeftOf="@+id/detailsView"
+        app:layout_constraintTop_toBottomOf="@+id/detailsView" />
 
     <TextView
         android:id="@+id/statusBoldView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="0dp"
+        android:layout_marginTop="8dp"
         android:text="Status:"
         android:textStyle="bold"
-        android:layout_marginLeft="0dp"
         app:layout_constraintLeft_toLeftOf="@+id/teacherboldView"
-        android:layout_marginTop="8dp"
         app:layout_constraintTop_toBottomOf="@+id/teacherboldView" />
 
     <TextView
