@@ -70,9 +70,7 @@ public class activity_courses extends AppCompatActivity {
             @Override
             protected void populateViewHolder(ItemViewHolder viewHolder, final Courses model, int position) {
                 viewHolder.setTitle(model.getName());
-                Log.i("TEST", model.getName());
                 viewHolder.setBody(model.getStatus());
-                Log.i("TEST", model.getStatus());
 
                 viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
 
@@ -92,7 +90,6 @@ public class activity_courses extends AppCompatActivity {
             }
 
         };
-        Log.i("TEST", mAdapter.toString());
         allCourses.setAdapter(mAdapter);
     }
 
