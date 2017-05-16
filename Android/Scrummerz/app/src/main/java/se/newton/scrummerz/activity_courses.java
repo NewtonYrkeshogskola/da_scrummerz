@@ -1,5 +1,6 @@
 package se.newton.scrummerz;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -59,7 +60,6 @@ public class activity_courses extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        Log.i("TEST", "classesref: " + classesRef);
 
         mAdapter = new FirebaseRecyclerAdapter<Courses, ItemViewHolder>(
                 Courses.class,
@@ -68,11 +68,29 @@ public class activity_courses extends AppCompatActivity {
                 classesRef) {
 
             @Override
-            protected void populateViewHolder(ItemViewHolder viewHolder, Courses model, int position) {
+            protected void populateViewHolder(ItemViewHolder viewHolder, final Courses model, int position) {
                 viewHolder.setTitle(model.getName());
                 Log.i("TEST", model.getName());
                 viewHolder.setBody(model.getStatus());
                 Log.i("TEST", model.getStatus());
+
+                viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+
+                    @Override
+                    public void onClick(View v) {
+                        // Launch BoxItem view
+                        final Intent intent = new Intent(activity_courses.this, CourseInfo.class);
+
+                        String boxkey = model.getBoxkey();
+                        String boxName = model.getTitle();
+
+                        intent.putExtra("CreatedBoxId", postKey);
+                        intent.putExtra("BoxKey", boxkey);
+                        intent.putExtra("BoxName", boxName);
+                        startActivity(intent);
+
+                    }
+                });
             }
 
         };
