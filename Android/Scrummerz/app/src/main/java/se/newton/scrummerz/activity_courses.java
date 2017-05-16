@@ -24,11 +24,14 @@ import se.newton.scrummerz.model.Student;
 
 public class activity_courses extends AppCompatActivity {
 
-    String userId, myClass, name;
     DatabaseReference dbRef;
     DatabaseReference classesRef;
-    private RecyclerView allCourses;
+
+    String userId, myClass, name;
+
     SharedPreferences studentInfo;
+    
+    private RecyclerView allCourses;
     private FirebaseRecyclerAdapter<Courses, ItemViewHolder> mAdapter = null;
 
 //    @Override

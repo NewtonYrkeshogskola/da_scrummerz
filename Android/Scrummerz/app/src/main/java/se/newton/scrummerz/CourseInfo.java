@@ -13,9 +13,11 @@ import com.google.firebase.database.FirebaseDatabase;
 public class CourseInfo extends AppCompatActivity {
 
     String userId, myClass, name;
+
     DatabaseReference dbRef;
     DatabaseReference classesRef;
     private RecyclerView allCourses;
+    SharedPreferences studentInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,5 +26,6 @@ public class CourseInfo extends AppCompatActivity {
         dbRef = FirebaseDatabase.getInstance().getReference();
         studentInfo = PreferenceManager.getDefaultSharedPreferences(this);
 
+        myClass = studentInfo.getString("studentClass", "");
     }
 }
