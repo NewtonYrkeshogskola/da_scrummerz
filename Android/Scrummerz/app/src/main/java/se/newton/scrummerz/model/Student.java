@@ -31,21 +31,5 @@ public class Student {
         return myClass;
     }
 
-
-    public void setPnr(String pnr) {
-        Pnr = pnr;
-    }
-
-    public void setName(String name) {
-        Name = name;
-    }
-
-    public String getMyClass() {
-        return myClass;
-    }
-
-    public void setMyClass(String myClass) {
-        this.myClass = myClass;
-    }
 }
 

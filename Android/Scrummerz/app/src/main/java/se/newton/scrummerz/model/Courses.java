@@ -2,65 +2,46 @@ package se.newton.scrummerz.model;
 
 
 public class Courses {
-    public String myClass;
-
-    private Boolean Active;
-    private String CourseCode;
-    private String Name;
-    private String Teacher;
+    private String status;
+    private String courseCode;
+    private String description;
+    private String name;
+    private String teacher;
 
     public Courses() {
         // Default constructor
     }
 
-    public Courses(String myClass, String Name, String Teacher, String CourseCode, Boolean Active) {
-        this.Teacher = Teacher;
-        this.Name = Name;
-        this.myClass = myClass;
-        this.Active = Active;
-        this.CourseCode = CourseCode;
+    public Courses(String status, String courseCode, String description, String name, String teacher) {
+        this.teacher = teacher;
+        this.name = name;
+        this.description = description;
+        this.status = status;
+        this.courseCode = courseCode;
     }
 
-    public String getTeacher() {
-        return Teacher;
+    public Courses(String courseCode, String name) {
+        this.name = name;
+        this.courseCode = courseCode;
     }
 
-    public String getName() {
-        return Name;
-    }
-
-    public Boolean getActive() {
-        return Active;
+    public String getStatus() {
+        return status;
     }
 
     public String getCourseCode() {
-        return CourseCode;
+        return courseCode;
     }
 
-    public String getmyClass() {
-        return myClass;
+    public String getDescription() {
+        return description;
     }
 
-    public void setMyClass(String myClass) {
-        this.myClass = myClass;
+    public String getName() {
+        return name;
     }
 
-    public void setActive(Boolean active) {
-        Active = active;
+    public String getTeacher() {
+        return teacher;
     }
-
-    public void setCourseCode(String courseCode) {
-        CourseCode = courseCode;
-    }
-
-    public void setName(String name) {
-        Name = name;
-    }
-
-    public void setTeacher(String teacher) {
-        Teacher = teacher;
-    }
-
-
-
 }
