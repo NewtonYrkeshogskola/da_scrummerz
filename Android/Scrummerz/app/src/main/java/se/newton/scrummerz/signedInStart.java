@@ -41,6 +41,7 @@ public class signedInStart extends AppCompatActivity {
         mRoot = FirebaseDatabase.getInstance().getReference();
         mAuth = FirebaseAuth.getInstance();
         currentUser = mAuth.getCurrentUser();
+
         uid = currentUser.getUid();
         studentInfo = PreferenceManager.getDefaultSharedPreferences(this);
 
@@ -108,7 +109,6 @@ public class signedInStart extends AppCompatActivity {
 
             }
         });
-
 
     }
 

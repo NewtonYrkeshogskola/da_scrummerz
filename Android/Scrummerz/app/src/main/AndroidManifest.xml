@@ -24,7 +24,8 @@
             android:theme="@style/FullscreenTheme" />
         <activity android:name=".signedInStart" />
         <activity android:name=".activity_courses" />
-        <activity android:name=".CourseInfo"></activity>
+        <activity android:name=".CourseInfo" />
+        <activity android:name=".grades_activity"></activity>
     </application>
 
 </manifest>
