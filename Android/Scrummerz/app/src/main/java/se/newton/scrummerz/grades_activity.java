@@ -60,61 +60,24 @@ public class grades_activity extends AppCompatActivity {
     public void getMyGrades(String user) {
         DatabaseReference localRef = dbRef.child("users").child("students").child(user).child("grades").child("final");
 
-        localRef.addChildEventListener(new ChildEventListener() {
+        localRef.addValueEventListener(new ValueEventListener() {
 
             public static final String TAG = "hejhej";
 
             @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String previousChildName) {
-                Log.i(TAG, "onChildAdded:" + dataSnapshot.getKey());
-
-                // A new comment has been added, add it to the displayed list
-                Comment comment = dataSnapshot.getValue(Comment.class);
-
-                // ...
-            }
-
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String previousChildName) {
-                Log.i(TAG, "onChildChanged:" + dataSnapshot.getKey());
-
-                // A comment has changed, use the key to determine if we are displaying this
-                // comment and if so displayed the changed comment.
-                Comment newComment = dataSnapshot.getValue(Comment.class);
-                String commentKey = dataSnapshot.getKey();
-
-                // ...
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-                Log.i(TAG, "onChildRemoved:" + dataSnapshot.getKey());
-
-                // A comment has changed, use the key to determine if we are displaying this
-                // comment and if so remove it.
-                String commentKey = dataSnapshot.getKey();
-
-                // ...
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String previousChildName) {
-                Log.i(TAG, "onChildMoved:" + dataSnapshot.getKey());
-
-                // A comment has changed position, use the key to determine if we are
-                // displaying this comment and if so move it.
-                Comment movedComment = dataSnapshot.getValue(Comment.class);
-                String commentKey = dataSnapshot.getKey();
-
-                // ...
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
+                    // TODO: handle the post
+                }
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                Log.i(TAG, "postComments:onCancelled", databaseError.toException());
-                //Context mContext = ;
-                //Toast.makeText(mContext, "Failed to load comments.", Toast.LENGTH_SHORT).show();
+                // Getting Post failed, log a message
+                Log.i(TAG, "loadPost:onCancelled", databaseError.toException());
+                // ...
             }
         });
+
     }
 }
