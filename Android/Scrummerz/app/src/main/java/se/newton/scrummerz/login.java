@@ -33,8 +33,10 @@ public class login extends AppCompatActivity {
     private FirebaseAuth.AuthStateListener mAuthListener;
     private DatabaseReference mRef;
     private String email, password;
+    FirebaseUser currentUser;
 
     SharedPreferences studentInfo;
+    Student student;
 
     Button loginBtn;
     EditText emailField, passwordField;
@@ -45,6 +47,7 @@ public class login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         mRef = FirebaseDatabase.getInstance().getReference();
+        currentUser = mAuth.getCurrentUser();
 
         studentInfo = PreferenceManager.getDefaultSharedPreferences(this);
 
@@ -102,7 +105,7 @@ public class login extends AppCompatActivity {
                             localRef.addValueEventListener(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(DataSnapshot dataSnapshot) {
-                                    Student student = dataSnapshot.getValue(Student.class);
+                                    student = dataSnapshot.getValue(Student.class);
 
                                 }
 
@@ -110,7 +113,7 @@ public class login extends AppCompatActivity {
                                 public void onCancelled(DatabaseError databaseError) {
 
                                 }
-                            })
+                            });
 
                             updateUI(user);
                         } else {
@@ -169,11 +172,9 @@ public class login extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-//        studentInfo.edit().putString("studentName", student.getName()).apply();
-//        studentInfo.edit().putString("studentClass", student.getmyClass()).apply();
-//        studentInfo.edit().putString("studentPnr", student.getPnr()).apply();
-//        studentInfo.edit().putString("studentUid",currentUser.getUid()).apply();
+        studentInfo.edit().putString("studentName", student.getName()).apply();
+        studentInfo.edit().putString("studentClass", student.getmyClass()).apply();
+        studentInfo.edit().putString("studentPnr", student.getPnr()).apply();
+        studentInfo.edit().putString("studentUid",currentUser.getUid()).apply();
     }
-}
-
 }

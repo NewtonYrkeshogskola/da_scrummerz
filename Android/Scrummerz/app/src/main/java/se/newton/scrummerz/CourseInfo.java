@@ -15,21 +15,13 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class CourseInfo extends AppCompatActivity {
 
-    String details, teacher, courseName, status;
-
-    DatabaseReference dbRef;
-    DatabaseReference classesRef;
-    private RecyclerView allCourses;
-    SharedPreferences studentInfo;
-
-    TextView courseNameView, detailsView, teacherView, statusView;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_course_info);
-        dbRef = FirebaseDatabase.getInstance().getReference();
-        studentInfo = PreferenceManager.getDefaultSharedPreferences(this);
+
+        String details, teacher, courseName, status;
+        TextView courseNameView, detailsView, teacherView, statusView;
 
         courseNameView = (TextView) findViewById(R.id.courseName);
         detailsView = (TextView) findViewById(R.id.detailsView);

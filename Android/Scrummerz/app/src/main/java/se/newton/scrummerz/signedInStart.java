@@ -25,6 +25,8 @@ import java.util.Locale;
 
 import se.newton.scrummerz.model.Student;
 
+import static android.R.attr.name;
+
 public class signedInStart extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
@@ -90,25 +92,11 @@ public class signedInStart extends AppCompatActivity {
         });
     }
 
-//    @Override
-//    protected void onStart() {
-//        super.onStart();
-//
-//        DatabaseReference mStudent = mRoot.child("users").child("students").child(uid).child("details");
-//
-//        mStudent.addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//
-//                student = dataSnapshot.getValue(Student.class);
-//                nameTextView.setText("Välkommen " + student.getName());
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//
-//            }
-//        });
-//    }
+    @Override
+    protected void onStart() {
+        super.onStart();
+        String welcomeText = "Välkommen " + studentInfo.getString("studentName", "");
+        nameTextView.setText(welcomeText);
+    }
 
 }
