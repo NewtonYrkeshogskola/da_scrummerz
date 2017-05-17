@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -29,6 +30,7 @@ public class signedInStart extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseUser currentUser;
     private DatabaseReference mRoot;
+
     TextView nameTextView;
     String uid;
     Student student = new Student();
@@ -44,8 +46,6 @@ public class signedInStart extends AppCompatActivity {
 
         uid = currentUser.getUid();
         studentInfo = PreferenceManager.getDefaultSharedPreferences(this);
-
-
 
         nameTextView = (TextView) findViewById(R.id.welcome);
         TextView coursesTextView = (TextView) findViewById(R.id.myCoursesTextView);
@@ -90,36 +90,25 @@ public class signedInStart extends AppCompatActivity {
         });
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-        DatabaseReference mStudent = mRoot.child("users").child("students").child(uid).child("details");
-
-        mStudent.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-                student = dataSnapshot.getValue(Student.class);
-                nameTextView.setText("Välkommen " + student.getName());
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-
-    }
-
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        studentInfo.edit().putString("studentName", student.getName()).apply();
-        studentInfo.edit().putString("studentClass", student.getmyClass()).apply();
-        studentInfo.edit().putString("studentPnr", student.getPnr()).apply();
-        studentInfo.edit().putString("studentUid",currentUser.getUid()).apply();
-    }
+//    @Override
+//    protected void onStart() {
+//        super.onStart();
+//
+//        DatabaseReference mStudent = mRoot.child("users").child("students").child(uid).child("details");
+//
+//        mStudent.addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//
+//                student = dataSnapshot.getValue(Student.class);
+//                nameTextView.setText("Välkommen " + student.getName());
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//
+//            }
+//        });
+//    }
 
 }

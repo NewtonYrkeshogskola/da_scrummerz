@@ -1,13 +1,22 @@
 package se.newton.scrummerz;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import se.newton.scrummerz.model.Student;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -34,16 +43,6 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    // Kontrollera om användaren redan är inloggad
-    @Override
-    public void onStart() {
-        
-        super.onStart();
-        // Kontrollera om användaren är inloggad (non-null).
-        // Om så är fallet, flytta direkt till inloggat läge.
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        updateUI(currentUser);
-    }
 
     // Hantera användaren vid inloggning
     private void updateUI(FirebaseUser user) {
@@ -53,6 +52,32 @@ public class MainActivity extends AppCompatActivity {
         } else {
             // Användaren är inte inloggad, så gör inget
         }
+    }
+
+    // Kontrollera om användaren redan är inloggad
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        // Kontrollera om användaren är inloggad (non-null).
+        // Om så är fallet, flytta direkt till inloggat läge.
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        updateUI(currentUser);
+
+//        DatabaseReference mStudent = mRoot.child("users").child("students").child(uid).child("details");
+//
+//        mStudent.addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//                Student student = dataSnapshot.getValue(Student.class);
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//
+//            }
+//        });
+
     }
 }
 

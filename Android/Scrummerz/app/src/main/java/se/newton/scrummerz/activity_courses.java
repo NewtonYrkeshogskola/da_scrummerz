@@ -101,11 +101,16 @@ public class activity_courses extends AppCompatActivity {
                         String courseKey = model.getCourseCode();
                         String details = model.getDescription();
                         String teacher = model.getTeacher();
-                        String status = model.getStatus();
                         String courseName = model.getName();
+                        String status = model.getStatus();
+                        String formattedStatus ="";
+
+                        if(status.equals("progress"))   formattedStatus = "Kursen är påbörjad";
+                        if(status.equals("finished"))   formattedStatus = "Kursen är avslutad";
+                        if(status.equals("comming"))    formattedStatus = "Kursen är ännu inte startad";
 
                         intent.putExtra("courseName", courseName);
-                        intent.putExtra("status", status);
+                        intent.putExtra("status", formattedStatus);
                         intent.putExtra("teacher", teacher);
                         intent.putExtra("description", details);
                         intent.putExtra("courseKey", courseKey);

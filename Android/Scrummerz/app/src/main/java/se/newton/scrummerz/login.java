@@ -1,7 +1,9 @@
 package se.newton.scrummerz;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
@@ -17,12 +19,22 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import se.newton.scrummerz.model.Student;
 
 public class login extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
+    private DatabaseReference mRef;
     private String email, password;
+
+    SharedPreferences studentInfo;
 
     Button loginBtn;
     EditText emailField, passwordField;
@@ -32,7 +44,9 @@ public class login extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-        //ButterKnife.bind(this);
+        mRef = FirebaseDatabase.getInstance().getReference();
+
+        studentInfo = PreferenceManager.getDefaultSharedPreferences(this);
 
         loginBtn = (Button) findViewById(R.id.loginBtn);
         emailField = (EditText) findViewById(R.id.emailField);
@@ -79,6 +93,25 @@ public class login extends AppCompatActivity {
                             // Inloggningen lyckades, uppdatera userUI med uppgifter
                             Log.d("inloggning", "signInWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
+                            String uid = user.getUid();
+                            DatabaseReference localRef = mRef.child("users")
+                                                             .child("students")
+                                                             .child(uid)
+                                                             .child("details");
+
+                            localRef.addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                    Student student = dataSnapshot.getValue(Student.class);
+
+                                }
+
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+
+                                }
+                            })
+
                             updateUI(user);
                         } else {
                             // Om inloggningen misslyckades, meddela användaren
@@ -132,5 +165,15 @@ public class login extends AppCompatActivity {
             mStatusTextView.setText("Inte inloggad");
         }
     }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+//        studentInfo.edit().putString("studentName", student.getName()).apply();
+//        studentInfo.edit().putString("studentClass", student.getmyClass()).apply();
+//        studentInfo.edit().putString("studentPnr", student.getPnr()).apply();
+//        studentInfo.edit().putString("studentUid",currentUser.getUid()).apply();
+    }
+}
 
 }
