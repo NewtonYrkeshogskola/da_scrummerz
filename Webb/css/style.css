@@ -156,7 +156,11 @@ a:hover
   cursor: pointer;
 }
 
-#front-row {
+#front-row{
+  color: white;
+}
+
+.whiteText {
   color: white;
 }
 
@@ -164,4 +168,8 @@ a:hover
   background: transparent;
   border: 0px;
   
+}
+
+.divmargin {
+  margin: 5px;
 }

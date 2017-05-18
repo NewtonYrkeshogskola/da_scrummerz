@@ -41,15 +41,23 @@
         </div>
     </nav>
 
-    <div>
-        <h3>Hur mår du idag?</h3>
-        <button class="feelingButton" ng-click="setFeeling(-1)"><img src="images/scared.png" width="60px" alt="Smiley for bad mood"></button>
-        <button class="feelingButton" ng-click="setFeeling(0)"><img src="images/neutral.png" width="60px" alt="Smiley for neutral mood"></button>
-        <button class="feelingButton" ng-click="setFeeling(1)"><img src="images/cool.png" width="60px" alt="Smiley for happy mood"></button>
-    </div>
-    <h1 class="text-center">Kursöversikt</h1>
+    <h1 class="text-center whiteText">Välkommen {{user.Name}}</h1>
+
+
+
     <div class="row">
-        <div class="col-sm-12  well well-sm">
+        <div class="col-sm-1"> </div>
+        <div class="col-sm-5 divmargin well well-sm">
+            <h4 class="text-center">Hur mår du idag?</h4>
+            <p>Hur är ditt humör? Hänger du med på lektionen? Hur känns det i klassrummet? <br> Meddela hur du mår genom att
+                klicka på en av figurerna. Du kan när som helst uppdatera ditt humör.</p>
+            <center>
+                <button class="feelingButton" ng-click="setFeeling(-1)"><img src="images/scared.png" width="60px" alt="Smiley for bad mood"></button>
+                <button class="feelingButton" ng-click="setFeeling(0)"><img src="images/neutral.png" width="60px" alt="Smiley for neutral mood"></button>
+                <button class="feelingButton" ng-click="setFeeling(1)"><img src="images/cool.png" width="60px" alt="Smiley for happy mood"></button>
+            </center>
+        </div>
+        <div class="col-sm-5 divmargin well well-sm">
             <h4 class="text-center">Pågående kurser</h4>
             <div ng-repeat="course in myCourses" class="panel panel-default" ng-show="{{course.status === 'progress'}}">
                 <div ng-click="value = !value" ng-class="{ active: value }" class="panel-heading">{{course.name}}</div>
@@ -61,8 +69,12 @@
             </div>
         </div>
     </div>
+    </div>
+    </div>
+
     <div class="row">
-        <div class="col-sm-12 well well-sm">
+        <div class="col-sm-1"> </div>
+        <div class="col-sm-5 divmargin well well-sm">
             <h4 class="text-center">Kommande kurser</h4>
             <div ng-repeat="course in myCourses" class="panel panel-default" ng-show="{{course.status === 'comming'}}">
                 <div ng-click="value = !value" ng-class="{ active: value }" class="panel-heading">{{course.name}}</div>
@@ -73,9 +85,9 @@
                 </div>
             </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-sm-12 well well-sm">
+
+
+        <div class="col-sm-5 divmargin well well-sm">
             <h4 class="text-center">Avslutade kurser</h4>
             <div ng-repeat="course in myCourses" class="panel panel-default" ng-show="{{course.status === 'finished'}}">
                 <div ng-click="value = !value" ng-class="{ active: value }" class="panel-heading">{{course.name}}</div>
@@ -86,7 +98,7 @@
                 </div>
             </div>
         </div>
-    </div>
+        <div class="col-sm-1"> </div>
     </div>
 </body>
 
