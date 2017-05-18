@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -42,6 +43,10 @@ public class signedInStart extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signed_in_start);
+
+        //Lagrar data lokalt på mobilen när mobilen är offline
+        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+
         mRoot = FirebaseDatabase.getInstance().getReference();
         mAuth = FirebaseAuth.getInstance();
         currentUser = mAuth.getCurrentUser();
@@ -69,11 +74,14 @@ public class signedInStart extends AppCompatActivity {
         String currentDate = sdf.format(new Date());
         String classRef = studentInfo.getString("studentClass", "");
         final DatabaseReference dateData = mRoot.child("feelings").child(classRef).child(currentDate).child(uid);
+        dateData.keepSynced(true);
+
 
         minus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dateData.setValue(-1);
+                Toast.makeText(signedInStart.this, "Tack för din röst!", Toast.LENGTH_LONG).show();
             }
         });
 
@@ -81,6 +89,7 @@ public class signedInStart extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 dateData.setValue(0);
+                Toast.makeText(signedInStart.this, "Tack för din röst!", Toast.LENGTH_LONG).show();
             }
         });
 
@@ -88,6 +97,7 @@ public class signedInStart extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 dateData.setValue(1);
+                Toast.makeText(signedInStart.this, "Tack för din röst!", Toast.LENGTH_LONG).show();
             }
         });
     }

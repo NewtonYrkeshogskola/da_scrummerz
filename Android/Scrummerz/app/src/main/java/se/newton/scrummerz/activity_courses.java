@@ -28,6 +28,7 @@ import se.newton.scrummerz.model.Student;
 
 public class activity_courses extends AppCompatActivity {
 
+
     DatabaseReference dbRef;
     DatabaseReference classesRef;
 
@@ -49,10 +50,11 @@ public class activity_courses extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_courses);
+
         studentInfo = PreferenceManager.getDefaultSharedPreferences(this);
         myClass = studentInfo.getString("studentClass", "");
-        Log.i("TEST myClass", " " + myClass);
         dbRef = FirebaseDatabase.getInstance().getReference();
+        dbRef.keepSynced(true);
         getUid();
         classesRef = dbRef.child("coursesByClass").child(myClass);
         getMyClass(userId);
@@ -60,9 +62,7 @@ public class activity_courses extends AppCompatActivity {
         allCourses = (RecyclerView) findViewById(R.id.coursesRecyclerView);
         allCourses.setHasFixedSize(false);
         allCourses.setLayoutManager(new LinearLayoutManager(this));
-
     }
-
 
     @Override
     protected void onStart() {
