@@ -39,7 +39,27 @@
             </ul>
         </div>
     </nav>
-    <h1 class="text-center">Kursöversikt</h1>
+    <h1 class="text-center">Betyg</h1>
+    <div class="row">
+        <div class="col-sm-4  well well-sm">
+            <h4 class="text-center">Betyg på avslutade kurser</h4>
+            <div ng-repeat="course in myCourses" 
+                 ng-repeat="grade in myGrades" 
+                 class="panel panel-default" 
+                 ng-init="grabFinalGrades(course.courseCode)"
+                 ng-show="{{course.status === 'finished'}}">
+                <div ng-click="value = !value" ng-class="{ active: value }" class="panel-heading">
+                    <Strong>{{course.name}}</Strong>
+                    <p>Betyg: {{}} och {{}}</p>
+                </div>
+                <div class="panel-body animate-hide" ng-show="value">
+                    <p><em>BESKRIVNING: </em><samp>{{course.description}}</samp></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-8  well well-sm"></div>
+
     <h5>Betyg på avslutade kurser</h5>
     <ul ng-repeat="grade in myGrades">
         <li ng-if="grade.final !== undefined">{{grade.$id}}</li>
@@ -47,10 +67,12 @@
     </ul>
 
     <h5>Betyg på avslutade uppgifter</h5>
-    <ul ng-repeat="grade in myGrades" ng-init="">
-        <li>{{myGrades}}</li>
-        <p>{{grade.key}}{{grade.inl1}}</p>
-    </ul>
+    <div ng-repeat="course in myCourses" ></div>
+        <ul ng-repeat="grade in myGrades" >
+            <li>{{myGrades}}</li>
+            <p>{{grade.key}}{{grade.inl1}}</p>
+        </ul>
+    </div>
 
 </body>
 

@@ -1,4 +1,5 @@
 var app = angular.module('LoggedIn', ['firebase', 'ngAnimate']);
+var grades = [];
 
 app.factory("Auth", ["$firebaseAuth",
     function ($firebaseAuth) {
@@ -7,62 +8,99 @@ app.factory("Auth", ["$firebaseAuth",
 ]);
 
 app.controller('personCtrl', ["$scope", "$firebaseObject", "$firebaseArray", '$filter', "Auth",
-    function ($scope, $firebaseObject, $firebaseArray, $filter, Auth) {
-        var ref = firebase.database().ref();
-        $scope.auth = Auth;
-        $scope.auth.$onAuthStateChanged(function (firebaseUser) {
-            var userId = firebaseUser.uid;
-            $scope.firebaseUser = firebaseUser;
-            $scope.user = $firebaseObject(ref.child('users').child('students/' + userId).child('details'));
-            
-            $scope.user.$loaded().then(function () {
-                $scope.myClass = $scope.user.myClass;
-                var klass = $scope.myClass;
-                $scope.myCourses = $firebaseObject(ref.child('coursesByClass/' + klass));
-                $scope.myGrades = $firebaseArray(ref.child('users').child('students/' + userId).child('grades').child('courses'));
+            function ($scope, $firebaseObject, $firebaseArray, $filter, Auth) {
+                var ref = firebase.database().ref();
+                $scope.auth = Auth;
+                $scope.auth.$onAuthStateChanged(function (firebaseUser) {
+                        var userId = firebaseUser.uid;
+                        $scope.firebaseUser = firebaseUser;
+                        $scope.user = $firebaseObject(ref.child('users').child('students/' + userId).child('details'));
 
-                //console.log(myGrades);
-                $scope.myGrade = firebase.database().ref().child('users').child('students/' + userId).child('grades').child('courses');
-                
-                $scope.date = new Date();
-                $scope.myDate = new Date($scope.date.getFullYear(),
-                    $scope.date.getMonth(),
-                    $scope.date.getDate());
-                $scope.myDate = $filter('date')($scope.myDate, 'yyyyMMdd');
-                var date = $scope.myDate;
-                console.log(date);
-                $scope.setFeeling = function (feeling){
-                    firebase.database().ref().child('feelings').child(klass).child(date).set({
-                        [userId] : feeling
+                        $scope.user.$loaded().then(function () {
+                                $scope.myClass = $scope.user.myClass;
+                                var klass = $scope.myClass;
+                                $scope.myCourses = $firebaseObject(ref.child('coursesByClass/' + klass));
+                                $scope.myGrades = $firebaseArray(ref.child('users').child('students/' + userId).child('grades').child('courses'));
+                                $scope.myGrade = firebase.database().ref().child('users').child('students/' + userId).child('grades').child('courses');
+
+                                //Hämtar betyg
+                                $scope.init = function (grades) {
+                                    $scope.grade = firebase.database().ref().child('grades').child(userId).child(grades);
+                                    $scope.grade.on('value', function (snap) {
+                                        snap.forEach(function (Snapshot) {
+                                            $scope.kursNamn = Snapshot.key;
+                                            $scope.kursBetyg = Snapshot.val();
+                                            // console.log($scope.kursNamn + ' ' + $scope.kursBetyg);
+                                        });
+                                    })
+                                }
+
+                                $scope.grabFinalGrades = function (grades) {
+                                    $scope.grade = firebase.database().ref().child('grades').child(userId).child("final");
+                                    $scope.grade.on('value', function (snap) {
+                                            $scope.globalgrades = [];
+                                            $scope.addGrades = function () {
+                                                $scope.globalgrades.push({
+                                                    "key": $scope.test1,
+                                                    "priorty": $scope.test2
+                                                });
+                                            };
+
+                                            snap.forEach(function (Snapshot) {
+
+                                                    $scope.test1 = Snapshot.key;
+                                                    $scope.test2 = Snapshot.val();
+
+                                                    $scope.addGrades();
+                                            
+
+                                                console.log($scope.globalgrades);
+
+                                            })
+                                    });
+                                }
+
+
+
+                                    $scope.date = new Date();
+                                    $scope.myDate = new Date($scope.date.getFullYear(),
+                                        $scope.date.getMonth(),
+                                        $scope.date.getDate());
+                                    $scope.myDate = $filter('date')($scope.myDate, 'yyyyMMdd');
+                                    var date = $scope.myDate;
+                                    console.log(date);
+                                    $scope.setFeeling = function (feeling) {
+                                        firebase.database().ref().child('feelings').child(klass).child(date).set({
+                                            [userId]: feeling
+                                        });
+                                    }
+                                });
+                        });
+                }]);
+
+        app.controller("AdminUserCtrl", ["$scope", "Auth",
+            function ($scope, Auth) {
+                $scope.createUser = function () {
+                    $scope.message = null;
+                    $scope.error = null;
+                    // Create a new user
+                    Auth.$createUserWithEmailAndPassword($scope.email, $scope.password)
+                        .then(function (firebaseUser) {
+                            $scope.message = "Användare skapad med UID: " + firebaseUser.uid;
+                        }).catch(function (error) {
+                            $scope.error = error;
+                        });
+                };
+
+                $scope.deleteUser = function () {
+                    $scope.message = null;
+                    $scope.error = null;
+                    // Delete the currently signed-in user
+                    Auth.$deleteUser().then(function () {
+                        $scope.message = "Användare raderad";
+                    }).catch(function (error) {
+                        $scope.error = error;
                     });
-                }
-            });
-        });
-    }]);
-
-app.controller("AdminUserCtrl", ["$scope", "Auth",
-    function ($scope, Auth) {
-        $scope.createUser = function () {
-            $scope.message = null;
-            $scope.error = null;
-            // Create a new user
-            Auth.$createUserWithEmailAndPassword($scope.email, $scope.password)
-                .then(function (firebaseUser) {
-                    $scope.message = "Användare skapad med UID: " + firebaseUser.uid;
-                }).catch(function (error) {
-                    $scope.error = error;
-                });
-        };
-
-        $scope.deleteUser = function () {
-            $scope.message = null;
-            $scope.error = null;
-            // Delete the currently signed-in user
-            Auth.$deleteUser().then(function () {
-                $scope.message = "Användare raderad";
-            }).catch(function (error) {
-                $scope.error = error;
-            });
-        };
-    }
-]);
+                };
+            }
+        ]);
