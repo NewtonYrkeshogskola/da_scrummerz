@@ -13,24 +13,22 @@ app.controller('personCtrl', ["$scope", "$firebaseObject", "$firebaseArray", "Au
     function ($scope, $firebaseObject, $firebaseArray, Auth) {
         var ref = firebase.database().ref();
         $scope.auth = Auth;
-        $scope.data = $firebaseObject(ref.child('courses'));
         $scope.auth.$onAuthStateChanged(function (firebaseUser) {
             var userId = firebaseUser.uid;
             $scope.firebaseUser = firebaseUser;
             $scope.user = $firebaseObject(ref.child('users').child('students/' + userId).child('details'));
-            // $scope.userClass = $firebaseObject(ref.child('users').child('students/' + userId).child('details'));
+            
             $scope.user.$loaded().then(function () {
-                $scope.data1 = firebase.database().ref().child('courses');
                 $scope.myClass = $scope.user.myClass;
                 var data1 = $scope.data1;
                 var klass = $scope.myClass;
                 $scope.myCourses = $firebaseObject(ref.child('coursesByClass/' + klass));
-                $scope.myGrades = $firebaseObject(ref.child('users').child('students/' + userId).child('grades').child('courses'));
-                $scope.myGrade = firebase.database().ref().child('users').child('students/' + userId).child('grades').child('courses');
-                $scope.grade = null;
-                $scope.init = function(gra){
+                $scope.myGrades = $firebaseArray(ref.child('users').child('students/' + userId).child('grades').child('courses'));
+                
+
+                $scope.get = function(gra){
                     $scope.grade = firebase.database().ref().child('users').child('students/' + userId).child('grades').child('courses/' + gra);
-                     $scope.grade.on('value', function (snap) {
+                    $scope.grade.on('value', function (snap) {
                     snap.forEach(function (Snapshot) {
                         $scope.kursNamn = Snapshot.key;
                         $scope.kursBetyg= Snapshot.val();

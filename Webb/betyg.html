@@ -42,13 +42,13 @@
     <h1 class="text-center">Kursöversikt</h1>
     <h5>Betyg på avslutade kurser</h5>
     <ul ng-repeat="grade in myGrades">
-        <li ng-if="grade.final !== undefined">{{grade.kurs}}</li>
+        <li ng-if="grade.final !== undefined">{{grade.$id}}</li>
         <p ng-if="grade.final !== undefined">{{grade.final}}</p>
     </ul>
 
     <h5>Betyg på avslutade uppgifter</h5>
-    <ul ng-repeat="grade in myGrades">
-        <li>{{grade.kurs}}</li>
+    <ul ng-repeat="grade in myGrades" ng-init="">
+        <li>{{myGrades}}</li>
         <p>{{grade.key}}{{grade.inl1}}</p>
     </ul>
 
