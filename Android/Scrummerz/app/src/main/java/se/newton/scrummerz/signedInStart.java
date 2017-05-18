@@ -6,27 +6,21 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
 import se.newton.scrummerz.model.Student;
-
-import static android.R.attr.name;
 
 public class signedInStart extends AppCompatActivity {
 
@@ -66,9 +60,9 @@ public class signedInStart extends AppCompatActivity {
             }
         });
 
-        Button minus = (Button) findViewById(R.id.minus);
-        Button neutral = (Button) findViewById(R.id.neutral);
-        Button plus = (Button) findViewById(R.id.plus);
+        ImageButton minus = (ImageButton) findViewById(R.id.negative);
+        ImageButton neutral = (ImageButton) findViewById(R.id.neutral);
+        ImageButton plus = (ImageButton) findViewById(R.id.positive);
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd", Locale.getDefault());
         String currentDate = sdf.format(new Date());
