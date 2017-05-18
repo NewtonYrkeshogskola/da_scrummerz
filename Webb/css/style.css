@@ -159,3 +159,9 @@ a:hover
 #front-row {
   color: white;
 }
+
+.feelingButton {
+  background: transparent;
+  border: 0px;
+  
+}

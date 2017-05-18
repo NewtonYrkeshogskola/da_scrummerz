@@ -14,7 +14,7 @@ app.controller('personCtrl', ["$scope", "$firebaseObject", "$firebaseArray", '$f
             var userId = firebaseUser.uid;
             $scope.firebaseUser = firebaseUser;
             $scope.user = $firebaseObject(ref.child('users').child('students/' + userId).child('details'));
-            
+
             $scope.user.$loaded().then(function () {
                 $scope.myClass = $scope.user.myClass;
                 var klass = $scope.myClass;
@@ -23,7 +23,7 @@ app.controller('personCtrl', ["$scope", "$firebaseObject", "$firebaseArray", '$f
 
                 //console.log(myGrades);
                 $scope.myGrade = firebase.database().ref().child('users').child('students/' + userId).child('grades').child('courses');
-                
+
                 $scope.date = new Date();
                 $scope.myDate = new Date($scope.date.getFullYear(),
                     $scope.date.getMonth(),
@@ -31,10 +31,11 @@ app.controller('personCtrl', ["$scope", "$firebaseObject", "$firebaseArray", '$f
                 $scope.myDate = $filter('date')($scope.myDate, 'yyyyMMdd');
                 var date = $scope.myDate;
                 console.log(date);
-                $scope.setFeeling = function (feeling){
-                    firebase.database().ref().child('feelings').child(klass).child(date).set({
-                        [userId] : feeling
+                $scope.setFeeling = function (feeling) {
+                    firebase.database().ref().child('feelings').child(klass).child(date).update({
+                        [userId]: feeling
                     });
+                    alert("Rösten registrerad");
                 }
             });
         });
