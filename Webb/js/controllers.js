@@ -32,8 +32,8 @@ app.controller('personCtrl', ["$scope", "$firebaseObject", "$firebaseArray", '$f
                 var date = $scope.myDate;
                 console.log(date);
                 $scope.setFeeling = function (feeling){
-                    firebase.database().ref().child('testweb').child(klass).child(date).child(userId).set({
-                        feeling
+                    firebase.database().ref().child('feelings').child(klass).child(date).set({
+                        [userId] : feeling
                     });
                 }
             });
