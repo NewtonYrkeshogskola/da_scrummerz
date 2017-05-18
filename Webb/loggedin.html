@@ -42,9 +42,10 @@
     </nav>
 
     <div>
-        <button ng-click="setFeeling(-1)">Skit</button>
-        <button ng-click="setFeeling(0)">Lagom</button>
-        <button ng-click="setFeeling(1)">Bra</button>
+        <h3>Hur mår du idag?</h3>
+        <button class="feelingButton" ng-click="setFeeling(-1)"><img src="images/scared.png" width="60px" alt="Smiley for bad mood"></button>
+        <button class="feelingButton" ng-click="setFeeling(0)"><img src="images/neutral.png" width="60px" alt="Smiley for neutral mood"></button>
+        <button class="feelingButton" ng-click="setFeeling(1)"><img src="images/cool.png" width="60px" alt="Smiley for happy mood"></button>
     </div>
     <h1 class="text-center">Kursöversikt</h1>
     <div class="row">

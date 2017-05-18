@@ -8,20 +8,40 @@ app.factory("Auth", ["$firebaseAuth",
 ]);
 
 app.controller('personCtrl', ["$scope", "$firebaseObject", "$firebaseArray", '$filter', "Auth",
-            function ($scope, $firebaseObject, $firebaseArray, $filter, Auth) {
-                var ref = firebase.database().ref();
-                $scope.auth = Auth;
-                $scope.auth.$onAuthStateChanged(function (firebaseUser) {
-                        var userId = firebaseUser.uid;
-                        $scope.firebaseUser = firebaseUser;
-                        $scope.user = $firebaseObject(ref.child('users').child('students/' + userId).child('details'));
 
-                        $scope.user.$loaded().then(function () {
-                                $scope.myClass = $scope.user.myClass;
-                                var klass = $scope.myClass;
-                                $scope.myCourses = $firebaseObject(ref.child('coursesByClass/' + klass));
-                                $scope.myGrades = $firebaseArray(ref.child('users').child('students/' + userId).child('grades').child('courses'));
-                                $scope.myGrade = firebase.database().ref().child('users').child('students/' + userId).child('grades').child('courses');
+    function ($scope, $firebaseObject, $firebaseArray, $filter, Auth) {
+        var ref = firebase.database().ref();
+        $scope.auth = Auth;
+        $scope.auth.$onAuthStateChanged(function (firebaseUser) {
+            var userId = firebaseUser.uid;
+            $scope.firebaseUser = firebaseUser;
+            $scope.user = $firebaseObject(ref.child('users').child('students/' + userId).child('details'));
+
+            $scope.user.$loaded().then(function () {
+                $scope.myClass = $scope.user.myClass;
+                var klass = $scope.myClass;
+                $scope.myCourses = $firebaseObject(ref.child('coursesByClass/' + klass));
+                $scope.myGrades = $firebaseArray(ref.child('users').child('students/' + userId).child('grades').child('courses'));
+
+                //console.log(myGrades);
+                $scope.myGrade = firebase.database().ref().child('users').child('students/' + userId).child('grades').child('courses');
+
+                $scope.date = new Date();
+                $scope.myDate = new Date($scope.date.getFullYear(),
+                    $scope.date.getMonth(),
+                    $scope.date.getDate());
+                $scope.myDate = $filter('date')($scope.myDate, 'yyyyMMdd');
+                var date = $scope.myDate;
+                console.log(date);
+                $scope.setFeeling = function (feeling) {
+                    firebase.database().ref().child('feelings').child(klass).child(date).update({
+                        [userId]: feeling
+                    });
+                    alert("Rösten registrerad");
+                }
+            });
+        });
+    }]);
 
                                 //Hämtar betyg
                                 $scope.init = function (grades) {
