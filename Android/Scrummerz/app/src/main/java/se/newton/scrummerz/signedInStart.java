@@ -38,9 +38,6 @@ public class signedInStart extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signed_in_start);
 
-        //Lagrar data lokalt på mobilen när mobilen är offline
-        FirebaseDatabase.getInstance().setPersistenceEnabled(true);
-
         mRoot = FirebaseDatabase.getInstance().getReference();
         mAuth = FirebaseAuth.getInstance();
         currentUser = mAuth.getCurrentUser();
