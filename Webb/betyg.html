@@ -43,14 +43,14 @@
     <div class="row">
         <div class="col-sm-4  well well-sm">
             <h4 class="text-center">Betyg på avslutade kurser</h4>
-            <div ng-repeat="course in myCourses" 
-                 ng-repeat="grade in myGrades" 
+            <div ng-repeat="course in myCourses"
+                 ng-repeat="grades in gradesData"
                  class="panel panel-default" 
-                 ng-init="grabFinalGrades(course.courseCode)"
+                 ng-init="grabFinalGrades()"
                  ng-show="{{course.status === 'finished'}}">
                 <div ng-click="value = !value" ng-class="{ active: value }" class="panel-heading">
                     <Strong>{{course.name}}</Strong>
-                    <p>Betyg: {{}} och {{}}</p>
+                    <p>Betyg: {{gradesData.grades}} och {{}}</p>
                 </div>
                 <div class="panel-body animate-hide" ng-show="value">
                     <p><em>BESKRIVNING: </em><samp>{{course.description}}</samp></p>

@@ -46,42 +46,55 @@ app.controller('personCtrl', ["$scope", "$firebaseObject", "$firebaseArray", '$f
             });
 
             //Hämtar betyg
-            $scope.init = function (grades) {
-                $scope.grade = firebase.database().ref().child('grades').child(userId).child(grades);
-                $scope.grade.on('value', function (snap) {
-                    snap.forEach(function (Snapshot) {
-                        $scope.kursNamn = Snapshot.key;
-                        $scope.kursBetyg = Snapshot.val();
-                        // console.log($scope.kursNamn + ' ' + $scope.kursBetyg);
-                    });
-                })
+            // $scope.init = function (grades) {
+            //     $scope.grade = firebase.database().ref().child('grades').child(userId).child(grades);
+            //     $scope.grade.on('value', function (snap) {
+            //         snap.forEach(function (Snapshot) {
+            //             $scope.kursNamn = Snapshot.key;
+            //             $scope.kursBetyg = Snapshot.val();
+            //             // console.log($scope.kursNamn + ' ' + $scope.kursBetyg);
+            //         });
+            //     })
+            // }
+
+            
+            var testGrades = function(){
+                console.log($scope.gradesData);
             }
 
-            $scope.grabFinalGrades = function (grades) {
+            $scope.grabFinalGrades = function () {
                 $scope.grade = firebase.database().ref().child('grades').child(userId).child("final");
                 $scope.grade.on('value', function (snap) {
-                    $scope.globalgrades = [];
-                    $scope.addGrades = function () {
-                        $scope.globalgrades.push({
-                            "key": $scope.test1,
-                            "priorty": $scope.test2
-                        });
-                    };
+                    $scope.globalgrades = {
+                        "grades":[
+                        ]
+                    }
                     snap.forEach(function (Snapshot) {
-
                         $scope.test1 = Snapshot.key;
                         $scope.test2 = Snapshot.val();
-
                         $scope.addGrades();
-
-                        console.log($scope.globalgrades);
-
                     })
+                    // console.log($scope.globalgrades);
                 });
-            }
 
+                
+
+                //Adds object to the globalgrades object
+                $scope.addGrades = function () {
+                    $scope.globalgrades.grades.push({
+                        "courseCode" :  $scope.test1,
+                        "grade" : $scope.test2
+                    });
+                    testGrades();
+                    $scope.gradesData = $scope.globalgrades.grades;
+                    
+                };
+                
+                
+            }
         });
-    }]);
+    }
+]);
 
 app.controller("AdminUserCtrl", ["$scope", "Auth",
     function ($scope, Auth) {
