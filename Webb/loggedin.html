@@ -43,63 +43,45 @@
 
     <h1 class="text-center whiteText">Välkommen {{user.Name}}</h1>
 
-
-
     <div class="row">
         <div class="col-sm-1"> </div>
-        <div class="col-sm-5 divmargin well well-sm">
-            <h4 class="text-center">Hur mår du idag?</h4>
-            <p>Hur är ditt humör? Hänger du med på lektionen? Hur känns det i klassrummet? <br> Meddela hur du mår genom att
-                klicka på en av figurerna. Du kan när som helst uppdatera ditt humör.</p>
-            <center>
-                <button class="feelingButton" ng-click="setFeeling(-1)"><img src="images/scared.png" width="60px" alt="Smiley for bad mood"></button>
-                <button class="feelingButton" ng-click="setFeeling(0)"><img src="images/neutral.png" width="60px" alt="Smiley for neutral mood"></button>
-                <button class="feelingButton" ng-click="setFeeling(1)"><img src="images/cool.png" width="60px" alt="Smiley for happy mood"></button>
-            </center>
-        </div>
-        <div class="col-sm-5 divmargin well well-sm">
-            <h4 class="text-center">Pågående kurser</h4>
-            <div ng-repeat="course in myCourses" class="panel panel-default" ng-show="{{course.status === 'progress'}}">
-                <div ng-click="value = !value" ng-class="{ active: value }" class="panel-heading">{{course.name}}</div>
-                <div class="panel-body animate-hide" ng-show="value">
-                    <p><em>BESKRIVNING: </em><samp>{{course.description}}</samp></p>
-                    <p><em>KURSKOD: </em><samp>{{course.courseCode}}</samp></p>
-                    <p><em>LÄRARE: </em><samp>{{course.teacher}}</samp></p>
-                </div>
-            </div>
-        </div>
-    </div>
-    </div>
-    </div>
-
-    <div class="row">
-        <div class="col-sm-1"> </div>
-        <div class="col-sm-5 divmargin well well-sm">
-            <h4 class="text-center">Kommande kurser</h4>
-            <div ng-repeat="course in myCourses" class="panel panel-default" ng-show="{{course.status === 'comming'}}">
-                <div ng-click="value = !value" ng-class="{ active: value }" class="panel-heading">{{course.name}}</div>
-                <div class="panel-body animate-hide" ng-show="value">
-                    <p><em>BESKRIVNING: </em><samp>{{course.description}}</samp></p>
-                    <p><em>KURSKOD: </em><samp>{{course.courseCode}}</samp></p>
-                    <p><em>LÄRARE: </em><samp>{{course.teacher}}</samp></p>
-                </div>
-            </div>
-        </div>
-
-
-        <div class="col-sm-5 divmargin well well-sm">
-            <h4 class="text-center">Avslutade kurser</h4>
-            <div ng-repeat="course in myCourses" class="panel panel-default" ng-show="{{course.status === 'finished'}}">
-                <div ng-click="value = !value" ng-class="{ active: value }" class="panel-heading">{{course.name}}</div>
-                <div class="panel-body animate-hide" ng-show="value">
-                    <p><em>BESKRIVNING: </em><samp>{{course.description}}</samp></p>
-                    <p><em>KURSKOD: </em><samp>{{course.courseCode}}</samp></p>
-                    <p><em>LÄRARE: </em><samp>{{course.teacher}}</samp></p>
-                </div>
+        <div class="col-sm-10">
+            <img src="images/books.jpg" alt="bild på böcker" width="100%">
+            <div class="navigation">
+                <a href="betyg.html"><img src="images/kommandeavslutade.svg" alt="Kommande och avslutade kurser"></a>
+                <a href="betyg.html"><img src="images/betyg.svg" alt="Mina betyg"></a>
             </div>
         </div>
         <div class="col-sm-1"> </div>
     </div>
+    <div class="col-sm-1"> </div>
+    <div class="col-sm-5 divmargin well well-sm">
+        <h4 class="text-center">Hur mår du idag?</h4>
+        <p>Hur är ditt humör? Hänger du med på lektionen? Hur känns det i klassrummet? <br> Meddela hur du mår genom att klicka
+            på en av figurerna. Du kan när som helst uppdatera ditt humör.</p>
+        <center>
+            <button class="feelingButton" ng-click="setFeeling(-1)"><img src="images/scared.png" width="60px" alt="Smiley for bad mood"></button>
+            <button class="feelingButton" ng-click="setFeeling(0)"><img src="images/neutral.png" width="60px" alt="Smiley for neutral mood"></button>
+            <button class="feelingButton" ng-click="setFeeling(1)"><img src="images/cool.png" width="60px" alt="Smiley for happy mood"></button>
+        </center>
+    </div>
+    </div>
+    <div class="col-sm-1"> </div>
+    <div class="col-sm-5 divmargin well well-sm">
+        <h4 class="text-center">Pågående kurser</h4>
+        <div ng-repeat="course in myCourses" class="panel panel-default" ng-show="{{course.status === 'progress'}}">
+            <div ng-click="value = !value" ng-class="{ active: value }" class="panel-heading">{{course.name}}</div>
+            <div class="panel-body animate-hide" ng-show="value">
+                <p><em>BESKRIVNING: </em><samp>{{course.description}}</samp></p>
+                <p><em>KURSKOD: </em><samp>{{course.courseCode}}</samp></p>
+                <p><em>LÄRARE: </em><samp>{{course.teacher}}</samp></p>
+            </div>
+        </div>
+    </div>
+    </div>
+    </div>
+
+
 </body>
 
 </html>

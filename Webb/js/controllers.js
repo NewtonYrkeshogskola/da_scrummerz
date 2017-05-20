@@ -1,6 +1,7 @@
 var app = angular.module('LoggedIn', ['firebase', 'ngAnimate']);
 var grades = [];
 
+
 app.factory("Auth", ["$firebaseAuth",
     function ($firebaseAuth) {
         return $firebaseAuth();
@@ -14,6 +15,7 @@ app.controller('personCtrl', ["$scope", "$firebaseObject", "$firebaseArray", '$f
 
         $scope.auth = Auth;
         $scope.globalGrades = [];
+        $scope.globalAssignments = [];
         $scope.auth.$onAuthStateChanged(function (firebaseUser) {
             var userId = firebaseUser.uid;
             $scope.firebaseUser = firebaseUser;
@@ -26,9 +28,6 @@ app.controller('personCtrl', ["$scope", "$firebaseObject", "$firebaseArray", '$f
                 var klass = $scope.myClass;
                 $scope.myCourses = $firebaseObject(ref.child('coursesByClass/' + klass));
                 $scope.myGrades = $firebaseArray(ref.child('users').child('students/' + userId).child('grades').child('courses'));
-
-                //console.log(myGrades);
-                $scope.myGrade = firebase.database().ref().child('users').child('students/' + userId).child('grades').child('courses');
 
                 // Get date for feelings
                 $scope.date = new Date();
@@ -45,18 +44,6 @@ app.controller('personCtrl', ["$scope", "$firebaseObject", "$firebaseArray", '$f
                     });
                     alert("Rösten registrerad");
                 }
-                var gradeRef = firebase.database().ref().child('grades').child(userId).child('final');
-
-                gradeRef.once('value', function (snapshot) {
-                    snapshot.forEach(function (childSnapshot) {
-                        var childKey = childSnapshot.key;
-                        var childData = childSnapshot.val();
-                        $scope.globalGrades.push({
-                            key: childKey,
-                            grade: childData
-                        })
-                    });
-                });
             });
         });
     }
@@ -86,5 +73,75 @@ app.controller("AdminUserCtrl", ["$scope", "Auth",
                 $scope.error = error;
             });
         };
+    }
+]);
+
+app.controller("gradesCtrl", ["$scope", "$firebaseObject", "$firebaseArray", '$filter', "Auth",
+    function ($scope, $firebaseObject, $firebaseArray, $filter, Auth) {
+        var ref = firebase.database().ref();
+
+        var userId;
+        $scope.auth = Auth;
+        $scope.auth.$onAuthStateChanged(function (firebaseUser) {
+            userId = firebaseUser.uid;
+            $scope.firebaseUser = firebaseUser;
+            $scope.user = $firebaseObject(ref.child('users').child('students/' + userId).child('details'));
+            $scope.globalGrades = [];
+            $scope.globalAssignments = [];
+
+            $scope.user.$loaded().then(function () {
+
+            // Get my class from scope and use it to get courses
+            $scope.myClass = $scope.user.myClass;
+            var klass = $scope.myClass;
+            $scope.myCourses = $firebaseObject(ref.child('coursesByClass/' + klass));
+            $scope.myGrades = $firebaseArray(ref.child('users').child('students/' + userId).child('grades').child('courses'));
+
+            // Loop through all grades under personal node and push to globalGrades
+            ref.child('grades').child(userId).child('final').once('value', function (snapshot) {
+                snapshot.forEach(function (childSnapshot) {
+                    var childKey = childSnapshot.key;
+                    var childData = childSnapshot.val();
+                    $scope.globalGrades.push({
+                        key: childKey,
+                        grade: childData
+                    })
+                });
+            });
+
+            // Loop through all assignments under personal node and push to globalAssignments
+
+            ref.child('grades').child(userId).child('assignments').once('value', function (snapshot) {
+                snapshot.forEach(function (childSnapshot) {
+                    $scope.testAssignment = childSnapshot.val();
+                })
+            })
+
+
+            ref.child('grades').child(userId).child('assignments').once('value', function (snapshot) {
+                snapshot.forEach(function (childSnapshot) {
+                    var childKey
+                    var childData
+                    var courseKey = childSnapshot.key;
+                    ref.child('grades').child(userId).child('assignments').child(courseKey).once('value', function (snapshot) {
+                        snapshot.forEach(function (childSnapshot) {
+                            childKey = childSnapshot.key;
+                            childData = childSnapshot.val();
+                            $scope.globalAssignments.push({
+                                key: courseKey,
+                                childKey: childKey,
+                                grade: childData
+                            })
+
+                        })
+                    });
+
+
+                });
+            });
+                    console.log($scope.globalAssignments)
+                    
+        })
+        })
     }
 ]);
