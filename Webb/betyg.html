@@ -19,8 +19,8 @@
     <script src="https://www.gstatic.com/firebasejs/3.6.6/firebase.js"></script>
     <script src="https://cdn.firebase.com/libs/angularfire/2.3.0/angularfire.min.js"></script>
     <script type="text/javascript" src="js/loggedin.js"></script>
-    <script type="text/javascript" src="js/database.js"></script>
     <script type="text/javascript" src="js/controllers.js"></script>
+    <script type="text/javascript" src="js/database.js"></script>
 </head>
 
 <body ng-app="LoggedIn" ng-controller="personCtrl as ctrl">
@@ -44,13 +44,11 @@
         <div class="col-sm-4  well well-sm">
             <h4 class="text-center">Betyg på avslutade kurser</h4>
             <div ng-repeat="course in myCourses"
-                 ng-repeat="grades in gradesData"
                  class="panel panel-default" 
-                 ng-init="grabFinalGrades()"
                  ng-show="{{course.status === 'finished'}}">
                 <div ng-click="value = !value" ng-class="{ active: value }" class="panel-heading">
                     <Strong>{{course.name}}</Strong>
-                    <p>Betyg: {{gradesData.grades}} och {{}}</p>
+                    <p ng-repeat="grade in globalGrades" ng-if="grade.key == course.courseCode">Betyg: {{grade.grade}} </p>
                 </div>
                 <div class="panel-body animate-hide" ng-show="value">
                     <p><em>BESKRIVNING: </em><samp>{{course.description}}</samp></p>
@@ -60,17 +58,12 @@
     </div>
     <div class="col-sm-8  well well-sm"></div>
 
-    <h5>Betyg på avslutade kurser</h5>
-    <ul ng-repeat="grade in myGrades">
-        <li ng-if="grade.final !== undefined">{{grade.$id}}</li>
-        <p ng-if="grade.final !== undefined">{{grade.final}}</p>
-    </ul>
-
     <h5>Betyg på avslutade uppgifter</h5>
     <div ng-repeat="course in myCourses" ></div>
         <ul ng-repeat="grade in myGrades" >
             <li>{{myGrades}}</li>
             <p>{{grade.key}}{{grade.inl1}}</p>
+            
         </ul>
     </div>
 
