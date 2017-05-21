@@ -91,57 +91,52 @@ app.controller("gradesCtrl", ["$scope", "$firebaseObject", "$firebaseArray", '$f
 
             $scope.user.$loaded().then(function () {
 
-            // Get my class from scope and use it to get courses
-            $scope.myClass = $scope.user.myClass;
-            var klass = $scope.myClass;
-            $scope.myCourses = $firebaseObject(ref.child('coursesByClass/' + klass));
-            $scope.myGrades = $firebaseArray(ref.child('users').child('students/' + userId).child('grades').child('courses'));
+                // Get my class from scope and use it to get courses
+                $scope.myClass = $scope.user.myClass;
+                var klass = $scope.myClass;
+                $scope.myCourses = $firebaseObject(ref.child('coursesByClass/' + klass));
+                $scope.myGrades = $firebaseArray(ref.child('users').child('students/' + userId).child('grades').child('courses'));
 
-            // Loop through all grades under personal node and push to globalGrades
-            ref.child('grades').child(userId).child('final').once('value', function (snapshot) {
-                snapshot.forEach(function (childSnapshot) {
-                    var childKey = childSnapshot.key;
-                    var childData = childSnapshot.val();
-                    $scope.globalGrades.push({
-                        key: childKey,
-                        grade: childData
-                    })
-                });
-            });
-
-            // Loop through all assignments under personal node and push to globalAssignments
-
-            ref.child('grades').child(userId).child('assignments').once('value', function (snapshot) {
-                snapshot.forEach(function (childSnapshot) {
-                    $scope.testAssignment = childSnapshot.val();
-                })
-            })
-
-
-            ref.child('grades').child(userId).child('assignments').once('value', function (snapshot) {
-                snapshot.forEach(function (childSnapshot) {
-                    var childKey
-                    var childData
-                    var courseKey = childSnapshot.key;
-                    ref.child('grades').child(userId).child('assignments').child(courseKey).once('value', function (snapshot) {
-                        snapshot.forEach(function (childSnapshot) {
-                            childKey = childSnapshot.key;
-                            childData = childSnapshot.val();
-                            $scope.globalAssignments.push({
-                                key: courseKey,
-                                childKey: childKey,
-                                grade: childData
-                            })
-
+                // Loop through all grades under personal node and push to globalGrades
+                ref.child('grades').child(userId).child('final').once('value', function (snapshot) {
+                    snapshot.forEach(function (childSnapshot) {
+                        var childKey = childSnapshot.key;
+                        var childData = childSnapshot.val();
+                        $scope.globalGrades.push({
+                            key: childKey,
+                            grade: childData
                         })
                     });
-
-
                 });
-            });
-                    console.log($scope.globalAssignments)
-                    
-        })
+
+                // Loop through all assignments under personal node and push to globalAssignments
+
+                ref.child('grades').child(userId).child('assignments').once('value', function (snapshot) {
+                    snapshot.forEach(function (childSnapshot) {
+                        $scope.testAssignment = childSnapshot.val();
+                    })
+                })
+
+
+                ref.child('grades').child(userId).child('assignments').once('value', function (snapshot) {
+                    snapshot.forEach(function (childSnapshot) {
+                        var childKey
+                        var childData
+                        var courseKey = childSnapshot.key;
+                        ref.child('grades').child(userId).child('assignments').child(courseKey).once('value', function (snapshot) {
+                            snapshot.forEach(function (childSnapshot) {
+                                childKey = childSnapshot.key;
+                                childData = childSnapshot.val();
+                                $scope.globalAssignments.push({
+                                    key: courseKey,
+                                    childKey: childKey,
+                                    grade: childData
+                                })
+                            })
+                        });
+                    });
+                });
+            })
         })
     }
 ]);

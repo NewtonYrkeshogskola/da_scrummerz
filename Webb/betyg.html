@@ -77,17 +77,17 @@
             <div class="col-sm-1"> </div>
             <div class="col-sm-5 divmargin well well-sm">
                 <h4 class="text-center">Betyg på avslutade kurser</h4>
-                <div ng-repeat="course in myCourses" class="panel panel-default" ng-show="{{course.status === 'finished'}}">
+                <div ng-repeat="course in myCourses" ng-show="{{course.status === 'finished'}}">
                     <div>
                         <Strong>{{course.name}}</Strong>
-                        <p ng-repeat="grade in globalGrades" ng-if="grade.key == course.courseCode">Betyg: {{grade.grade}} </p>
+                        <p ng-repeat="grade in globalGrades" ng-if="grade.key == course.courseCode">Slutbetyg på denna kurs: <strong>{{grade.grade}}</strong> </p>
                     </div>
                 </div>
             </div>
             <div class="col-sm-5 divmargin well well-sm">
                 <h4 class="text-center">Betyg på avslutade uppgifter</h4>
                 <br>
-                <div ng-repeat="course in myCourses" class="panel panel-default">
+                <div ng-repeat="course in myCourses">
                     <div>
                         <Strong>{{course.name}}</Strong>
                         <tr ng-repeat="assignment in globalAssignments">
@@ -96,8 +96,9 @@
                             <td>{{assignment.childKey}}</td>
                         </tr>
 
-                        <p ng-repeat="assignment in globalAssignments" ng-if="assignment.key == course.courseCode">
-                            Uppgift: {{assignment.childKey}} <br>Betyg: {{assignment.grade}} </p>
+                        <li ng-repeat="assignment in globalAssignments" ng-if="assignment.key == course.courseCode">
+                            {{assignment.childKey}} : {{assignment.grade}} </li>
+                            <br>
                     </div>
                 </div>
             </div>
