@@ -28,12 +28,13 @@
     <nav class="navbar navbar-inverse">
         <div class="container-fluid">
             <div class="navbar-header">
-                <a class="navbar-brand" href="index.html">Studentportalen</a>
+                <a class="navbar-brand" href="loggedin.html">Studentportalen</a>
             </div>
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user "></span> {{user.Name}}<span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li><a href="betyg.html">Mina betyg</a></li>
+                        <li><a href="courses.html">Mina kurser</a></li>
                     </ul>
                 </li>
                 <li><a href="#" id="quickstart-sign-in" data-toggle="modal" data-target="#login-modal"><span class="glyphicon glyphicon-log-out"></span> Logga ut</a></li>
@@ -48,7 +49,7 @@
         <div class="col-sm-10">
             <img src="images/books.jpg" alt="bild på böcker" width="100%">
             <div class="navigation">
-                <a href="betyg.html"><img src="images/kommandeavslutade.svg" alt="Kommande och avslutade kurser"></a>
+                <a href="courses.html"><img src="images/kommandeavslutade.svg" alt="Kommande och avslutade kurser"></a>
                 <a href="betyg.html"><img src="images/betyg.svg" alt="Mina betyg"></a>
             </div>
         </div>
@@ -69,12 +70,12 @@
     <div class="col-sm-1"> </div>
     <div class="col-sm-5 divmargin well well-sm">
         <h4 class="text-center">Pågående kurser</h4>
-        <div ng-repeat="course in myCourses" class="panel panel-default" ng-show="{{course.status === 'progress'}}">
-            <div ng-click="value = !value" ng-class="{ active: value }" class="panel-heading">{{course.name}}</div>
+        <div ng-repeat="course in myCourses" class="panel panel-default" ng-show="{{course.details.status === 'progress'}}">
+            <div ng-click="value = !value" ng-class="{ active: value }" class="panel-heading">{{course.details.name}}</div>
             <div class="panel-body animate-hide" ng-show="value">
-                <p><em>BESKRIVNING: </em><samp>{{course.description}}</samp></p>
-                <p><em>KURSKOD: </em><samp>{{course.courseCode}}</samp></p>
-                <p><em>LÄRARE: </em><samp>{{course.teacher}}</samp></p>
+                <p><em>BESKRIVNING: </em><samp>{{course.details.description}}</samp></p>
+                <p><em>KURSKOD: </em><samp>{{course.details.courseCode}}</samp></p>
+                <p><em>LÄRARE: </em><samp>{{course.details.teacher}}</samp></p>
             </div>
         </div>
     </div>

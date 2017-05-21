@@ -148,7 +148,10 @@ a:hover
   line-height:20px;
   opacity:1;
   padding:10px;
+
 }
+
+
 
 .animate-hide.ng-hide {
   line-height:0;

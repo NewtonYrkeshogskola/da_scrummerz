@@ -13,9 +13,12 @@ app.controller('personCtrl', ["$scope", "$firebaseObject", "$firebaseArray", '$f
     function ($scope, $firebaseObject, $firebaseArray, $filter, Auth) {
         var ref = firebase.database().ref();
 
+        // Top level variables
         $scope.auth = Auth;
         $scope.globalGrades = [];
         $scope.globalAssignments = [];
+
+
         $scope.auth.$onAuthStateChanged(function (firebaseUser) {
             var userId = firebaseUser.uid;
             $scope.firebaseUser = firebaseUser;
@@ -78,10 +81,13 @@ app.controller("AdminUserCtrl", ["$scope", "Auth",
 
 app.controller("gradesCtrl", ["$scope", "$firebaseObject", "$firebaseArray", '$filter', "Auth",
     function ($scope, $firebaseObject, $firebaseArray, $filter, Auth) {
+        
+        // Top level variables
         var ref = firebase.database().ref();
-
         var userId;
         $scope.auth = Auth;
+
+
         $scope.auth.$onAuthStateChanged(function (firebaseUser) {
             userId = firebaseUser.uid;
             $scope.firebaseUser = firebaseUser;
@@ -89,6 +95,7 @@ app.controller("gradesCtrl", ["$scope", "$firebaseObject", "$firebaseArray", '$f
             $scope.globalGrades = [];
             $scope.globalAssignments = [];
 
+            // This will be executed after the user has been loaded
             $scope.user.$loaded().then(function () {
 
                 // Get my class from scope and use it to get courses
@@ -110,23 +117,18 @@ app.controller("gradesCtrl", ["$scope", "$firebaseObject", "$firebaseArray", '$f
                 });
 
                 // Loop through all assignments under personal node and push to globalAssignments
-
-                ref.child('grades').child(userId).child('assignments').once('value', function (snapshot) {
-                    snapshot.forEach(function (childSnapshot) {
-                        $scope.testAssignment = childSnapshot.val();
-                    })
-                })
-
-
                 ref.child('grades').child(userId).child('assignments').once('value', function (snapshot) {
                     snapshot.forEach(function (childSnapshot) {
                         var childKey
                         var childData
                         var courseKey = childSnapshot.key;
+
                         ref.child('grades').child(userId).child('assignments').child(courseKey).once('value', function (snapshot) {
                             snapshot.forEach(function (childSnapshot) {
                                 childKey = childSnapshot.key;
                                 childData = childSnapshot.val();
+                                
+                                // For each child under each 
                                 $scope.globalAssignments.push({
                                     key: courseKey,
                                     childKey: childKey,

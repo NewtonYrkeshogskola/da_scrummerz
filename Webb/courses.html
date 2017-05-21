@@ -60,52 +60,19 @@
 
             <div class="col-sm-5 divmargin well well-sm">
                 <h4 class="text-center">Avslutade kurser</h4>
-                <div ng-repeat="course in myCourses" class="panel panel-default " ng-show="{{course.details.status === 'finished'}}">
+                <div ng-repeat="course in myCourses" class="panel panel-default" ng-show="{{course.details.status === 'finished'}}">
                     <div ng-click="value = !value" ng-class="{ active: value }" class="panel-heading">{{course.details.name}}</div>
                     <div class="panel-body animate-hide" ng-show="value">
                         <p><em>BESKRIVNING: </em><samp>{{course.details.description}}</samp></p>
                         <p><em>KURSKOD: </em><samp>{{course.details.courseCode}}</samp></p>
                         <p><em>LÄRARE: </em><samp>{{course.details.teacher}}</samp></p>
                     </div>
+                    <a href="betyg.html">Se betyg för dina kurser</a> 
                 </div>
             </div>
             <div class="col-sm-1"> </div>
         </div>
     </div>
-    <div ng-controller="gradesCtrl">
-        <h1 class="text-center">Betyg</h1>
-        <div class="row">
-            <div class="col-sm-1"> </div>
-            <div class="col-sm-5 divmargin well well-sm">
-                <h4 class="text-center">Betyg på avslutade kurser</h4>
-                <div ng-repeat="course in myCourses" ng-show="{{course.details.status === 'finished'}}">
-                    <div>
-                        <Strong>{{course.name}}</Strong>
-                        <p ng-repeat="grade in globalGrades" ng-if="grade.key == course.details.courseCode">Slutbetyg på denna kurs: <strong>{{grade.grade}}</strong> </p>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="col-sm-5 divmargin well">
-                <h4 class="text-center">Betyg på avslutade uppgifter</h4>
-                <br>
-                <div ng-repeat="course in myCourses">
-                    <div>
-                        <Strong>{{course.details.name}}</Strong>
-
-                        <li ng-repeat="assignment in globalAssignments" ng-if="assignment.key == course.details.courseCode">
-                            {{assignment.childKey}} : {{assignment.grade}} </li>
-                            <br>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-1"> </div>
-
-    </div>
-
-
-
 </body>
 
 </html>
