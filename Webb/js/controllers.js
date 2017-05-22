@@ -49,6 +49,25 @@ app.controller('personCtrl', ["$scope", "$firebaseObject", "$firebaseArray", '$f
                     alert("Rösten registrerad");
                 }
 
+
+ $scope.giveFeedbackToTheFinishedCourse = function (kurs, q1, q2, q3, q4, q5) {
+                   /* firebase.database().ref().child('finishedCourseFeedback').child(kurs).child(q1).update({
+                        q1
+                    });
+                     firebase.database().ref().child('finishedCourseFeedback').child(kurs).child(q2).update({
+                        q2
+                    });
+                     firebase.database().ref().child('finishedCourseFeedback').child(kurs).child(q3).update({
+                        q3
+                    });
+                     firebase.database().ref().child('finishedCourseFeedback').child(kurs).child(q4).update({
+                        q4
+                    });
+                     firebase.database().ref().child('finishedCourseFeedback').child(kurs).child(q5).update({
+                        q5
+                    });*/
+                    alert(kurs + " " + q1+ " " +  q2+ " " +  q3+ " " +  q4+ " " +  q5);
+                }
                 // Loop through all active assignments under personal node and push to globalAssignments
                 ref.child('coursesByClass').child(klass).once('value', function (snapshot) {
                     snapshot.forEach(function (childSnapshot) {
