@@ -98,4 +98,14 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/book" />
 
+    <Button
+        android:id="@+id/assignmentsBtn"
+        android:layout_width="103dp"
+        android:layout_height="56dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginRight="16dp"
+        android:text="Uppgifter"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
 </android.support.constraint.ConstraintLayout>

@@ -47,7 +47,6 @@ public class login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         mRef = FirebaseDatabase.getInstance().getReference();
-        currentUser = mAuth.getCurrentUser();
 
         studentInfo = PreferenceManager.getDefaultSharedPreferences(this);
 
@@ -60,6 +59,11 @@ public class login extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
         // Slut på initiering
 
+        Log.i("test mAuth", mAuth.toString());
+
+        currentUser = mAuth.getCurrentUser();
+//        Log.i("test CURRENT USER", currentUser.toString());
+//        studentInfo.edit().putString("studentUid",currentUser.getUid()).apply();
 
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -106,7 +110,13 @@ public class login extends AppCompatActivity {
                                 @Override
                                 public void onDataChange(DataSnapshot dataSnapshot) {
                                     student = dataSnapshot.getValue(Student.class);
-
+                                    Log.i("Student", student.getName() + " " + student.getmyClass() + " " + student.getPnr());
+                                    studentInfo.edit().putString("studentName", student.getName()).apply();
+                                    studentInfo.edit().putString("studentClass", student.getmyClass()).apply();
+                                    studentInfo.edit().putString("studentPnr", student.getPnr()).apply();
+                                    Log.i("Student", student.getmyClass());
+                                    Log.i("Student", student.getName());
+                                    Log.i("Student", student.getPnr());
                                 }
 
                                 @Override
@@ -172,9 +182,10 @@ public class login extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        studentInfo.edit().putString("studentName", student.getName()).apply();
-        studentInfo.edit().putString("studentClass", student.getmyClass()).apply();
-        studentInfo.edit().putString("studentPnr", student.getPnr()).apply();
-        studentInfo.edit().putString("studentUid",currentUser.getUid()).apply();
+//        Log.i("test", "" + student.getmyClass() + " " + student.getPnr() + " " + student.getName());
+//        studentInfo.edit().putString("studentName", student.getName()).apply();
+//        studentInfo.edit().putString("studentClass", student.getmyClass()).apply();
+//        studentInfo.edit().putString("studentPnr", student.getPnr()).apply();
+
     }
 }

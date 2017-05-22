@@ -68,20 +68,6 @@ public class MainActivity extends AppCompatActivity {
         FirebaseUser currentUser = mAuth.getCurrentUser();
         updateUI(currentUser);
 
-//        DatabaseReference mStudent = mRoot.child("users").child("students").child(uid).child("details");
-//
-//        mStudent.addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//                Student student = dataSnapshot.getValue(Student.class);
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//
-//            }
-//        });
-
     }
 }
 
