@@ -28,7 +28,7 @@ public class signedInStart extends AppCompatActivity {
     private FirebaseUser currentUser;
     private DatabaseReference mRoot;
 
-    TextView nameTextView;
+    TextView nameTextView, myGradesTextView;
     String uid;
     Student student = new Student();
     SharedPreferences studentInfo;
@@ -46,13 +46,24 @@ public class signedInStart extends AppCompatActivity {
         studentInfo = PreferenceManager.getDefaultSharedPreferences(this);
 
         nameTextView = (TextView) findViewById(R.id.welcome);
+        myGradesTextView = (TextView) findViewById(R.id.myGradesTextView);
         TextView coursesTextView = (TextView) findViewById(R.id.myCoursesTextView);
 
+        //Starts the course activity
         coursesTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(signedInStart.this, activity_courses.class);
                 intent.putExtra("class", student.myClass);
+                startActivity(intent);
+            }
+        });
+
+        //Starts the grades activity
+        myGradesTextView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(signedInStart.this, grades_activity.class);
                 startActivity(intent);
             }
         });

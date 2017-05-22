@@ -32,7 +32,7 @@ public class activity_courses extends AppCompatActivity {
     DatabaseReference dbRef;
     DatabaseReference classesRef;
 
-    String userId, myClass, name;
+    String userId, myClass;
 
     SharedPreferences studentInfo;
     
