@@ -35,7 +35,7 @@ public class activity_courses extends AppCompatActivity {
     String userId, myClass;
 
     SharedPreferences studentInfo;
-    
+
     private RecyclerView allCourses;
     private FirebaseRecyclerAdapter<Courses, ItemViewHolder> mAdapter = null;
 
@@ -75,20 +75,43 @@ public class activity_courses extends AppCompatActivity {
                 classesRef) {
 
             @Override
-            protected void populateViewHolder(ItemViewHolder viewHolder, final Courses model, int position) {
-                viewHolder.setTitle(model.getName());
-                viewHolder.setBody(model.getStatus());
+            protected void populateViewHolder(final ItemViewHolder viewHolder, final Courses model, int position) {
+                String key = this.getRef(position).getKey();
 
-                if (Objects.equals(model.getStatus(), "finished")) {
-                    Drawable id = getResources().getDrawable(R.drawable.finished);
-                    viewHolder.setImage(id);
-                } else if (Objects.equals(model.getStatus(), "comming")) {
-                    Drawable id = getResources().getDrawable(R.drawable.future);
-                    viewHolder.setImage(id);
-                } else if (Objects.equals(model.getStatus(), "progress")) {
-                    Drawable id = getResources().getDrawable(R.drawable.ongoing);
-                    viewHolder.setImage(id);
-                }
+                classesRef.child(key).child("details").addListenerForSingleValueEvent(new ValueEventListener() {
+
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        String name = dataSnapshot.child("name").getValue(String.class);
+                        ((TextView)viewHolder.itemView.findViewById(R.id.Item_title_courseTitle)).setText(name);
+
+                        String body = dataSnapshot.child("status").getValue(String.class);
+
+                        //TODO: fixa strängar
+                        if (body.equals("finished")) {
+                            Drawable id = getResources().getDrawable(R.drawable.finished);
+                            viewHolder.setImage(id);
+                            ((TextView)viewHolder.itemView.findViewById(R.id.Item_category)).setText("Kursen är färdig");
+                        } else if (body.equals("comming")) {
+                            Drawable id = getResources().getDrawable(R.drawable.future);
+                            viewHolder.setImage(id);
+                            ((TextView)viewHolder.itemView.findViewById(R.id.Item_category)).setText("Kursen är inte påbörjad");
+                        } else if (body.equals("progress")) {
+                            Drawable id = getResources().getDrawable(R.drawable.ongoing);
+                            viewHolder.setImage(id);
+                            ((TextView)viewHolder.itemView.findViewById(R.id.Item_category)).setText("Kursen pågår");
+                        }
+
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        Log.i("FEL", databaseError.toString());
+                    }
+                });
+
+
+
 
 
                 viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -104,10 +127,6 @@ public class activity_courses extends AppCompatActivity {
                         String courseName = model.getName();
                         String status = model.getStatus();
                         String formattedStatus ="";
-
-                        if(status.equals("progress"))   formattedStatus = "Kursen är påbörjad";
-                        if(status.equals("finished"))   formattedStatus = "Kursen är avslutad";
-                        if(status.equals("comming"))    formattedStatus = "Kursen är ännu inte startad";
 
                         intent.putExtra("courseName", courseName);
                         intent.putExtra("status", formattedStatus);
