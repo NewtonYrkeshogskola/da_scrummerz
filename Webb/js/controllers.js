@@ -22,6 +22,7 @@ app.controller('personCtrl', ["$scope", "$firebaseObject", "$firebaseArray", '$f
         $scope.auth.$onAuthStateChanged(function (firebaseUser) {
             var userId = firebaseUser.uid;
             $scope.firebaseUser = firebaseUser;
+            $scope.globalActiveAssignments = [];
             $scope.user = $firebaseObject(ref.child('users').child('students/' + userId).child('details'));
 
             $scope.user.$loaded().then(function () {
@@ -47,6 +48,31 @@ app.controller('personCtrl', ["$scope", "$firebaseObject", "$firebaseArray", '$f
                     });
                     alert("Rösten registrerad");
                 }
+
+                // Loop through all active assignments under personal node and push to globalAssignments
+                ref.child('coursesByClass').child(klass).once('value', function (snapshot) {
+                    snapshot.forEach(function (childSnapshot) {
+                        var childKey
+                        var childData
+                        var courseKey = childSnapshot.key;
+
+                        ref.child('coursesByClass').child(klass).child(courseKey).child('assignments').once('value', function (snapshot) {
+                            snapshot.forEach(function (childSnapshot) {
+                                childKey = childSnapshot.key;
+                                childData = childSnapshot.val();
+                                
+                                // For each child under each 
+                                $scope.globalActiveAssignments.push({
+                                    key: courseKey,
+                                    childKey: childKey,
+                                    assignment: childData
+                                })
+                            })
+                        });
+                    });
+                });
+
+
             });
         });
     }
@@ -138,6 +164,12 @@ app.controller("gradesCtrl", ["$scope", "$firebaseObject", "$firebaseArray", '$f
                         });
                     });
                 });
+
+                
+
+
+
+
             })
         })
     }
