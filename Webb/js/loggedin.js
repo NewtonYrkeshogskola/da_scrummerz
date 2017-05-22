@@ -16,6 +16,7 @@ function initApp() {
             var providerData = user.providerData;
 
         } else {
+            window.location = "index.html";
         }
     });
     
