@@ -76,8 +76,15 @@
             </center>
             <center>
                 <h4 class="text-center"><strong>Anmäl din närvaro: </strong></h4>
-                <input type="text" placeholder="ange koden här" ng-model="attendanceCode"><br>
-                <button type="button" class="btn btn-success" ng-click="attendance(attendanceCode)">I'm here!</button>
+                <form>
+                    <label for="chooseCourse">Välj kurs: </label><br>
+                    <select id="chooseCourse" ng-model="courseAttended" required>
+                    <option ng-repeat="course in myCourses" ng-show="{{course.details.status === 'progress'}}">{{course.details.courseCode}}</option>
+                </select><br>
+                    <label for="codeInput">Skriv koden: </label><br>
+                    <input type="text" id="codeInput" placeholder="ange koden här" ng-model="attendanceCode" required><br><br>
+                    <button type="button" class="btn btn-success" ng-click="attendance(courseAttended, attendanceCode)">I'm here!</button>
+                </form>
                 <center>
         </div>
 

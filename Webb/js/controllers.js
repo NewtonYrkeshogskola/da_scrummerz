@@ -64,15 +64,31 @@ app.controller('personCtrl', ["$scope", "$firebaseObject", "$firebaseArray", '$f
 
                 //function which gets path to database from input string (närvaro kod) and stores value to the db
                 //attendance code should have following structure: courseCode/date(format:yyyymmdd)/code, ex: YAPP-APP/20170523/randomnumber
-                $scope.attendance = function (pathToFirebase) {
-                    var pathParts = pathToFirebase.split("/");
+                //function checks if the last part of the code ('code') exists and if the user already reported his/her attendance
+                $scope.attendance = function (courseAttended, attendanceCode) {
+                    /*var pathParts = pathToFirebase.split("/");
                     var kursPath = pathParts[0];
                     var datePath = pathParts[1];
-                    var codePath = pathParts[2];
-                    firebase.database().ref().child('coursesByClass').child(klass).child(kursPath).child(datePath).child(codePath).update({
-                        [userId]: true
-                    });
-                    alert(kursPath + ' ' + datePath + ' ' + codePath);
+                    var codePath = pathParts[2];*/
+                    var pathToAttendance = firebase.database().ref().child('coursesByClass').child(klass).child(courseAttended).child(date).child(attendanceCode);
+                    var pathToCode = firebase.database().ref().child('coursesByClass').child(klass).child(courseAttended).child(date);
+                    pathToCode.once('value', function (snapshot) {
+                        if (snapshot.hasChild(attendanceCode)) {
+                            pathToAttendance.once('value', function (childSnapshot) {
+                                if (childSnapshot.hasChild(userId)) {
+                                    alert("Du har redan anmält din närvaro. Tack!");
+                                }
+                                else {
+                                    firebase.database().ref().child('coursesByClass').child(klass).child(courseAttended).child(date).child(attendanceCode).update({
+                                        [userId]: true
+                                    });
+                                }
+                            });
+                        }
+                        else {
+                            alert('Fel kod. Kontrollera koden och försök igen')
+                        }
+                    })
                 }
                 /*!!!!!!!!!!! DO NOT DELETE THIS. WE MAY NEED THIS LATER*/
                 /*$scope.giveFeedbackToTheFinishedCourse = function (kurs, q1, q2, q3, q4, q5, q6, q7) {
