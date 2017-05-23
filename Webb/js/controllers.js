@@ -82,6 +82,7 @@ app.controller('personCtrl', ["$scope", "$firebaseObject", "$firebaseArray", '$f
                                     firebase.database().ref().child('coursesByClass').child(klass).child(courseAttended).child(date).child(attendanceCode).update({
                                         [userId]: true
                                     });
+                                    alert('Din närvaro är registrerad. Tack!')
                                 }
                             });
                         }
