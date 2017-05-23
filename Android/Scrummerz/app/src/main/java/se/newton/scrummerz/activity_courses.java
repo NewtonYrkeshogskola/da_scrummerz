@@ -33,7 +33,6 @@ public class activity_courses extends AppCompatActivity {
     DatabaseReference classesRef;
 
     String userId, myClass;
-    Courses courses;
 
     SharedPreferences studentInfo;
 
@@ -85,7 +84,7 @@ public class activity_courses extends AppCompatActivity {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         String name = dataSnapshot.child("name").getValue(String.class);
-                        courses = dataSnapshot.getValue(Courses.class);
+                        final Courses courses = dataSnapshot.getValue(Courses.class);
 
                         ((TextView)viewHolder.itemView.findViewById(R.id.Item_title_courseTitle)).setText(name);
                         String body = dataSnapshot.child("status").getValue(String.class);
@@ -105,6 +104,37 @@ public class activity_courses extends AppCompatActivity {
                             ((TextView)viewHolder.itemView.findViewById(R.id.Item_category)).setText("Kursen pågår");
                         }
 
+                        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+
+                            @Override
+                            public void onClick(View v) {
+                                // Launch CourseInfo class
+                                final Intent intent = new Intent(activity_courses.this, CourseInfo.class);
+
+                                String courseKey = model.getCourseCode();
+                                String details = courses.getDescription();
+                                String teacher = courses.getTeacher();
+                                String courseName = courses.getName();
+                                String status = courses.getStatus();
+                                String formattedStatus ="";
+
+                                if (status.equals("progress")) formattedStatus = ("Kursen är påbörjad");
+                                if (status.equals("finished")) formattedStatus = ("Kursen är avslutad");
+                                if (status.equals("comming"))  formattedStatus = ("Kursen är ännu inte startad");
+
+                                Log.i("test", courseName + " " + details + " " + status);
+
+                                intent.putExtra("courseName", courseName);
+                                intent.putExtra("status", formattedStatus);
+                                intent.putExtra("teacher", teacher);
+                                intent.putExtra("description", details);
+                                intent.putExtra("courseKey", courseKey);
+                                intent.putExtra("classKey", myClass);
+                                startActivity(intent);
+
+                            }
+                        });
+
                     }
 
                     @Override
@@ -113,38 +143,7 @@ public class activity_courses extends AppCompatActivity {
                     }
                 });
 
-                viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
 
-                    @Override
-                    public void onClick(View v) {
-                        // Launch CourseInfo class
-                        final Intent intent = new Intent(activity_courses.this, CourseInfo.class);
-
-                        String courseKey = model.getCourseCode();
-                        String details = courses.getDescription();
-                        String teacher = courses.getTeacher();
-                        String courseName = courses.getName();
-                        String status = courses.getStatus();
-                        String formattedStatus ="";
-//                        String test = model
-                        Log.i("test MODEL", "" + test);
-
-                        if (status.equals("progress")) formattedStatus = ("Kursen är påbörjad");
-                        if (status.equals("finished")) formattedStatus = ("Kursen är avslutad");
-                        if (status.equals("comming"))  formattedStatus = ("Kursen är ännu inte startad");
-
-//                        Log.i("test", courseName + " " + details + " " + status);
-
-                        intent.putExtra("courseName", courseName);
-                        intent.putExtra("status", formattedStatus);
-                        intent.putExtra("teacher", teacher);
-                        intent.putExtra("description", details);
-                        intent.putExtra("courseKey", courseKey);
-                        intent.putExtra("classKey", myClass);
-//                        startActivity(intent);
-
-                    }
-                });
             }
 
         };
