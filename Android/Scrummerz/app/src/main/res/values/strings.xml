@@ -6,4 +6,5 @@
     <string name="title_activity_login">login</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="scannerInfo">Scanna QR-koden för att markera din närvaro idag</string>
 </resources>

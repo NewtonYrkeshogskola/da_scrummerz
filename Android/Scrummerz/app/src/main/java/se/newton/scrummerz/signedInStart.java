@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -48,6 +49,17 @@ public class signedInStart extends AppCompatActivity {
         nameTextView = (TextView) findViewById(R.id.welcome);
         myGradesTextView = (TextView) findViewById(R.id.myGradesTextView);
         TextView coursesTextView = (TextView) findViewById(R.id.myCoursesTextView);
+        Button startScanner = (Button) findViewById(R.id.scanner);
+
+
+        startScanner.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(signedInStart.this, scanner.class);
+                startActivity(intent);
+            }
+        });
+
 
         //Starts the course activity
         coursesTextView.setOnClickListener(new View.OnClickListener() {
