@@ -33,6 +33,7 @@ public class activity_courses extends AppCompatActivity {
     DatabaseReference classesRef;
 
     String userId, myClass;
+    Courses courses;
 
     SharedPreferences studentInfo;
 
@@ -77,14 +78,16 @@ public class activity_courses extends AppCompatActivity {
             @Override
             protected void populateViewHolder(final ItemViewHolder viewHolder, final Courses model, int position) {
                 String key = this.getRef(position).getKey();
+                Log.i("test MODEL INFO", model.toString());
 
                 classesRef.child(key).child("details").addListenerForSingleValueEvent(new ValueEventListener() {
 
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         String name = dataSnapshot.child("name").getValue(String.class);
-                        ((TextView)viewHolder.itemView.findViewById(R.id.Item_title_courseTitle)).setText(name);
+                        courses = dataSnapshot.getValue(Courses.class);
 
+                        ((TextView)viewHolder.itemView.findViewById(R.id.Item_title_courseTitle)).setText(name);
                         String body = dataSnapshot.child("status").getValue(String.class);
 
                         //TODO: fixa strängar
@@ -110,10 +113,6 @@ public class activity_courses extends AppCompatActivity {
                     }
                 });
 
-
-
-
-
                 viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
 
                     @Override
@@ -122,11 +121,19 @@ public class activity_courses extends AppCompatActivity {
                         final Intent intent = new Intent(activity_courses.this, CourseInfo.class);
 
                         String courseKey = model.getCourseCode();
-                        String details = model.getDescription();
-                        String teacher = model.getTeacher();
-                        String courseName = model.getName();
-                        String status = model.getStatus();
+                        String details = courses.getDescription();
+                        String teacher = courses.getTeacher();
+                        String courseName = courses.getName();
+                        String status = courses.getStatus();
                         String formattedStatus ="";
+//                        String test = model
+                        Log.i("test MODEL", "" + test);
+
+                        if (status.equals("progress")) formattedStatus = ("Kursen är påbörjad");
+                        if (status.equals("finished")) formattedStatus = ("Kursen är avslutad");
+                        if (status.equals("comming"))  formattedStatus = ("Kursen är ännu inte startad");
+
+//                        Log.i("test", courseName + " " + details + " " + status);
 
                         intent.putExtra("courseName", courseName);
                         intent.putExtra("status", formattedStatus);
@@ -134,7 +141,7 @@ public class activity_courses extends AppCompatActivity {
                         intent.putExtra("description", details);
                         intent.putExtra("courseKey", courseKey);
                         intent.putExtra("classKey", myClass);
-                        startActivity(intent);
+//                        startActivity(intent);
 
                     }
                 });
@@ -161,14 +168,11 @@ public class activity_courses extends AppCompatActivity {
             itemTitle.setText(title);
         }
 
-        void setBody(String body) {
+        public void setBody(String body) {
             TextView itemBody = (TextView) mView.findViewById(R.id.Item_category);
-            if (Objects.equals(body, "progress"))
-                itemBody.setText("Kursen är påbörjad");
-            if (Objects.equals(body, "finished"))
-                itemBody.setText("Kursen är avslutad");
-            if (Objects.equals(body, "comming"))
-                itemBody.setText("Kursen är ännu inte startad");
+            if (Objects.equals(body, "progress")) itemBody.setText("Kursen är påbörjad");
+            if (Objects.equals(body, "finished")) itemBody.setText("Kursen är avslutad");
+            if (Objects.equals(body, "comming"))  itemBody.setText("Kursen är ännu inte startad");
         }
 
         void setImage (Drawable image) {

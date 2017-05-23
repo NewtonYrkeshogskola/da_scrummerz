@@ -33,6 +33,7 @@ public class CourseInfo extends AppCompatActivity {
         details = intent.getStringExtra("description");
         teacher = intent.getStringExtra("teacher");
         status = intent.getStringExtra("status");
+        Log.i("test", courseName + " " + details + " " + status);
 
         detailsView.setText(details);
         courseNameView.setText(courseName);

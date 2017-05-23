@@ -100,7 +100,7 @@ public class login extends AppCompatActivity {
                             // Inloggningen lyckades, uppdatera userUI med uppgifter
                             Log.d("inloggning", "signInWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
-                            String uid = user.getUid();
+                            final String uid = user.getUid();
                             DatabaseReference localRef = mRef.child("users")
                                                              .child("students")
                                                              .child(uid)
@@ -114,6 +114,7 @@ public class login extends AppCompatActivity {
                                     studentInfo.edit().putString("studentName", student.getName()).apply();
                                     studentInfo.edit().putString("studentClass", student.getmyClass()).apply();
                                     studentInfo.edit().putString("studentPnr", student.getPnr()).apply();
+                                    studentInfo.edit().putString("studentUid", uid).apply();
                                     Log.i("Student", student.getmyClass());
                                     Log.i("Student", student.getName());
                                     Log.i("Student", student.getPnr());
