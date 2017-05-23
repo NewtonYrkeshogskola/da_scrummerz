@@ -111,7 +111,7 @@ public class activity_courses extends AppCompatActivity {
                                 // Launch CourseInfo class
                                 final Intent intent = new Intent(activity_courses.this, CourseInfo.class);
 
-                                String courseKey = model.getCourseCode();
+                                String courseKey = courses.getCourseCode();
                                 String details = courses.getDescription();
                                 String teacher = courses.getTeacher();
                                 String courseName = courses.getName();
@@ -122,14 +122,13 @@ public class activity_courses extends AppCompatActivity {
                                 if (status.equals("finished")) formattedStatus = ("Kursen är avslutad");
                                 if (status.equals("comming"))  formattedStatus = ("Kursen är ännu inte startad");
 
-                                Log.i("test", courseName + " " + details + " " + status);
-
                                 intent.putExtra("courseName", courseName);
                                 intent.putExtra("status", formattedStatus);
                                 intent.putExtra("teacher", teacher);
                                 intent.putExtra("description", details);
                                 intent.putExtra("courseKey", courseKey);
                                 intent.putExtra("classKey", myClass);
+                                Log.i("COURSEKEY FOUND", "" + courseKey);
                                 startActivity(intent);
 
                             }
