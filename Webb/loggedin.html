@@ -66,6 +66,14 @@
                 <button class="feelingButton" ng-click="setFeeling(0)"><img src="images/neutral.png" width="60px" alt="Smiley for neutral mood"></button>
                 <button class="feelingButton" ng-click="setFeeling(1)"><img src="images/cool.png" width="60px" alt="Smiley for happy mood"></button>
             </center>
+            <center>
+                <div ng-repeat="s in myLatestFeeling" ng-show="s.key === userId">
+                    Din senaste röst:
+                    <img ng-if="s.key === userId && s.grade === -1" src="images/scared.png" width="30px" alt="Smiley for bad mood">
+                    <img ng-if="s.key === userId && s.grade === 0" src="images/neutral.png" width="30px" alt="Smiley for bad mood">
+                    <img ng-if="s.key === userId && s.grade === 1" src="images/cool.png" width="30px" alt="Smiley for bad mood">
+                </div>
+            </center>
         </div>
 
         <div class="col-sm-5 divmargin well well-sm">
@@ -98,12 +106,8 @@
                     </div>
                 </div>
             </div>
-
-
             <div class="col-sm-1"> </div>
         </div>
-
-
 </body>
 
 </html>

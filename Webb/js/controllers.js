@@ -24,7 +24,7 @@ app.controller('personCtrl', ["$scope", "$firebaseObject", "$firebaseArray", '$f
             $scope.firebaseUser = firebaseUser;
             $scope.globalActiveAssignments = [];
             $scope.user = $firebaseObject(ref.child('users').child('students/' + userId).child('details'));
-
+            $scope.userId = firebaseUser.uid;
             $scope.user.$loaded().then(function () {
 
                 // Get my class from scope and use it to get courses
@@ -46,27 +46,45 @@ app.controller('personCtrl', ["$scope", "$firebaseObject", "$firebaseArray", '$f
                     firebase.database().ref().child('feelings').child(klass).child(date).update({
                         [userId]: feeling
                     });
-                    alert("Rösten registrerad");
                 }
+                ref.child('feelings').child(klass).child(date).child(userId);
 
+                ref.child('feelings').child(klass).child(date).on('value', function (snapshot) {
+                    $scope.myLatestFeeling = [];
+                    snapshot.forEach(function (childSnapshot) {
+                        var childKey = childSnapshot.key;
+                        var myFeelingsValue = childSnapshot.val();
+                        $scope.myLatestFeeling.push({
+                            key: childKey,
+                            grade: myFeelingsValue
+                        })
 
- $scope.giveFeedbackToTheFinishedCourse = function (kurs, q1, q2, q3, q4, q5) {
-                   /* firebase.database().ref().child('finishedCourseFeedback').child(kurs).child(q1).update({
-                        q1
-                    });
-                     firebase.database().ref().child('finishedCourseFeedback').child(kurs).child(q2).update({
-                        q2
-                    });
-                     firebase.database().ref().child('finishedCourseFeedback').child(kurs).child(q3).update({
-                        q3
-                    });
-                     firebase.database().ref().child('finishedCourseFeedback').child(kurs).child(q4).update({
-                        q4
-                    });
-                     firebase.database().ref().child('finishedCourseFeedback').child(kurs).child(q5).update({
-                        q5
-                    });*/
-                    alert(kurs + " " + q1+ " " +  q2+ " " +  q3+ " " +  q4+ " " +  q5);
+                    })
+                });
+
+                $scope.giveFeedbackToTheFinishedCourse = function (kurs, q1, q2, q3, q4, q5, q6, q7) {
+                    /* firebase.database().ref().child('finishedCourseFeedback').child(kurs).child(q1).update({
+                         q1
+                     });
+                      firebase.database().ref().child('finishedCourseFeedback').child(kurs).child(q2).update({
+                         q2
+                     });
+                      firebase.database().ref().child('finishedCourseFeedback').child(kurs).child(q3).update({
+                         q3
+                     });
+                      firebase.database().ref().child('finishedCourseFeedback').child(kurs).child(q4).update({
+                         q4
+                     });
+                      firebase.database().ref().child('finishedCourseFeedback').child(kurs).child(q5).update({
+                         q5
+                     });
+                      firebase.database().ref().child('finishedCourseFeedback').child(kurs).child(q6).update({
+                         q6
+                     });
+                      firebase.database().ref().child('finishedCourseFeedback').child(kurs).child(q7).update({
+                         q7
+                     });*/
+                    alert(kurs + " " + q1 + " " + q2 + " " + q3 + " " + q4 + " " + q5 + " " + q6 + " " + q7);
                 }
                 // Loop through all active assignments under personal node and push to globalAssignments
                 ref.child('coursesByClass').child(klass).once('value', function (snapshot) {
@@ -79,7 +97,7 @@ app.controller('personCtrl', ["$scope", "$firebaseObject", "$firebaseArray", '$f
                             snapshot.forEach(function (childSnapshot) {
                                 childKey = childSnapshot.key;
                                 childData = childSnapshot.val();
-                                
+
                                 // For each child under each 
                                 $scope.globalActiveAssignments.push({
                                     key: courseKey,
@@ -126,7 +144,7 @@ app.controller("AdminUserCtrl", ["$scope", "Auth",
 
 app.controller("gradesCtrl", ["$scope", "$firebaseObject", "$firebaseArray", '$filter', "Auth",
     function ($scope, $firebaseObject, $firebaseArray, $filter, Auth) {
-        
+
         // Top level variables
         var ref = firebase.database().ref();
         var userId;
@@ -172,7 +190,7 @@ app.controller("gradesCtrl", ["$scope", "$firebaseObject", "$firebaseArray", '$f
                             snapshot.forEach(function (childSnapshot) {
                                 childKey = childSnapshot.key;
                                 childData = childSnapshot.val();
-                                
+
                                 // For each child under each 
                                 $scope.globalAssignments.push({
                                     key: courseKey,
@@ -184,7 +202,7 @@ app.controller("gradesCtrl", ["$scope", "$firebaseObject", "$firebaseArray", '$f
                     });
                 });
 
-                
+
 
 
 
