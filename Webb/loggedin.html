@@ -70,10 +70,15 @@
                 <div ng-repeat="s in myLatestFeeling" ng-show="s.key === userId">
                     Din senaste röst:
                     <img ng-if="s.key === userId && s.grade === -1" src="images/scared.png" width="30px" alt="Smiley for bad mood">
-                    <img ng-if="s.key === userId && s.grade === 0" src="images/neutral.png" width="30px" alt="Smiley for bad mood">
-                    <img ng-if="s.key === userId && s.grade === 1" src="images/cool.png" width="30px" alt="Smiley for bad mood">
+                    <img ng-if="s.key === userId && s.grade === 0" src="images/neutral.png" width="30px" alt="Smiley for neutral mood">
+                    <img ng-if="s.key === userId && s.grade === 1" src="images/cool.png" width="30px" alt="Smiley for happy mood">
                 </div>
             </center>
+            <center>
+                <h4 class="text-center"><strong>Anmäl din närvaro: </strong></h4>
+                <input type="text" placeholder="ange koden här" ng-model="attendanceCode"><br>
+                <button type="button" class="btn btn-success" ng-click="attendance(attendanceCode)">I'm here!</button>
+                <center>
         </div>
 
         <div class="col-sm-5 divmargin well well-sm">

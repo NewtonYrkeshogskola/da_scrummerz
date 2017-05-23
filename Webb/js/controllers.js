@@ -47,8 +47,8 @@ app.controller('personCtrl', ["$scope", "$firebaseObject", "$firebaseArray", '$f
                         [userId]: feeling
                     });
                 }
-                ref.child('feelings').child(klass).child(date).child(userId);
 
+                // Get the latest user's feeling
                 ref.child('feelings').child(klass).child(date).on('value', function (snapshot) {
                     $scope.myLatestFeeling = [];
                     snapshot.forEach(function (childSnapshot) {
@@ -62,8 +62,21 @@ app.controller('personCtrl', ["$scope", "$firebaseObject", "$firebaseArray", '$f
                     })
                 });
 
-                $scope.giveFeedbackToTheFinishedCourse = function (kurs, q1, q2, q3, q4, q5, q6, q7) {
-                    /* firebase.database().ref().child('finishedCourseFeedback').child(kurs).child(q1).update({
+                //function which gets path to database from input string (närvaro kod) and stores value to the db
+                //attendance code should have following structure: courseCode/date(format:yyyymmdd)/code, ex: YAPP-APP/20170523/randomnumber
+                $scope.attendance = function (pathToFirebase) {
+                    var pathParts = pathToFirebase.split("/");
+                    var kursPath = pathParts[0];
+                    var datePath = pathParts[1];
+                    var codePath = pathParts[2];
+                    firebase.database().ref().child('coursesByClass').child(klass).child(kursPath).child(datePath).child(codePath).update({
+                        [userId]: true
+                    });
+                    alert(kursPath + ' ' + datePath + ' ' + codePath);
+                }
+                /*!!!!!!!!!!! DO NOT DELETE THIS. WE MAY NEED THIS LATER*/
+                /*$scope.giveFeedbackToTheFinishedCourse = function (kurs, q1, q2, q3, q4, q5, q6, q7) {
+                     firebase.database().ref().child('finishedCourseFeedback').child(kurs).child(q1).update({
                          q1
                      });
                       firebase.database().ref().child('finishedCourseFeedback').child(kurs).child(q2).update({
@@ -83,9 +96,9 @@ app.controller('personCtrl', ["$scope", "$firebaseObject", "$firebaseArray", '$f
                      });
                       firebase.database().ref().child('finishedCourseFeedback').child(kurs).child(q7).update({
                          q7
-                     });*/
+                     });
                     alert(kurs + " " + q1 + " " + q2 + " " + q3 + " " + q4 + " " + q5 + " " + q6 + " " + q7);
-                }
+                }*/
                 // Loop through all active assignments under personal node and push to globalAssignments
                 ref.child('coursesByClass').child(klass).once('value', function (snapshot) {
                     snapshot.forEach(function (childSnapshot) {
