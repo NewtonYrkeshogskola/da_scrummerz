@@ -145,8 +145,32 @@ app.controller('personCtrl', ["$scope", "$firebaseObject", "$firebaseArray", '$f
     }
 ]);
 
-app.controller("AdminUserCtrl", ["$scope", "Auth",
-    function ($scope, Auth) {
+app.controller("AdminUserCtrl", ["$scope", "$firebaseObject", "$firebaseArray", '$filter', "Auth",
+
+    function ($scope, $firebaseObject, $firebaseArray, $filter, Auth) {
+        // Top level variables
+        $scope.auth = Auth;
+        var ref = firebase.database().ref();
+        var userId;
+        var firebaseUser;
+        var user;
+        var klass = $scope.myClass;
+
+        $scope.auth.$onAuthStateChanged(function (firebaseUser) {
+            userId = firebaseUser.uid;
+            $scope.firebaseUser = firebaseUser;
+            firebaseUser = firebaseUser;
+            $scope.user = $firebaseObject(ref.child('users').child('students/' + userId).child('details'));
+            user = $scope.user;
+
+            $scope.user.$loaded().then(function () {
+                $scope.myClass = $scope.user.myClass;
+                $scope.myCourses = $firebaseObject(ref.child('coursesByClass/' + klass));
+            })
+
+        });
+        
+
         $scope.createUser = function () {
             $scope.message = null;
             $scope.error = null;
@@ -169,6 +193,41 @@ app.controller("AdminUserCtrl", ["$scope", "Auth",
                 $scope.error = error;
             });
         };
+
+
+        // Get date for QR code
+        $scope.date = new Date();
+        $scope.myDate = new Date($scope.date.getFullYear(),
+            $scope.date.getMonth(),
+            $scope.date.getDate());
+        $scope.myDate = $filter('date')($scope.myDate, 'yyyyMMdd');
+        var date = $scope.myDate;
+
+        //generate QR code
+        var qrcode = new QRCode(document.getElementById("qrcode"), {
+            width: 1000,
+            height: 1000,
+            useSVG: true
+        });
+
+        function makeCode() {
+            alert("HÄR")
+            var klass = document.getElementById("chooseCourse");
+            var kod = document.getElementById("code");
+
+            qrcode.makeCode(klass.value + '/' + date + '/' + kod.value);
+        }
+
+        $("#text").
+            on("blur", function () {
+                makeCode();
+            }).
+            on("keydown", function (e) {
+                if (e.keyCode == 13) {
+                    makeCode();
+                }
+            });
+
     }
 ]);
 
