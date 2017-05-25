@@ -1,4 +1,4 @@
-var app = angular.module('LoggedIn', ['firebase', 'ngAnimate']);
+var app = angular.module('LoggedIn', ['firebase', 'ngAnimate', "ja.qr"]);
 var grades = [];
 
 
@@ -154,7 +154,6 @@ app.controller("AdminUserCtrl", ["$scope", "$firebaseObject", "$firebaseArray", 
         var userId;
         var firebaseUser;
         var user;
-        var klass = $scope.myClass;
 
         $scope.auth.$onAuthStateChanged(function (firebaseUser) {
             userId = firebaseUser.uid;
@@ -165,11 +164,11 @@ app.controller("AdminUserCtrl", ["$scope", "$firebaseObject", "$firebaseArray", 
 
             $scope.user.$loaded().then(function () {
                 $scope.myClass = $scope.user.myClass;
-                $scope.myCourses = $firebaseObject(ref.child('coursesByClass/' + klass));
+                $scope.myCourses = $firebaseObject(ref.child('coursesByClass/' + $scope.myClass));
             })
 
         });
-        
+
 
         $scope.createUser = function () {
             $scope.message = null;
@@ -194,7 +193,6 @@ app.controller("AdminUserCtrl", ["$scope", "$firebaseObject", "$firebaseArray", 
             });
         };
 
-
         // Get date for QR code
         $scope.date = new Date();
         $scope.myDate = new Date($scope.date.getFullYear(),
@@ -203,30 +201,32 @@ app.controller("AdminUserCtrl", ["$scope", "$firebaseObject", "$firebaseArray", 
         $scope.myDate = $filter('date')($scope.myDate, 'yyyyMMdd');
         var date = $scope.myDate;
 
+        // get a random code for the QR
+        $scope.random = Math.floor((Math.random() * 100000) + 1);
+
+        $scope.selectedCourse = "NONE"
+
         //generate QR code
-        var qrcode = new QRCode(document.getElementById("qrcode"), {
-            width: 1000,
-            height: 1000,
-            useSVG: true
-        });
+        $scope.string = null;
 
-        function makeCode() {
-            alert("HÄR")
-            var klass = document.getElementById("chooseCourse");
-            var kod = document.getElementById("code");
-
-            qrcode.makeCode(klass.value + '/' + date + '/' + kod.value);
+        $scope.updateString = function () {
+            $scope.string = date + "/" + $scope.selectedCourse + "/" + $scope.random;
         }
 
-        $("#text").
-            on("blur", function () {
-                makeCode();
-            }).
-            on("keydown", function (e) {
-                if (e.keyCode == 13) {
-                    makeCode();
-                }
+        $scope.activatePresence = function () {
+            var localDate = new Date();
+            $scope.time = localDate.getHours() + ":" + localDate.getMinutes();
+            firebase.database().ref().child('coursesByClass').child($scope.myClass).child($scope.selectedCourse).child(date).child($scope.random).update({
+                active: true,
+                created: $scope.time
             });
+        }
+        $scope.deActivatePresence = function () {
+
+            firebase.database().ref().child('coursesByClass').child($scope.myClass).child($scope.selectedCourse).child(date).child($scope.random).update({
+                active: false
+            });
+        }
 
     }
 ]);

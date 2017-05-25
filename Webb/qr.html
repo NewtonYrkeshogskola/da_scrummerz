@@ -17,32 +17,23 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-animate.js"></script>
     <script src="https://www.gstatic.com/firebasejs/3.6.6/firebase.js"></script>
     <script src="https://cdn.firebase.com/libs/angularfire/2.3.0/angularfire.min.js"></script>
-    <script type="text/javascript" src="js/jquery.min.js"></script>
-    <script type="text/javascript" src="js/qrcode.js"></script>
     <script type="text/javascript" src="js/database.js"></script>
+    <script src="js/qrcode.min.js"></script>
+    <script src="js/angular-qr.min.js"></script>
     <script type="text/javascript" src="js/controllers.js"></script>
 </head>
 
 <body ng-app="LoggedIn" ng-controller="AdminUserCtrl as ctrl">
 
-    Inloggad som {{user.Name}} <br>
-
-    Ange klass: 
-    <select id="chooseCourse" ng-model="courseAttended" required >
-    <option ng-repeat="course in myCourses" ng-show="{{course.details.status === 'progress'}}">{{course.details.courseCode}}</option>
-    <br> Ange kod:
-    <input id="code" type="text" value="72954" style="width:30%" /> <br>
-
-    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-        <g id="qrcode" />
-    </svg>
-
-    <button ng-click="makeCode()">KLICKA HÄR</button>
-
+    Inloggad som {{user.Name}} <br> Ange klass:
+    <select id="chooseCourse" ng-model="selectedCourse" ng-change="updateString()" required>
+    <option ng-repeat="course in myCourses" ng-show="{{course.details.status === 'progress'}}">{{course.details.courseCode}}</option><input ng-hide="true"/> 
+    <button ng-click="activatePresence()">Aktivera närvaro</button>
+    <button ng-click="deActivatePresence()">Sluta ta närvaro</button>
     <br>
-    Användare: {{user}} <br>
-    Klass: {{myClass}} <br>
-    Kurser: {{myCourses}} <br>
+    <qr text="string" ng-hide="selectedCourse == 'NONE'" size=600></qr>
+    <br>
+    <p ng-hide="selectedCourse == 'NONE'"> Kod för manuell inmatning till {{selectedCourse}}: {{random}}. </p>
 
 </body>
 
