@@ -5,10 +5,13 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,6 +36,7 @@ public class signedInStart extends AppCompatActivity {
     String uid;
     Student student = new Student();
     SharedPreferences studentInfo;
+    RelativeLayout.LayoutParams layoutparams;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,9 +84,9 @@ public class signedInStart extends AppCompatActivity {
             }
         });
 
-        ImageButton minus = (ImageButton) findViewById(R.id.negative);
-        ImageButton neutral = (ImageButton) findViewById(R.id.neutral);
-        ImageButton plus = (ImageButton) findViewById(R.id.positive);
+        final ImageButton minus = (ImageButton) findViewById(R.id.negative);
+        final ImageButton neutral = (ImageButton) findViewById(R.id.neutral);
+        final ImageButton plus = (ImageButton) findViewById(R.id.positive);
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd", Locale.getDefault());
         String currentDate = sdf.format(new Date());
@@ -90,11 +94,21 @@ public class signedInStart extends AppCompatActivity {
         final DatabaseReference dateData = mRoot.child("feelings").child(classRef).child(currentDate).child(uid);
         dateData.keepSynced(true);
 
+        //Width 70dp, height 68dp
 
         minus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dateData.setValue(-1);
+                minus.setScaleX(1.15f);
+                minus.setScaleY(1.15f);
+
+                neutral.setScaleX(0.70f);
+                neutral.setScaleY(0.70f);
+
+                plus.setScaleX(0.70f);
+                plus.setScaleY(0.70f);
+
                 Toast.makeText(signedInStart.this, "Tack för din röst!", Toast.LENGTH_LONG).show();
             }
         });
@@ -103,6 +117,14 @@ public class signedInStart extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 dateData.setValue(0);
+                minus.setScaleX(0.70f);
+                minus.setScaleY(0.70f);
+
+                neutral.setScaleX(1.15f);
+                neutral.setScaleY(1.15f);
+
+                plus.setScaleX(0.70f);
+                plus.setScaleY(0.70f);
                 Toast.makeText(signedInStart.this, "Tack för din röst!", Toast.LENGTH_LONG).show();
             }
         });
@@ -111,6 +133,14 @@ public class signedInStart extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 dateData.setValue(1);
+                minus.setScaleX(0.70f);
+                minus.setScaleY(0.70f);
+
+                neutral.setScaleX(0.70f);
+                neutral.setScaleY(0.70f);
+
+                plus.setScaleX(1.15f);
+                plus.setScaleY(1.15f);
                 Toast.makeText(signedInStart.this, "Tack för din röst!", Toast.LENGTH_LONG).show();
             }
         });
