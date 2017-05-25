@@ -1,4 +1,4 @@
-var app = angular.module('LoggedIn', ['firebase', 'ngAnimate']);
+var app = angular.module('LoggedIn', ['firebase', 'ngAnimate', "ja.qr"]);
 var grades = [];
 
 
