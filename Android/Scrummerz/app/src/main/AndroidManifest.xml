@@ -2,6 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="se.newton.scrummerz">
 
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -23,7 +27,12 @@
             android:label="@string/title_activity_login"
             android:theme="@style/FullscreenTheme" />
         <activity android:name=".signedInStart" />
-        <activity android:name=".activity_courses"></activity>
+        <activity android:name=".activity_courses" />
+        <activity android:name=".CourseInfo" />
+        <activity android:name=".grades_activity" />
+        <activity android:name=".assignment" />
+        <activity android:name=".assignment_grades" />
+        <activity android:name=".scanner"></activity>
     </application>
 
 </manifest>
