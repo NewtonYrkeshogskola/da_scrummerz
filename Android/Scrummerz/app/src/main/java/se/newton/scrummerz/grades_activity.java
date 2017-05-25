@@ -71,30 +71,41 @@ public class grades_activity extends ListActivity {
     public void getMyGrades(String user) {
         DatabaseReference gradesRef = dbRef.child("grades").child(userId).child("final");
         final String myClass = preferences.getString("studentClass", "");
-        Log.i("test class", myClass);
 
         gradesRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+//                Log.i("test NOW DO THIS GRADE", dataSnapshot.getKey());
+//                Log.i("test NOW DO THIS GRADE", dataSnapshot.getValue().toString());
+
                 for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
                     courseCode = postSnapshot.getKey();
                     grade = postSnapshot.getValue().toString();
 
-                    DatabaseReference courseRef = dbRef.child("coursesByClass").child(myClass).child(courseCode).child("details");
-                    courseRef.addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            Courses courses = dataSnapshot.getValue(Courses.class);
-                            grades.add(courses.getName() + " (" + courses.getCourseCode() + ")"
-                                    + "\nSlutbetyg på denna kurs: " + grade);
-                            arrayAdapter.notifyDataSetChanged();
-                        }
+                    Courses courses = dataSnapshot.getValue(Courses.class);
+                    grades.add(postSnapshot.getKey() + "\nSlutbetyg på denna kurs: " + grade);
+                    arrayAdapter.notifyDataSetChanged();
 
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
 
-                        }
-                    });
+                    Log.i("test NOW DO THIS GRADE", postSnapshot.getKey());
+                    Log.i("test NOW DO THIS GRADE", postSnapshot.getValue().toString());
+
+
+//                    DatabaseReference courseRef = dbRef.child("coursesByClass").child(myClass).child(courseCode).child("details");
+//                    courseRef.addValueEventListener(new ValueEventListener() {
+//                        @Override
+//                        public void onDataChange(DataSnapshot dataSnapshot) {
+//                            Courses courses = dataSnapshot.getValue(Courses.class);
+//                            grades.add(courses.getName() + " (" + courses.getCourseCode() + ")"
+//                                    + "\nSlutbetyg på denna kurs: " + grade);
+//                            arrayAdapter.notifyDataSetChanged();
+//                        }
+//
+//                        @Override
+//                        public void onCancelled(DatabaseError databaseError) {
+//
+//                        }
+//                    });
 
                 }
             }

@@ -92,8 +92,6 @@ public class signedInStart extends AppCompatActivity {
         final DatabaseReference dateData = mRoot.child("feelings").child(classRef).child(currentDate).child(uid);
         dateData.keepSynced(true);
 
-        //Width 70dp, height 68dp
-
         minus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
