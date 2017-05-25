@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/3.9.0/firebase.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/3.9.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/3.9.0/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/3.9.0/firebase-auth.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-animate.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/3.6.6/firebase.js"></script>
+    <script src="https://cdn.firebase.com/libs/angularfire/2.3.0/angularfire.min.js"></script>
+    <script type="text/javascript" src="js/loggedin.js"></script>
+    <script type="text/javascript" src="js/controllers.js"></script>
+    <script type="text/javascript" src="js/database.js"></script>
+</head>
+
+<body ng-app="LoggedIn">
+    <div ng-controller="personCtrl as ctrl">
+        <nav class="navbar navbar-inverse">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="loggedin.html">Studentportalen</a>
+                </div>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-user "></span> {{user.Name}}<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="betyg.html">Mina betyg</a></li>
+                            <li><a href="courses.html">Mina kurser</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#" id="quickstart-sign-in" data-toggle="modal" data-target="#login-modal"><span class="glyphicon glyphicon-log-out"></span> Logga ut</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <div ng-controller="gradesCtrl">
+            <h1 class="text-center">Betyg</h1>
+            <div class="row">
+                <div class="col-sm-1"> </div>
+                <div class="col-sm-5 divmargin well well-sm">
+                    <h4 class="text-center">Betyg på avslutade kurser</h4>
+                    <div ng-repeat="course in myCourses" ng-show="{{course.details.status === 'finished'}}">
+                        <div>
+                            <Strong>{{course.details.name}}</Strong>
+                            <p ng-repeat="grade in globalGrades" ng-if="grade.key == course.details.courseCode">Slutbetyg på denna kurs: <strong>{{grade.grade}}</strong> </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-5 divmargin well">
+                    <h4 class="text-center">Betyg på avslutade uppgifter</h4>
+                    <br>
+
+                    <div ng-repeat="course in myCourses" class="panel panel-default" ng-show="{{course.details.status != 'comming'}}">
+                        <div ng-click="value = !value" ng-class="{ active: value }" class="panel-heading">{{course.details.name}}</div>
+                        <div class="panel-body animate-hide" ng-show="value">
+                            <li ng-repeat="assignment in globalAssignments" ng-if="assignment.key == course.details.courseCode">
+                                {{assignment.childKey}} : {{assignment.grade}} </li>
+                            <br>
+                            <em>Saknas det uppgifter i denna vy, så är de ännu inte betygsatta.</em>
+                            <br>
+                        </div>
+                    </div>
+                    <div class="col-sm-1"> </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <form>
+                        <select ng-model="courseToGiveFeedbackTo">
+            <option ng-repeat="course in myCourses" ng-show="{{course.details.status === 'finished'}}">{{course.details.name}}</option>
+        </select>
+                        <fieldset ng-model="group1" id="group1">Allmänt sett, vilket är ditt omdöme om kursen?
+                            <input type="radio" value="1" name="group1">1
+                            <input type="radio" value="2" name="group1">2
+                            <input type="radio" value="3" name="group1">3
+                            <input type="radio" value="4" name="group1">4
+                            <input type="radio" value="5" name="group1">5
+                        </fieldset>
+                        <fieldset ng-model="group2" id="group2">Hur tycker du att kursens innehåll överensstämmer med lärandemålen?
+                            <input type="radio" value="1" name="group2">1
+                            <input type="radio" value="2" name="group2">2
+                            <input type="radio" value="3" name="group2">3
+                            <input type="radio" value="4" name="group2">4
+                            <input type="radio" value="5" name="group2">5
+                        </fieldset>
+                         <fieldset ng-model="group3" id="group3">Vad tycker du om kurslitteraturen?
+                            <input type="radio" value="1" name="group3">1
+                            <input type="radio" value="2" name="group3">2
+                            <input type="radio" value="3" name="group3">3
+                            <input type="radio" value="4" name="group3">4
+                            <input type="radio" value="5" name="group3">5
+                        </fieldset>
+                        <fieldset ng-model="group4" id="group4">Hur väl tycker du att undervisningslokalerna har fungerat?
+                            <input type="radio" value="1" name="group4">1
+                            <input type="radio" value="2" name="group4">2
+                            <input type="radio" value="3" name="group4">3
+                            <input type="radio" value="4" name="group4">4
+                            <input type="radio" value="5" name="group4">5
+                        </fieldset>
+                         <fieldset ng-model="group5" id="group5">Kommer du att ha nytta av kursen? 
+                            <input type="radio" value="1" name="group5">1
+                            <input type="radio" value="2" name="group5">2
+                            <input type="radio" value="3" name="group5">3
+                            <input type="radio" value="4" name="group5">4
+                            <input type="radio" value="5" name="group5">5
+                        </fieldset>
+                        
+                         <button class="button button-block button-positive" ng-click="giveFeedbackToTheFinishedCourse(courseToGiveFeedbackTo, group1, group2, group3, group4, group5)">Ge feedback!</button>
+                    </form>
+                </div>
+            </div>
+
+</body>
+
+</html>
+
