@@ -73,54 +73,65 @@
                     <div class="col-sm-1"> </div>
                 </div>
             </div>
-            <div class="row">
+
+            <!-- !!!!!!!!!!! DO NOT DELETE THIS. WE MAY NEED THIS LATER -->
+            <!--            <div class="row" ng-controller="personCtrl">
+                <div id="main" class = 'form'></div>
                 <div class="col-sm-6">
                     <form>
-                        <select ng-model="courseToGiveFeedbackTo">
+                        <label for="courseToGiveFeedbackTo">Välj en kurs</label><br>
+                        <select id="courseToGiveFeedbackTo" ng-model="courseToGiveFeedbackTo">
             <option ng-repeat="course in myCourses" ng-show="{{course.details.status === 'finished'}}">{{course.details.name}}</option>
         </select>
-                        <fieldset ng-model="group1" id="group1">Allmänt sett, vilket är ditt omdöme om kursen?
-                            <input type="radio" value="1" name="group1">1
-                            <input type="radio" value="2" name="group1">2
-                            <input type="radio" value="3" name="group1">3
-                            <input type="radio" value="4" name="group1">4
-                            <input type="radio" value="5" name="group1">5
+                        <label for="group1">Allmänt sett, vilket är ditt omdöme om kursen?</label>
+                        <fieldset id="group1">
+                            <input type="radio" ng-model="group1" value="1" name="group1">1
+                            <input type="radio" ng-model="group1" value="2" name="group1">2
+                            <input type="radio" ng-model="group1" value="3" name="group1">3
+                            <input type="radio" ng-model="group1" value="4" name="group1">4
+                            <input type="radio" ng-model="group1" value="5" name="group1">5
                         </fieldset>
-                        <fieldset ng-model="group2" id="group2">Hur tycker du att kursens innehåll överensstämmer med lärandemålen?
-                            <input type="radio" value="1" name="group2">1
-                            <input type="radio" value="2" name="group2">2
-                            <input type="radio" value="3" name="group2">3
-                            <input type="radio" value="4" name="group2">4
-                            <input type="radio" value="5" name="group2">5
+                        <label for="group2">Hur tycker du att kursens innehåll överensstämmer med lärandemålen?</label>
+                        <fieldset id="group2">
+                            <input type="radio" ng-model="group2" value="1" name="group2">1
+                            <input type="radio" ng-model="group2" value="2" name="group2">2
+                            <input type="radio" ng-model="group2" value="3" name="group2">3
+                            <input type="radio" ng-model="group2" value="4" name="group2">4
+                            <input type="radio" ng-model="group2" value="5" name="group2">5
                         </fieldset>
-                         <fieldset ng-model="group3" id="group3">Vad tycker du om kurslitteraturen?
-                            <input type="radio" value="1" name="group3">1
-                            <input type="radio" value="2" name="group3">2
-                            <input type="radio" value="3" name="group3">3
-                            <input type="radio" value="4" name="group3">4
-                            <input type="radio" value="5" name="group3">5
+                        <label for="group3">Vad tycker du om kurslitteraturen?</label>
+                        <fieldset id="group3">
+                            <input type="radio" ng-model="group3" value="1" name="group3">1
+                            <input type="radio" ng-model="group3" value="2" name="group3">2
+                            <input type="radio" ng-model="group3" value="3" name="group3">3
+                            <input type="radio" ng-model="group3" value="4" name="group3">4
+                            <input type="radio" ng-model="group3" value="5" name="group3">5
                         </fieldset>
-                        <fieldset ng-model="group4" id="group4">Hur väl tycker du att undervisningslokalerna har fungerat?
-                            <input type="radio" value="1" name="group4">1
-                            <input type="radio" value="2" name="group4">2
-                            <input type="radio" value="3" name="group4">3
-                            <input type="radio" value="4" name="group4">4
-                            <input type="radio" value="5" name="group4">5
+                        <label for="group4">Hur väl tycker du att undervisningslokalerna har fungerat?</label>
+                        <fieldset id="group4">
+                            <input type="radio" ng-model="group4" value="1" name="group4">1
+                            <input type="radio" ng-model="group4" value="2" name="group4">2
+                            <input type="radio" ng-model="group4" value="3" name="group4">3
+                            <input type="radio" ng-model="group4" value="4" name="group4">4
+                            <input type="radio" ng-model="group4" value="5" name="group4">5
                         </fieldset>
-                         <fieldset ng-model="group5" id="group5">Kommer du att ha nytta av kursen? 
-                            <input type="radio" value="1" name="group5">1
-                            <input type="radio" value="2" name="group5">2
-                            <input type="radio" value="3" name="group5">3
-                            <input type="radio" value="4" name="group5">4
-                            <input type="radio" value="5" name="group5">5
+                        <label for="group5">Kommer du att ha nytta av kursen?</label>
+                        <fieldset id="group5">
+                            <input type="radio" ng-model="group5" value="1" name="group5">1
+                            <input type="radio" ng-model="group5" value="2" name="group5">2
+                            <input type="radio" ng-model="group5" value="3" name="group5">3
+                            <input type="radio" ng-model="group5" value="4" name="group5">4
+                            <input type="radio" ng-model="group5" value="5" name="group5">5
                         </fieldset>
-                        
-                         <button class="button button-block button-positive" ng-click="giveFeedbackToTheFinishedCourse(courseToGiveFeedbackTo, group1, group2, group3, group4, group5)">Ge feedback!</button>
+                        <label for="question6">Hur kan kursen förbättras?</label><br>
+                        <input type="text" id="question6" ng-model="question6"><br>
+                        <label for="question7">Vad är det viktigaste du har lärt dig under kursen?</label><br>
+                        <input type="text" id="question7" ng-model="question7"><br><br>
+                        <button class="button button-block button-positive" ng-click="giveFeedbackToTheFinishedCourse(courseToGiveFeedbackTo, group1, group2, group3, group4, group5, question6, question7)">Lämna feedback!</button>
                     </form>
                 </div>
-            </div>
+            </div>-->
 
 </body>
 
 </html>
-
