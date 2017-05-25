@@ -210,6 +210,7 @@ app.controller("AdminUserCtrl", ["$scope", "$firebaseObject", "$firebaseArray", 
         $scope.string = null;
 
         $scope.updateString = function () {
+            $scope.random = Math.floor((Math.random() * 100000) + 1);
             $scope.string = date + "/" + $scope.selectedCourse + "/" + $scope.random;
         }
 
@@ -220,12 +221,14 @@ app.controller("AdminUserCtrl", ["$scope", "$firebaseObject", "$firebaseArray", 
                 active: true,
                 created: $scope.time
             });
+            alert("Nu är närvaron aktiverad. Du kan nu registera dig som närvarande.")
         }
         $scope.deActivatePresence = function () {
 
             firebase.database().ref().child('coursesByClass').child($scope.myClass).child($scope.selectedCourse).child(date).child($scope.random).update({
                 active: false
             });
+            alert("Närvaron är nu stängd för nya registreringar")
         }
 
     }

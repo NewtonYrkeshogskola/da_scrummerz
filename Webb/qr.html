@@ -7,6 +7,8 @@
     <title>Lärare - Generera närvaro</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no" />
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/3.9.0/firebase.js"></script>
@@ -25,16 +27,25 @@
 
 <body ng-app="LoggedIn" ng-controller="AdminUserCtrl as ctrl">
 
-    Inloggad som {{user.Name}} <br> Ange klass:
-    <select id="chooseCourse" ng-model="selectedCourse" ng-change="updateString()" required>
-    <option ng-repeat="course in myCourses" ng-show="{{course.details.status === 'progress'}}">{{course.details.courseCode}}</option><input ng-hide="true"/> 
-    <button ng-click="activatePresence()">Aktivera närvaro</button>
-    <button ng-click="deActivatePresence()">Sluta ta närvaro</button>
+    <div class="row">
+        <div class="col-sm-3">
+            Inloggad som {{user.Name}} <br> Ange klass:
+    <select class="styled-select" id="chooseCourse" ng-model="selectedCourse" ng-change="updateString()" required>
+    <option ng-repeat="course in myCourses" ng-show="{{course.details.status === 'progress'}}">{{course.details.courseCode}}</option><input ng-hide="true"/> <br><br>
+    <button class="button-qr-activate" ng-click="activatePresence()">Aktivera närvaro</button> 
+    <button class="button-qr-deactivate" ng-click="deActivatePresence()">Sluta ta närvaro</button>
     <br>
-    <qr text="string" ng-hide="selectedCourse == 'NONE'" size=600></qr>
-    <br>
-    <p ng-hide="selectedCourse == 'NONE'"> Kod för manuell inmatning till {{selectedCourse}}: {{random}}. </p>
-
+        </div>
+        <div class="col-sm-6">
+            <div id="qr" ng-hide="selectedCourse == 'NONE'">
+                <qr text="string" size=900></qr>
+            </div>
+        </div>
+        <div class="col-sm-3"> </div>
+            <center>
+                <h1 ng-hide="selectedCourse == 'NONE'"> Kod för manuell inmatning <br><br>{{random}} <br><br> Kurs: {{selectedCourse}}</h1>
+            </center>
+    </div>
 </body>
 
 </html>
