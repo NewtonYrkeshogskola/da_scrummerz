@@ -211,7 +211,7 @@ app.controller("AdminUserCtrl", ["$scope", "$firebaseObject", "$firebaseArray", 
 
         $scope.updateString = function () {
             $scope.random = Math.floor((Math.random() * 100000) + 1);
-            $scope.string = date + "/" + $scope.selectedCourse + "/" + $scope.random;
+            $scope.string = $scope.selectedCourse + "/" + date + "/" + $scope.random;
         }
 
         $scope.activatePresence = function () {
@@ -293,12 +293,6 @@ app.controller("gradesCtrl", ["$scope", "$firebaseObject", "$firebaseArray", '$f
                         });
                     });
                 });
-
-
-
-
-
-
             })
         })
     }
