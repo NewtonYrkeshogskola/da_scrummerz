@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@mipmap/bg"
+    tools:context="se.newton.scrummerz.CourseInfo">
+
+    <TextView
+        android:id="@+id/courseName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
+        android:text="Kursnamn"
+        android:textColor="@color/cardview_dark_background"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintLeft_toLeftOf="@+id/imageView2"
+        app:layout_constraintRight_toRightOf="@+id/imageView2"
+        app:layout_constraintTop_toBottomOf="@+id/imageView2" />
+
+    <TextView
+        android:id="@+id/detailsView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="0dp"
+        android:layout_marginRight="0dp"
+        android:layout_marginTop="12dp"
+        android:text="Spicy jalapeno bacon ipsum dolor amet rump kielbasa pancetta tongue picanha. Cupim pork belly prosciutto jerky sirloin kielbasa brisket beef chuck corned beef jowl tenderloin drumstick ball tip. Andouille ham hock chicken hamburger. Cupim short ribs pig, rump burgdoggen bresaola swine. Venison ham burgdoggen kielbasa drumstick porchetta strip steak chicken boudin bresaola flank picanha turkey. Pancetta turkey ham corned beef bacon. Spare ribs cow beef ribs pork belly andouille bresaola kielbasa shoulder burgdoggen tenderloin pork chop rump."
+        android:textColor="@color/cardview_dark_background"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="@+id/courseName"
+        app:layout_constraintRight_toRightOf="@+id/courseName"
+        app:layout_constraintTop_toBottomOf="@+id/courseName" />
+
+    <TextView
+        android:id="@+id/teacherboldView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="0dp"
+        android:layout_marginTop="6dp"
+        android:text="Lärare: "
+        android:textColor="@color/cardview_dark_background"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="@+id/detailsView"
+        app:layout_constraintTop_toBottomOf="@+id/detailsView" />
+
+    <TextView
+        android:id="@+id/statusBoldView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="0dp"
+        android:layout_marginTop="8dp"
+        android:text="Status:"
+        android:textColor="@color/cardview_dark_background"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="@+id/detailsView"
+        app:layout_constraintTop_toBottomOf="@+id/teacherboldView" />
+
+    <TextView
+        android:id="@+id/teacherView"
+        android:layout_width="272dp"
+        android:layout_height="19dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="0dp"
+        android:textColor="@color/cardview_dark_background"
+        app:layout_constraintBaseline_toBaselineOf="@+id/teacherboldView"
+        app:layout_constraintLeft_toRightOf="@+id/teacherboldView"
+        app:layout_constraintRight_toRightOf="@+id/detailsView" />
+
+    <TextView
+        android:id="@+id/statusView"
+        android:layout_width="272dp"
+        android:layout_height="19dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginRight="0dp"
+        android:textColor="@color/cardview_dark_background"
+        app:layout_constraintBaseline_toBaselineOf="@+id/statusBoldView"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="@+id/teacherView"
+        app:layout_constraintRight_toRightOf="@+id/detailsView" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="0dp"
+        android:layout_height="170dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginRight="0dp"
+        android:layout_marginTop="0dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/book" />
+
+    <Button
+        android:id="@+id/assignmentsBtn"
+        android:layout_width="103dp"
+        android:layout_height="56dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginRight="16dp"
+        android:text="Uppgifter"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+</android.support.constraint.ConstraintLayout>

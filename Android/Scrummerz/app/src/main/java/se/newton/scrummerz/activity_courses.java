@@ -1,6 +1,8 @@
 package se.newton.scrummerz;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
@@ -8,6 +10,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -18,16 +21,22 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.Objects;
+
 import se.newton.scrummerz.model.Courses;
 import se.newton.scrummerz.model.Student;
 
 public class activity_courses extends AppCompatActivity {
 
-    String userId, myClass, name;
+
     DatabaseReference dbRef;
     DatabaseReference classesRef;
-    private RecyclerView allCourses;
+
+    String userId, myClass;
+
     SharedPreferences studentInfo;
+
+    private RecyclerView allCourses;
     private FirebaseRecyclerAdapter<Courses, ItemViewHolder> mAdapter = null;
 
 //    @Override
@@ -41,10 +50,11 @@ public class activity_courses extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_courses);
+
         studentInfo = PreferenceManager.getDefaultSharedPreferences(this);
         myClass = studentInfo.getString("studentClass", "");
-        Log.i("TEST myClass", " " + myClass);
         dbRef = FirebaseDatabase.getInstance().getReference();
+        dbRef.keepSynced(true);
         getUid();
         classesRef = dbRef.child("coursesByClass").child(myClass);
         getMyClass(userId);
@@ -52,14 +62,11 @@ public class activity_courses extends AppCompatActivity {
         allCourses = (RecyclerView) findViewById(R.id.coursesRecyclerView);
         allCourses.setHasFixedSize(false);
         allCourses.setLayoutManager(new LinearLayoutManager(this));
-
     }
-
 
     @Override
     protected void onStart() {
         super.onStart();
-        Log.i("TEST", "classesref: " + classesRef);
 
         mAdapter = new FirebaseRecyclerAdapter<Courses, ItemViewHolder>(
                 Courses.class,
@@ -68,15 +75,77 @@ public class activity_courses extends AppCompatActivity {
                 classesRef) {
 
             @Override
-            protected void populateViewHolder(ItemViewHolder viewHolder, Courses model, int position) {
-                viewHolder.setTitle(model.getName());
-                Log.i("TEST", model.getName());
-                viewHolder.setBody(model.getStatus());
-                Log.i("TEST", model.getStatus());
+            protected void populateViewHolder(final ItemViewHolder viewHolder, final Courses model, int position) {
+                String key = this.getRef(position).getKey();
+                Log.i("test MODEL INFO", model.toString());
+
+                classesRef.child(key).child("details").addListenerForSingleValueEvent(new ValueEventListener() {
+
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        String name = dataSnapshot.child("name").getValue(String.class);
+                        final Courses courses = dataSnapshot.getValue(Courses.class);
+
+                        ((TextView)viewHolder.itemView.findViewById(R.id.Item_title_courseTitle)).setText(name);
+                        String body = dataSnapshot.child("status").getValue(String.class);
+
+                        //TODO: fixa strängar
+                        if (body.equals("finished")) {
+                            Drawable id = getResources().getDrawable(R.drawable.finished);
+                            viewHolder.setImage(id);
+                            ((TextView)viewHolder.itemView.findViewById(R.id.Item_category)).setText("Kursen är färdig");
+                        } else if (body.equals("comming")) {
+                            Drawable id = getResources().getDrawable(R.drawable.future);
+                            viewHolder.setImage(id);
+                            ((TextView)viewHolder.itemView.findViewById(R.id.Item_category)).setText("Kursen är inte påbörjad");
+                        } else if (body.equals("progress")) {
+                            Drawable id = getResources().getDrawable(R.drawable.ongoing);
+                            viewHolder.setImage(id);
+                            ((TextView)viewHolder.itemView.findViewById(R.id.Item_category)).setText("Kursen pågår");
+                        }
+
+                        viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+
+                            @Override
+                            public void onClick(View v) {
+                                // Launch CourseInfo class
+                                final Intent intent = new Intent(activity_courses.this, CourseInfo.class);
+
+                                String courseKey = courses.getCourseCode();
+                                String details = courses.getDescription();
+                                String teacher = courses.getTeacher();
+                                String courseName = courses.getName();
+                                String status = courses.getStatus();
+                                String formattedStatus ="";
+
+                                if (status.equals("progress")) formattedStatus = ("Kursen är påbörjad");
+                                if (status.equals("finished")) formattedStatus = ("Kursen är avslutad");
+                                if (status.equals("comming"))  formattedStatus = ("Kursen är ännu inte startad");
+
+                                intent.putExtra("courseName", courseName);
+                                intent.putExtra("status", formattedStatus);
+                                intent.putExtra("teacher", teacher);
+                                intent.putExtra("description", details);
+                                intent.putExtra("courseKey", courseKey);
+                                intent.putExtra("classKey", myClass);
+                                Log.i("COURSEKEY FOUND", "" + courseKey);
+                                startActivity(intent);
+
+                            }
+                        });
+
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        Log.i("FEL", databaseError.toString());
+                    }
+                });
+
+
             }
 
         };
-        Log.i("TEST", mAdapter.toString());
         allCourses.setAdapter(mAdapter);
     }
 
@@ -97,10 +166,18 @@ public class activity_courses extends AppCompatActivity {
             itemTitle.setText(title);
         }
 
-        void setBody(String body) {
+        public void setBody(String body) {
             TextView itemBody = (TextView) mView.findViewById(R.id.Item_category);
-            itemBody.setText(body);
+            if (Objects.equals(body, "progress")) itemBody.setText("Kursen är påbörjad");
+            if (Objects.equals(body, "finished")) itemBody.setText("Kursen är avslutad");
+            if (Objects.equals(body, "comming"))  itemBody.setText("Kursen är ännu inte startad");
         }
+
+        void setImage (Drawable image) {
+            ImageView imageView = (ImageView) mView.findViewById(R.id.course_status);
+            imageView.setImageDrawable(image);
+        }
+
     }
 
 
@@ -112,13 +189,12 @@ public class activity_courses extends AppCompatActivity {
 
 
     public void getMyClass(String user){
-        DatabaseReference localRef = dbRef.child("users").child("Pupils").child(user);
+        DatabaseReference localRef = dbRef.child("users").child("students").child(user).child("details");
 
         localRef.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                Student student = new Student();
-                student = dataSnapshot.getValue(Student.class);
+                Student student = dataSnapshot.getValue(Student.class);
                 myClass = student.myClass;
                 mAdapter.notifyDataSetChanged();
             }
