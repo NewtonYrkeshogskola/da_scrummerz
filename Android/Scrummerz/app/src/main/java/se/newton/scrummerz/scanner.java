@@ -1,6 +1,7 @@
 package se.newton.scrummerz;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -25,18 +26,18 @@ import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
 public class scanner extends BaseScannerActivity implements ZXingScannerView.ResultHandler {
     private static ZXingScannerView mainScanner;
-    public static ProgressBar mProgressBar;
+    protected static ProgressBar mProgressBar;
     private int REQUEST_CAMERA;
 
 
     String uid, name, classRef;
-    private FirebaseAuth mAuth;
-    private FirebaseUser currentUser;
     private DatabaseReference mRoot;
     DatabaseReference addPresence;
     Boolean active;
 
     SharedPreferences studentInfo;
+
+    Intent backtomain;
 
 
     // Initiate view and add scanner
@@ -44,17 +45,20 @@ public class scanner extends BaseScannerActivity implements ZXingScannerView.Res
     public void onCreate(Bundle state) {
         super.onCreate(state);
         setContentView(R.layout.activity_scanner);
-        mProgressBar = (ProgressBar) findViewById(R.id.scanProgress);
+        mProgressBar = (ProgressBar) findViewById(R.id.mProgressBar);
         mProgressBar.setVisibility(ProgressBar.INVISIBLE);
 
         mRoot = FirebaseDatabase.getInstance().getReference();
-        mAuth = FirebaseAuth.getInstance();
-        currentUser = mAuth.getCurrentUser();
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
 
         uid = currentUser.getUid();
         studentInfo = PreferenceManager.getDefaultSharedPreferences(this);
         classRef = studentInfo.getString("studentClass", "");
         name = studentInfo.getString("studentName", "");
+
+        backtomain = new Intent(scanner.this, signedInStart.class);
+
 
 
         ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA);
@@ -107,24 +111,42 @@ public class scanner extends BaseScannerActivity implements ZXingScannerView.Res
         mProgressBar.setVisibility(ProgressBar.VISIBLE);
 
         String scanResultString = scanResult.getText();
-        addPresence = mRoot.child("coursesByClass/").child(classRef).child(scanResultString);
 
-        addPresence.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                active = dataSnapshot.child("active").getValue().equals(true);
-                if (!active) {
-                    Toast.makeText(scanner.this, "Detta lektionstillfälle finns inte, eller är inte aktivt", Toast.LENGTH_LONG).show();
-                } else {
-                    addPresence.child(uid).setValue(name);
+        int dashCount = 0;
+        for (char c : scanResultString.toCharArray()) {
+            if (c == '/') {
+                dashCount++;
+            }
+        }
+
+        if (dashCount == 2) {
+            addPresence = mRoot.child("coursesByClass/").child(classRef).child(scanResultString);
+
+            addPresence.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    active = dataSnapshot.child("active").getValue().equals(true);
+                    if (!active) {
+                        mProgressBar.setVisibility(ProgressBar.INVISIBLE);
+                        Toast.makeText(scanner.this, "Detta lektionstillfälle finns inte, eller är inte aktivt", Toast.LENGTH_LONG).show();
+                        mainScanner.startCamera();
+                    } else {
+                        mProgressBar.setVisibility(ProgressBar.INVISIBLE);
+                        addPresence.child(uid).setValue(name);
+                        startActivity(backtomain);
+                    }
+
                 }
 
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Toast.makeText(scanner.this, "Kunde inte hämta från databasen", Toast.LENGTH_SHORT).show();
-            }
-        });
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    Toast.makeText(scanner.this, "Kunde inte hämta från databasen", Toast.LENGTH_SHORT).show();
+                }
+            });
+        } else {
+            mProgressBar.setVisibility(ProgressBar.INVISIBLE);
+            Toast.makeText(this, "Denna kod är ogiltig", Toast.LENGTH_SHORT).show();
+            mainScanner.startCamera();
+        }
     }
 }

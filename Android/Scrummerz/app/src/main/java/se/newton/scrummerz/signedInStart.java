@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -51,7 +50,7 @@ public class signedInStart extends AppCompatActivity {
         nameTextView = (TextView) findViewById(R.id.welcome);
         myGradesTextView = (TextView) findViewById(R.id.myGradesTextView);
         TextView coursesTextView = (TextView) findViewById(R.id.myCoursesTextView);
-        Button startScanner = (Button) findViewById(R.id.scanner);
+        TextView startScanner = (TextView) findViewById(R.id.scanner);
 
 
         startScanner.setOnClickListener(new View.OnClickListener() {
