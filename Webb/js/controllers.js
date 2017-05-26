@@ -66,24 +66,29 @@ app.controller('personCtrl', ["$scope", "$firebaseObject", "$firebaseArray", '$f
                 //attendance code should have following structure: courseCode/date(format:yyyymmdd)/code, ex: YAPP-APP/20170523/randomnumber
                 //function checks if the last part of the code ('code') exists and if the user already reported his/her attendance
                 $scope.attendance = function (courseAttended, attendanceCode) {
-                    /*var pathParts = pathToFirebase.split("/");
-                    var kursPath = pathParts[0];
-                    var datePath = pathParts[1];
-                    var codePath = pathParts[2];*/
+
                     var pathToAttendance = firebase.database().ref().child('coursesByClass').child(klass).child(courseAttended).child(date).child(attendanceCode);
                     var pathToCode = firebase.database().ref().child('coursesByClass').child(klass).child(courseAttended).child(date);
                     pathToCode.once('value', function (snapshot) {
                         if (snapshot.hasChild(attendanceCode)) {
+
                             pathToAttendance.once('value', function (childSnapshot) {
-                                if (childSnapshot.hasChild(userId)) {
-                                    alert("Du har redan anmält din närvaro. Tack!");
+                                var statusValue = childSnapshot.child("active").val();
+                                if (statusValue === true) {
+                                    if (childSnapshot.hasChild(userId)) {
+                                        alert("Du har redan anmält din närvaro. Tack!");
+                                    }
+                                    else {
+                                        firebase.database().ref().child('coursesByClass').child(klass).child(courseAttended).child(date).child(attendanceCode).update({
+                                            [userId]: $scope.user.Name
+                                        });
+                                        alert('Din närvaro är registrerad. Tack!')
+                                    }
                                 }
                                 else {
-                                    firebase.database().ref().child('coursesByClass').child(klass).child(courseAttended).child(date).child(attendanceCode).update({
-                                        [userId]: $scope.user.Name
-                                    });
-                                    alert('Din närvaro är registrerad. Tack!')
+                                    alert('Tillfället är inte längre aktivt');
                                 }
+
                             });
                         }
                         else {
