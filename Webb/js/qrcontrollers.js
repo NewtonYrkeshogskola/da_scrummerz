@@ -222,6 +222,11 @@ app.controller("AdminUserCtrl", ["$scope", "$firebaseObject", "$firebaseArray", 
                 created: $scope.time
             });
             alert("Nu är närvaron aktiverad. Du kan nu registera dig som närvarande.")
+
+            var checkedStudents = firebase.database().ref().child('coursesByClass').child($scope.myClass).child($scope.selectedCourse).child(date).child($scope.random).child("students")
+            checkedStudents.on('value', function (snapshot) {
+                $scope.studentsLoggedIn = snapshot.val();
+            });
         }
         $scope.deActivatePresence = function () {
 
@@ -230,6 +235,9 @@ app.controller("AdminUserCtrl", ["$scope", "$firebaseObject", "$firebaseArray", 
             });
             alert("Närvaron är nu stängd för nya registreringar")
         }
+
+
+
 
     }
 ]);
@@ -293,6 +301,8 @@ app.controller("gradesCtrl", ["$scope", "$firebaseObject", "$firebaseArray", '$f
                         });
                     });
                 });
+
+
             })
         })
     }

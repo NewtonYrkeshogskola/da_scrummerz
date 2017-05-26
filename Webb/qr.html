@@ -35,6 +35,10 @@
     <button class="button-qr-activate" ng-click="activatePresence()">Aktivera närvaro</button> 
     <button class="button-qr-deactivate" ng-click="deActivatePresence()">Sluta ta närvaro</button>
     <br>
+
+    <h3>Studenter som checkat in</h3>
+    <h5 ng-repeat="students in studentsLoggedIn">{{students}}
+    </h5>
         </div>
         <div class="col-sm-6">
             <div id="qr" ng-hide="selectedCourse == 'NONE'">

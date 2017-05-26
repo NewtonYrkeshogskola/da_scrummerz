@@ -67,19 +67,19 @@ app.controller('personCtrl', ["$scope", "$firebaseObject", "$firebaseArray", '$f
                 //function checks if the last part of the code ('code') exists and if the user already reported his/her attendance
                 $scope.attendance = function (courseAttended, attendanceCode) {
 
-                    var pathToAttendance = firebase.database().ref().child('coursesByClass').child(klass).child(courseAttended).child(date).child(attendanceCode);
+                    var pathToInfo = firebase.database().ref().child('coursesByClass').child(klass).child(courseAttended).child(date).child(attendanceCode);
                     var pathToCode = firebase.database().ref().child('coursesByClass').child(klass).child(courseAttended).child(date);
                     pathToCode.once('value', function (snapshot) {
                         if (snapshot.hasChild(attendanceCode)) {
 
-                            pathToAttendance.once('value', function (childSnapshot) {
+                            pathToInfo.once('value', function (childSnapshot) {
                                 var statusValue = childSnapshot.child("active").val();
                                 if (statusValue === true) {
-                                    if (childSnapshot.hasChild(userId)) {
+                                    if (childSnapshot.child("students").hasChild(userId)) {
                                         alert("Du har redan anmält din närvaro. Tack!");
                                     }
                                     else {
-                                        firebase.database().ref().child('coursesByClass').child(klass).child(courseAttended).child(date).child(attendanceCode).update({
+                                        firebase.database().ref().child('coursesByClass').child(klass).child(courseAttended).child(date).child(attendanceCode).child("students").update({
                                             [userId]: $scope.user.Name
                                         });
                                         alert('Din närvaro är registrerad. Tack!')
@@ -235,6 +235,10 @@ app.controller("AdminUserCtrl", ["$scope", "$firebaseObject", "$firebaseArray", 
             });
             alert("Närvaron är nu stängd för nya registreringar")
         }
+
+        $scope.printPrescence = function () {
+            
+        };
 
     }
 ]);
