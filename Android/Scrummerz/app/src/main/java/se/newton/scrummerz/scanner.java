@@ -125,15 +125,21 @@ public class scanner extends BaseScannerActivity implements ZXingScannerView.Res
             addPresence.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
-                    active = dataSnapshot.child("active").getValue().equals(true);
+                    try {
+                        active = dataSnapshot.child("active").getValue().equals(true);
                     if (!active) {
                         mProgressBar.setVisibility(ProgressBar.INVISIBLE);
                         Toast.makeText(scanner.this, "Detta lektionstillfälle finns inte, eller är inte aktivt", Toast.LENGTH_LONG).show();
                         mainScanner.startCamera();
                     } else {
                         mProgressBar.setVisibility(ProgressBar.INVISIBLE);
-                        addPresence.child(uid).setValue(name);
-                        startActivity(backtomain);
+                        addPresence.child("students").child(uid).setValue(name);
+                        finish();
+                    }
+                    } catch (NullPointerException e) {
+                        mProgressBar.setVisibility(ProgressBar.INVISIBLE);
+                        Toast.makeText(scanner.this, "Detta lektionstillfälle finns inte, eller är inte aktivt", Toast.LENGTH_LONG).show();
+                        mainScanner.startCamera();
                     }
 
                 }
