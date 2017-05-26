@@ -80,7 +80,7 @@ app.controller('personCtrl', ["$scope", "$firebaseObject", "$firebaseArray", '$f
                                 }
                                 else {
                                     firebase.database().ref().child('coursesByClass').child(klass).child(courseAttended).child(date).child(attendanceCode).update({
-                                        [userId]: true
+                                        [userId]: $scope.user.Name
                                     });
                                     alert('Din närvaro är registrerad. Tack!')
                                 }
