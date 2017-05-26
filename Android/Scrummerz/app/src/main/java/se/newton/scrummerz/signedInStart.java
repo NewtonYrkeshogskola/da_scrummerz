@@ -10,7 +10,6 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -103,8 +102,6 @@ public class signedInStart extends AppCompatActivity {
 
                 plus.setScaleX(0.70f);
                 plus.setScaleY(0.70f);
-
-                Toast.makeText(signedInStart.this, "Tack för din röst!", Toast.LENGTH_LONG).show();
             }
         });
 
@@ -120,7 +117,6 @@ public class signedInStart extends AppCompatActivity {
 
                 plus.setScaleX(0.70f);
                 plus.setScaleY(0.70f);
-                Toast.makeText(signedInStart.this, "Tack för din röst!", Toast.LENGTH_LONG).show();
             }
         });
 
@@ -136,7 +132,6 @@ public class signedInStart extends AppCompatActivity {
 
                 plus.setScaleX(1.15f);
                 plus.setScaleY(1.15f);
-                Toast.makeText(signedInStart.this, "Tack för din röst!", Toast.LENGTH_LONG).show();
             }
         });
     }
