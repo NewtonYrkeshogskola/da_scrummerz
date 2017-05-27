@@ -22,22 +22,28 @@
     <script type="text/javascript" src="js/database.js"></script>
     <script src="js/qrcode.min.js"></script>
     <script src="js/angular-qr.min.js"></script>
-    <script type="text/javascript" src="js/qrcontrollers.js"></script>
+    <script type="text/javascript" src="js/admincontroller.js"></script>
 </head>
 
 <body ng-app="LoggedIn" ng-controller="AdminUserCtrl as ctrl">
 
     <div class="row">
         <div class="col-sm-3">
-            Inloggad som {{user.Name}} <br> Ange klass:
+            Inloggad som {{user.Name}} <br>
+            Ange klass:
+    <select class="styled-select" id="chooseCourse" ng-model="selectedClass" ng-change="updateString()" required>
+    <option>{{myClass}}</option><input ng-hide="true"/></select>
+            <br> Ange kurs:
     <select class="styled-select" id="chooseCourse" ng-model="selectedCourse" ng-change="updateString()" required>
-    <option ng-repeat="course in myCourses" ng-show="{{course.details.status === 'progress'}}">{{course.details.courseCode}}</option><input ng-hide="true"/> <br><br>
+    <option ng-repeat="course in myCourses" ng-show="{{course.details.status === 'progress'}}">{{course.details.courseCode}}</option><input ng-hide="true"/></select> <br><br>
+    
+    
     <button class="button-qr-activate" ng-click="activatePresence()">Aktivera närvaro</button> 
     <button class="button-qr-deactivate" ng-click="deActivatePresence()">Sluta ta närvaro</button>
     <br>
 
-    <h3>Studenter som checkat in</h3>
-    <h5 ng-repeat="students in studentsLoggedIn">{{students}}
+    <h3 ng-hide="selectedCourse == 'NONE'">Studenter som checkat in</h3>
+    <h5 ng-repeat="students in studentsLoggedIn" ng-hide="selectedCourse == 'NONE'">{{students}}
     </h5>
         </div>
         <div class="col-sm-6">
@@ -48,7 +54,6 @@
         <div class="col-sm-3"> </div>
             <center>
                 <h1 ng-hide="selectedCourse == 'NONE'"> Kod för manuell inmatning <br><br>{{random}} <br><br> Kurs: {{selectedCourse}}</h1>
-                {{string}}
             </center>
     </div>
 </body>
