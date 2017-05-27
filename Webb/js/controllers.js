@@ -17,6 +17,7 @@ app.controller('personCtrl', ["$scope", "$firebaseObject", "$firebaseArray", '$f
         $scope.auth = Auth;
         $scope.globalGrades = [];
         $scope.globalAssignments = [];
+        $scope.globalCourseNews = [];
 
 
         $scope.auth.$onAuthStateChanged(function (firebaseUser) {
@@ -96,31 +97,7 @@ app.controller('personCtrl', ["$scope", "$firebaseObject", "$firebaseArray", '$f
                         }
                     })
                 }
-                /*!!!!!!!!!!! DO NOT DELETE THIS. WE MAY NEED THIS LATER*/
-                /*$scope.giveFeedbackToTheFinishedCourse = function (kurs, q1, q2, q3, q4, q5, q6, q7) {
-                     firebase.database().ref().child('finishedCourseFeedback').child(kurs).child(q1).update({
-                         q1
-                     });
-                      firebase.database().ref().child('finishedCourseFeedback').child(kurs).child(q2).update({
-                         q2
-                     });
-                      firebase.database().ref().child('finishedCourseFeedback').child(kurs).child(q3).update({
-                         q3
-                     });
-                      firebase.database().ref().child('finishedCourseFeedback').child(kurs).child(q4).update({
-                         q4
-                     });
-                      firebase.database().ref().child('finishedCourseFeedback').child(kurs).child(q5).update({
-                         q5
-                     });
-                      firebase.database().ref().child('finishedCourseFeedback').child(kurs).child(q6).update({
-                         q6
-                     });
-                      firebase.database().ref().child('finishedCourseFeedback').child(kurs).child(q7).update({
-                         q7
-                     });
-                    alert(kurs + " " + q1 + " " + q2 + " " + q3 + " " + q4 + " " + q5 + " " + q6 + " " + q7);
-                }*/
+               
                 // Loop through all active assignments under personal node and push to globalAssignments
                 ref.child('coursesByClass').child(klass).once('value', function (snapshot) {
                     snapshot.forEach(function (childSnapshot) {
@@ -143,8 +120,30 @@ app.controller('personCtrl', ["$scope", "$firebaseObject", "$firebaseArray", '$f
                         });
                     });
                 });
+$scope.classNews = $firebaseObject(ref.child('newsByClass/' + klass));
+$scope.generalNews = $firebaseObject(ref.child('generalNews'));
 
+ref.child('coursesByClass').child(klass).once('value', function (snapshot) {
+                    snapshot.forEach(function (childSnapshot) {
+                        var childKey
+                        var childData
+                        var courseKey = childSnapshot.key;
 
+                        ref.child('coursesByClass').child(klass).child(courseKey).child('news').once('value', function (snapshot) {
+                            snapshot.forEach(function (childSnapshot) {
+                                childKey = childSnapshot.key;
+                                childData = childSnapshot.val();
+
+                                // For each child under each 
+                                $scope.globalCourseNews.push({
+                                    key: courseKey,
+                                    childKey: childKey,
+                                    news: childData
+                                })
+                            })
+                        });
+                    });
+                });
             });
         });
     }
