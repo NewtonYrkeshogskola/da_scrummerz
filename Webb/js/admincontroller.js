@@ -65,7 +65,7 @@ app.controller("AdminUserCtrl", ["$scope", "$firebaseObject", "$firebaseArray", 
         var date = $scope.myDate;
 
         // get a random code for the QR
-        $scope.random = Math.floor((Math.random() * 100000) + 1);
+        $scope.random = Math.floor((Math.random() * 10000) + 1);
 
         $scope.selectedCourse = "NONE"
 
@@ -73,7 +73,7 @@ app.controller("AdminUserCtrl", ["$scope", "$firebaseObject", "$firebaseArray", 
         $scope.string = null;
 
         $scope.updateString = function () {
-            $scope.random = Math.floor((Math.random() * 100000) + 1);
+            $scope.random = Math.floor((Math.random() * 10000) + 10000);
             $scope.string = $scope.selectedCourse + "/" + date + "/" + $scope.random;
         }
 
