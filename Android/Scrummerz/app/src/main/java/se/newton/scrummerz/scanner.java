@@ -119,13 +119,7 @@ public class scanner extends BaseScannerActivity implements ZXingScannerView.Res
             }
         }
 
-        String illegal = ",][.";
-
-        if (dashCount == 2 &&
-                scanResultString.length() > 10 &&
-                scanResultString.length() < 14 &&
-                !scanResultString.contains(illegal)
-                )
+        if (dashCount == 2)
         {
             addPresence = mRoot.child("coursesByClass/").child(classRef).child(scanResultString);
 
