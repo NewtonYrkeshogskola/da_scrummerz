@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="com.android.alarm.permission.SET_ALARM" />
 
     <application
         android:allowBackup="true"
@@ -32,7 +33,8 @@
         <activity android:name=".grades_activity" />
         <activity android:name=".assignment" />
         <activity android:name=".assignment_grades" />
-        <activity android:name=".scanner"></activity>
+        <activity android:name=".scanner" />
+        <receiver android:name=".Notification_reciever" />
     </application>
 
 </manifest>

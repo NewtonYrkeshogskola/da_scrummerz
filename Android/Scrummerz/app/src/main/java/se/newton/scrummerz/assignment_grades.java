@@ -2,9 +2,7 @@ package se.newton.scrummerz;
 
 import android.app.ListActivity;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
@@ -69,7 +67,7 @@ public class assignment_grades extends ListActivity {
                     String courseKey = postSnapshot.getKey();
                     if (courseKey.equals(courseCode)){
                         for (DataSnapshot childSnapshot: postSnapshot.getChildren()){
-                            gradesOnAssignments.add(childSnapshot.getKey() + "\nBetyg: " +
+                            gradesOnAssignments.add(childSnapshot.getKey() + "\n" + getString(R.string.grades) +
                                     childSnapshot.getValue());
                             arrayAdapter.notifyDataSetChanged();
                         }

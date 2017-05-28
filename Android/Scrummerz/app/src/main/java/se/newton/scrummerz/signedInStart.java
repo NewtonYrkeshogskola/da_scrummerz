@@ -1,6 +1,8 @@
 package se.newton.scrummerz;
 
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -17,6 +19,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -134,13 +137,30 @@ public class signedInStart extends AppCompatActivity {
                 plus.setScaleY(1.15f);
             }
         });
+
+        setNotifications();
+
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        String welcomeText = "Välkommen " + studentInfo.getString("studentName", "");
+        String welcomeText = getString(R.string.welcome) + " " + studentInfo.getString("studentName", "");
         nameTextView.setText(welcomeText);
+    }
+
+    public void setNotifications () {
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, 14);
+        calendar.set(Calendar.MINUTE, 59);
+
+        Intent notificationIntent = new Intent(getApplicationContext(), Notification_reciever.class);
+
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 100, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
     }
 
 }

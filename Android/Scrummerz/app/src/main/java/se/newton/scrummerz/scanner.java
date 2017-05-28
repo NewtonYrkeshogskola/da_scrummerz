@@ -119,7 +119,14 @@ public class scanner extends BaseScannerActivity implements ZXingScannerView.Res
             }
         }
 
-        if (dashCount == 2) {
+        String illegal = ",][.";
+
+        if (dashCount == 2 &&
+                scanResultString.length() > 10 &&
+                scanResultString.length() < 14 &&
+                !scanResultString.contains(illegal)
+                )
+        {
             addPresence = mRoot.child("coursesByClass/").child(classRef).child(scanResultString);
 
             addPresence.addValueEventListener(new ValueEventListener() {
@@ -129,16 +136,17 @@ public class scanner extends BaseScannerActivity implements ZXingScannerView.Res
                         active = dataSnapshot.child("active").getValue().equals(true);
                     if (!active) {
                         mProgressBar.setVisibility(ProgressBar.INVISIBLE);
-                        Toast.makeText(scanner.this, "Detta lektionstillfälle finns inte, eller är inte aktivt", Toast.LENGTH_LONG).show();
+                        Toast.makeText(scanner.this, "Närvaron är inte aktiv", Toast.LENGTH_LONG).show();
                         mainScanner.startCamera();
                     } else {
                         mProgressBar.setVisibility(ProgressBar.INVISIBLE);
                         addPresence.child("students").child(uid).setValue(name);
+                        Toast.makeText(scanner.this, "Narvaron är registrerad", Toast.LENGTH_LONG).show();
                         finish();
                     }
                     } catch (NullPointerException e) {
                         mProgressBar.setVisibility(ProgressBar.INVISIBLE);
-                        Toast.makeText(scanner.this, "Detta lektionstillfälle finns inte, eller är inte aktivt", Toast.LENGTH_LONG).show();
+                        Toast.makeText(scanner.this, "Denna kod är inte giltig, eller har aldrig aktiverats av läraren", Toast.LENGTH_LONG).show();
                         mainScanner.startCamera();
                     }
 

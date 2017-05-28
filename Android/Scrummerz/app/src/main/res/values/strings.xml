@@ -7,4 +7,24 @@
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="scannerInfo">Scanna QR-koden för att markera din närvaro idag</string>
+    <string name="dontForget">Glöm inte att rösta</string>
+    <string name="giveDailyFeedback">Klicka här för att ge din dagliga feedback</string>
+    <string name="welcome">Välkommen</string>
+    <string name="courseFinished">Kursen är färdig</string>
+    <string name="courseNotStarted">Kursen är inte påbörjad</string>
+    <string name="courseActive">Kursen pågår</string>
+    <string name="grades">Betyg:</string>
+    <string name="required">krävs.</string>
+    <string name="notLoggedIn">Inte inloggad</string>
+    <string name="myCourses">Mina kurser</string>
+    <string name="gradesTitle">Betyg</string>
+    <string name="welcomePlusName">Välkommen </string>
+    <string name="email">E-postadress</string>
+    <string name="password">Lösenord</string>
+    <string name="goToLogin">Gå till inloggningen</string>
+    <string name="giveFeedback" >Ge feedback</string>
+    <string name="menuMyCourses">Mina kurser</string>
+    <string name="menuMyGrades">Mina betyg</string>
+    <string name="menuRegisterAttendance">Registrera närvaro</string>
+    <string name="feelingToday">Hur känner du dig idag?</string>
 </resources>
