@@ -1,4 +1,4 @@
-var app = angular.module('LoggedIn', ['firebase', 'ngAnimate']);
+var app = angular.module('LoggedIn', ['firebase', 'ngAnimate', 'schemaForm']);
 var grades = [];
 
 
@@ -97,7 +97,7 @@ app.controller('personCtrl', ["$scope", "$firebaseObject", "$firebaseArray", '$f
                         }
                     })
                 }
-               
+
                 // Loop through all active assignments under personal node and push to globalAssignments
                 ref.child('coursesByClass').child(klass).once('value', function (snapshot) {
                     snapshot.forEach(function (childSnapshot) {
@@ -120,10 +120,10 @@ app.controller('personCtrl', ["$scope", "$firebaseObject", "$firebaseArray", '$f
                         });
                     });
                 });
-$scope.classNews = $firebaseObject(ref.child('newsByClass/' + klass));
-$scope.generalNews = $firebaseObject(ref.child('generalNews'));
+                $scope.classNews = $firebaseObject(ref.child('newsByClass/' + klass));
+                $scope.generalNews = $firebaseObject(ref.child('generalNews'));
 
-ref.child('coursesByClass').child(klass).once('value', function (snapshot) {
+                ref.child('coursesByClass').child(klass).once('value', function (snapshot) {
                     snapshot.forEach(function (childSnapshot) {
                         var childKey
                         var childData
@@ -209,7 +209,320 @@ app.controller("gradesCtrl", ["$scope", "$firebaseObject", "$firebaseArray", '$f
                         });
                     });
                 });
+                 $scope.schema = {
+        "type": "object",
+        "properties": {
+            "radios": {
+                "title": "Allmänt sett, vilket är ditt omdöme om kursen?",
+                "type": "number",
+                "enum": [
+                    1,
+                    2,
+                    3,
+                    4,
+                    5
+                ]
+            },
+            "radios2": {
+                "title": "Hur tycker du att kursens innehåll överensstämmer med lärandemålen?",
+                "type": "number",
+                "enum": [
+                    1,
+                    2,
+                    3,
+                    4,
+                    5
+                ]
+            },
+            "radios3": {
+                "title": "Vad tycker du om kurslitteraturen?",
+                "type": "number",
+                "enum": [
+                    1,
+                    2,
+                    3,
+                    4,
+                    5
+                ]
+            },
+            "radios4": {
+                "title": "Kursen har givit mig god översikt av området",
+                "type": "number",
+                "enum": [
+                    1,
+                    2,
+                    3,
+                    4,
+                    5
+                ]
+            },
+            "radios5": {
+                "title": "Kursen har fördjupat min förståelse för området",
+                "type": "number",
+                "enum": [
+                    1,
+                    2,
+                    3,
+                    4,
+                    5
+                ]
+            },
+            "radios6": {
+                "title": "Kursen har hjälpt (kommer att hjälpa) mig lösa problem inom området",
+                "type": "number",
+                "enum": [
+                    1,
+                    2,
+                    3,
+                    4,
+                    5
+                ]
+            },
+            "comment1": {
+                "title": "Ge förslag till moment i kursen som behöver förbättras och på vilket sätt",
+                "type": "string",
+                "minLength": 20
+            },
+            "comment2": {
+                "title": "Vilka moment i kursen är OK som de är och berätta gärna varför?",
+                "type": "string",
+                "minLength": 20
+            },
+            "comment3": {
+                "title": "Övriga kommentarer och /eller synpunkter:",
+                "type": "string",
+                "minLength": 20
+            }
+        },
+        "required": [
+            "radios",
+            "radios2",
+            "radios3",
+            "radios4",
+            "radios5",
+            "radios6"
+        ]
+    };
+
+    $scope.form = [
+        {
+            "key": "radios",
+            "type": "radios-inline",
+            "titleMap": [
+                {
+                    "value": 1,
+                    "name": 1
+                },
+                {
+                    "value": 2,
+                    "name": 2
+                },
+                {
+                    "value": 3,
+                    "name": 3
+                },
+                {
+                    "value": 4,
+                    "name": 4
+                },
+                {
+                    "value": 5,
+                    "name": 5
+                },
+
+            ]
+        },
+        {
+            "key": "radios2",
+            "type": "radios-inline",
+            "titleMap": [
+                {
+                    "value": 1,
+                    "name": 1
+                },
+                {
+                    "value": 2,
+                    "name": 2
+                },
+                {
+                    "value": 3,
+                    "name": 3
+                },
+                {
+                    "value": 4,
+                    "name": 4
+                },
+                {
+                    "value": 5,
+                    "name": 5
+                }
+
+            ]
+        },
+        {
+            "key": "radios3",
+            "type": "radios-inline",
+            "titleMap": [
+                {
+                    "value": 1,
+                    "name": 1
+                },
+                {
+                    "value": 2,
+                    "name": 2
+                },
+                {
+                    "value": 3,
+                    "name": 3
+                },
+                {
+                    "value": 4,
+                    "name": 4
+                },
+                {
+                    "value": 5,
+                    "name": 5
+                },
+
+            ]
+        },
+        {
+            "key": "radios4",
+            "type": "radios-inline",
+            "titleMap": [
+                {
+                    "value": 1,
+                    "name": 1
+                },
+                {
+                    "value": 2,
+                    "name": 2
+                },
+                {
+                    "value": 3,
+                    "name": 3
+                },
+                {
+                    "value": 4,
+                    "name": 4
+                },
+                {
+                    "value": 5,
+                    "name": 5
+                }
+
+            ]
+        },
+        {
+            "key": "radios5",
+            "type": "radios-inline",
+            "titleMap": [
+                {
+                    "value": 1,
+                    "name": 1
+                },
+                {
+                    "value": 2,
+                    "name": 2
+                },
+                {
+                    "value": 3,
+                    "name": 3
+                },
+                {
+                    "value": 4,
+                    "name": 4
+                },
+                {
+                    "value": 5,
+                    "name": 5
+                },
+
+            ]
+        },
+        {
+            "key": "radios6",
+            "type": "radios-inline",
+            "titleMap": [
+                {
+                    "value": 1,
+                    "name": 1
+                },
+                {
+                    "value": 2,
+                    "name": 2
+                },
+                {
+                    "value": 3,
+                    "name": 3
+                },
+                {
+                    "value": 4,
+                    "name": 4
+                },
+                {
+                    "value": 5,
+                    "name": 5
+                }
+
+            ]
+        },
+        {
+            "key": "comment1",
+            "type": "textarea"
+        },
+        {
+            "key": "comment2",
+            "type": "textarea"
+        },
+        {
+            "key": "comment3",
+            "type": "textarea"
+        },
+        {
+            "type": "submit",
+            "style": "btn-info",
+            "title": "Ge feedback"
+        }
+    ];
+
+    $scope.model = {};
+    $scope.onSubmit = function (finishedCourseFeedback, form) {
+        // First we broadcast an event so all fields validate themselves
+        $scope.$broadcast('schemaFormValidate');
+
+        // Then we check if the form is valid
+        if (form.$valid) {
+            var radio1 = $scope.model.radios;
+            var radio2 = $scope.model.radios2;
+            var radio3 = $scope.model.radios3;
+            var radio4 = $scope.model.radios4;
+            var radio5 = $scope.model.radios5;
+            var radio6 = $scope.model.radios6;
+            var comment1 = $scope.model.comment1;
+            var comment2 = $scope.model.comment2;
+            var comment3 = $scope.model.comment3;
+            firebase.database().ref().child('coursesByClass').child(klass).child(finishedCourseFeedback).child('feedback').push({
+                        radio1,
+                        radio2,
+                        radio3,
+                        radio4,
+                        radio5,
+                        radio6,
+                        comment1,
+                        comment2,
+                        comment3
+                    });
+                   
+
+alert(radio1);
+        }
+    }
             })
         })
     }
 ]);
+app.controller('FormController', function ($scope) {
+
+   
+});
