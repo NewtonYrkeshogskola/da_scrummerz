@@ -32,7 +32,7 @@ public class Notification_reciever extends BroadcastReceiver{
             PendingIntent pendingIntent = (PendingIntent.getActivity(context, 100, startActivity, PendingIntent.FLAG_UPDATE_CURRENT));
             NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
                     .setContentIntent(pendingIntent)
-                    .setSmallIcon(R.drawable.cool)
+                    .setSmallIcon(R.drawable.icon)
                     .setContentTitle(context.getString(R.string.dontForget))
                     .setContentText(context.getString(R.string.giveDailyFeedback))
                     .setVibrate(new long[]{1000, 1000})
