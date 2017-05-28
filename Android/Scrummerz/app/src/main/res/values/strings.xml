@@ -27,4 +27,5 @@
     <string name="menuMyGrades">Mina betyg</string>
     <string name="menuRegisterAttendance">Registrera närvaro</string>
     <string name="feelingToday">Hur känner du dig idag?</string>
+    <string name="authenticationFailed">Autensiering misslyckades.</string>
 </resources>

@@ -130,7 +130,7 @@ public class login extends AppCompatActivity {
                         } else {
                             // Om inloggningen misslyckades, meddela användaren
                             Log.w("Inloggning", "signInWithEmail:failure", task.getException());
-                            Toast.makeText(login.this, "Autensiering misslyckades.",
+                            Toast.makeText(login.this, R.string.authenticationFailed,
                                     Toast.LENGTH_SHORT).show();
                             updateUI(null);
                         }
@@ -174,6 +174,7 @@ public class login extends AppCompatActivity {
             // Här hanterar vi vad som händer när man är inloggad
             Intent intent = new Intent(login.this, signedInStart.class);
             startActivity(intent);
+            finish();
         } else {
             // Här hanterar vi vad som händer om man inte är inloggad
             mStatusTextView.setText(R.string.notLoggedIn);
