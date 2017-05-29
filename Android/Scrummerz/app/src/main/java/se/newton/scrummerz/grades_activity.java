@@ -22,14 +22,12 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import se.newton.scrummerz.model.Courses;
-
 public class grades_activity extends ListActivity {
 
 
     DatabaseReference dbRef;
 
-    String userId, grade, courseCode;
+    String userId, grade, courseCode, course;
     SharedPreferences preferences;
     ArrayList grades = new ArrayList<String>();
     protected static ArrayAdapter<String> arrayAdapter = null;
@@ -71,31 +69,18 @@ public class grades_activity extends ListActivity {
     public void getMyGrades(String user) {
         DatabaseReference gradesRef = dbRef.child("grades").child(userId).child("final");
         final String myClass = preferences.getString("studentClass", "");
-        Log.i("test class", myClass);
+        Log.i("grade", myClass);
 
         gradesRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
-                    courseCode = postSnapshot.getKey();
+
+                    course = postSnapshot.getKey();
                     grade = postSnapshot.getValue().toString();
+                    Log.i("grade", course + " " + grade);
 
-                    DatabaseReference courseRef = dbRef.child("coursesByClass").child(myClass).child(courseCode).child("details");
-                    courseRef.addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            Courses courses = dataSnapshot.getValue(Courses.class);
-                            grades.add(courses.getName() + " (" + courses.getCourseCode() + ")"
-                                    + "\nSlutbetyg på denna kurs: " + grade);
-                            arrayAdapter.notifyDataSetChanged();
-                        }
-
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
-
-                        }
-                    });
-
+                    grades.add(course + "\nSlutbetyg på denna kurs: " + grade);
                 }
             }
 

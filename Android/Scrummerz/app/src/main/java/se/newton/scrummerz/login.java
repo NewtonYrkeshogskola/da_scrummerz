@@ -130,8 +130,7 @@ public class login extends AppCompatActivity {
                         } else {
                             // Om inloggningen misslyckades, meddela användaren
                             Log.w("Inloggning", "signInWithEmail:failure", task.getException());
-                            Toast.makeText(login.this, "Autensiering misslyckades.",
-                                    Toast.LENGTH_SHORT).show();
+                            Toast.makeText(login.this, "Autensiering misslyckades.", Toast.LENGTH_SHORT).show();
                             updateUI(null);
                         }
 
