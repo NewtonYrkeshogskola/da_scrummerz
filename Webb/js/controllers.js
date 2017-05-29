@@ -166,6 +166,7 @@ app.controller("gradesCtrl", ["$scope", "$firebaseObject", "$firebaseArray", '$f
             $scope.globalGrades = [];
             $scope.globalAssignments = [];
             $scope.finishedNotRated = [];
+            $scope.notRatedWeekly = [];
 
             // This will be executed after the user has been loaded
             $scope.user.$loaded().then(function () {
@@ -535,6 +536,33 @@ app.controller("gradesCtrl", ["$scope", "$firebaseObject", "$firebaseArray", '$f
                         });
                     }
                 }
+
+                $scope.dateWeeklyFeedback = new Date();
+                $scope.myDate = new Date($scope.dateWeeklyFeedback.getFullYear(),
+                    $scope.dateWeeklyFeedback.getMonth(),
+                    $scope.dateWeeklyFeedback.getDate());
+                $scope.myDate = $filter('date')($scope.myDate, 'yyyyMMdd');
+                var dateWeeklyFeedback = $scope.myDate;
+                console.log(dateWeeklyFeedback)
+
+
+                //kontrollera att kursen är pågående och att studenten inte lämnat sin feedback. skapa array av avslutade kurser utan feedback
+                ref.child('coursesByClass').child(klass).once('value', function (snapshot) {
+                    snapshot.forEach(function (childSnapshot) {
+                        var isFinished = childSnapshot.child("details").child("status").val();
+                        var userExists = childSnapshot.child("weeklyFeedback").child(userId).val();
+                        var dateExists = childSnapshot.child("weeklyFeedback").child(dateWeeklyFeedback).val();
+                        console.log(dateExists);
+                        if (isFinished === 'progress' && userExists === null ) {
+                            var childKey = childSnapshot.key;
+                            console.log(childSnapshot.key);
+                            $scope.notRatedWeekly.push({
+                                key: childKey
+                            })
+                            console.log($scope.notRatedWeekly);
+                        }
+                    });
+                });
                 $scope.schemaWeekly = {
                     "type": "object",
                     "properties": {
@@ -584,6 +612,7 @@ app.controller("gradesCtrl", ["$scope", "$firebaseObject", "$firebaseArray", '$f
 
                 $scope.modelWeekly = {};
                 $scope.onSubmitWeekly = function (activeCourseWeeklyFeedback, formWeekly) {
+                    location.reload();
                     // First we broadcast an event so all fields validate themselves
                     $scope.$broadcast('schemaFormValidate');
 

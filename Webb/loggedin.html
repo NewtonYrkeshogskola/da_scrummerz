@@ -161,7 +161,7 @@
                     <h4 class="text-center">Veckovis feedback för dina pågående kurser</h4>
                     <label for="selectFinishedCourse">Välj en pågående kurs och ge din feedback</label><br>
                     <select name="selectFinishedCourse" ng-model="activeCourseWeeklyFeedback">
-                        <option ng-repeat="course in finishedNotRated" ng-model="activeCourseWeeklyFeedback">{{course.key}}</option>
+                        <option ng-repeat="course in notRatedWeekly" ng-model="activeCourseWeeklyFeedback">{{course.key}}</option>
                     </select>
                     <form name="weeklyForm" sf-schema="schemaWeekly" sf-form="formWeekly" sf-model="modelWeekly" ng-submit="onSubmitWeekly(activeCourseWeeklyFeedback, weeklyForm)"></form>
                 </div>
