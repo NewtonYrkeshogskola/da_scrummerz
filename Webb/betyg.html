@@ -84,7 +84,7 @@
                     <h4 class="text-center">Ge feedback på avslutade kurser</h4>
                     <label for="selectFinishedCourse">Välj en avslutad kurs och ge din feedback</label><br>
                     <select name="selectFinishedCourse" ng-model="finishedCourseFeedback">
-                        <option ng-repeat="course in myCourses" ng-model="finishedCourseFeedback" ng-show="{{course.details.status === 'finished'}}">{{course.details.courseCode}}</option>
+                        <option ng-repeat="course in finishedNotRated" ng-model="finishedCourseFeedback">{{course.key}}</option>
                     </select>
                     <form name="myForm" sf-schema="schema" sf-form="form" sf-model="model" ng-submit="onSubmit(finishedCourseFeedback, myForm)"></form>
                 </div>

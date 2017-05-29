@@ -165,6 +165,7 @@ app.controller("gradesCtrl", ["$scope", "$firebaseObject", "$firebaseArray", '$f
             $scope.user = $firebaseObject(ref.child('users').child('students/' + userId).child('details'));
             $scope.globalGrades = [];
             $scope.globalAssignments = [];
+            $scope.finishedNotRated = [];
 
             // This will be executed after the user has been loaded
             $scope.user.$loaded().then(function () {
@@ -207,6 +208,21 @@ app.controller("gradesCtrl", ["$scope", "$firebaseObject", "$firebaseArray", '$f
                                 })
                             })
                         });
+                    });
+                });
+
+                //kontrollera att kursen är avslutad och att studenten inte lämnat sin feedback. skapa array av avslutade kurser utan feedback
+                ref.child('coursesByClass').child(klass).once('value', function (snapshot) {
+                    snapshot.forEach(function (childSnapshot) {
+                        var isFinished = childSnapshot.child("details").child("status").val();
+                        var userExists = childSnapshot.child("feedback").child(userId).val();
+                        if (isFinished === 'finished' && userExists === null) {
+                            var childKey = childSnapshot.key;
+                            //console.log(childSnapshot.key);
+                            $scope.finishedNotRated.push({
+                                key: childKey
+                            })
+                        }
                     });
                 });
                 $scope.schema = {
@@ -300,7 +316,10 @@ app.controller("gradesCtrl", ["$scope", "$firebaseObject", "$firebaseArray", '$f
                         "radios3",
                         "radios4",
                         "radios5",
-                        "radios6"
+                        "radios6",
+                        "comment1",
+                        "comment2",
+                        "comment3"
                     ]
                 };
 
