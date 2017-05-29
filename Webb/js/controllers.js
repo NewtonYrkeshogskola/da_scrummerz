@@ -502,7 +502,7 @@ app.controller("gradesCtrl", ["$scope", "$firebaseObject", "$firebaseArray", '$f
                         var comment1 = $scope.model.comment1;
                         var comment2 = $scope.model.comment2;
                         var comment3 = $scope.model.comment3;
-                        firebase.database().ref().child('coursesByClass').child(klass).child(finishedCourseFeedback).child('feedback').push({
+                        firebase.database().ref().child('coursesByClass').child(klass).child(finishedCourseFeedback).child('feedback').child(userId).update({
                             radio1,
                             radio2,
                             radio3,
@@ -572,7 +572,7 @@ app.controller("gradesCtrl", ["$scope", "$firebaseObject", "$firebaseArray", '$f
                         var commentw1 = $scope.modelWeekly.commentw1;
                         var commentw2 = $scope.modelWeekly.commentw2;
                         var commentw3 = $scope.modelWeekly.commentw3;
-                        firebase.database().ref().child('coursesByClass').child(klass).child(activeCourseWeeklyFeedback).child('weeklyFeedback').push({
+                        firebase.database().ref().child('coursesByClass').child(klass).child(activeCourseWeeklyFeedback).child('weeklyFeedback').child(userId).update({
                             commentw1,
                             commentw2,
                             commentw3
