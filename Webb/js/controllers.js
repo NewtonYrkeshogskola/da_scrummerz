@@ -507,6 +507,7 @@ app.controller("gradesCtrl", ["$scope", "$firebaseObject", "$firebaseArray", '$f
 
                 $scope.model = {};
                 $scope.onSubmit = function (finishedCourseFeedback, form) {
+                    location.reload();
                     // First we broadcast an event so all fields validate themselves
                     $scope.$broadcast('schemaFormValidate');
 
