@@ -4,16 +4,29 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bglogin"
+    android:background="@mipmap/bg"
     tools:context="se.newton.scrummerz.signedInStart">
+
+    <TextView
+        android:id="@+id/scanner"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/menuRegisterAttendance"
+        android:textColor="@color/cardview_dark_background"
+        android:textSize="24sp"
+        app:layout_constraintLeft_toLeftOf="@+id/myCoursesTextView"
+        app:layout_constraintTop_toBottomOf="@+id/myGradesTextView" />
 
     <TextView
         android:id="@+id/myGradesTextView"
         android:layout_width="154dp"
         android:layout_height="30dp"
-        android:layout_marginTop="17dp"
-        android:text="Mina betyg"
-        android:textColor="@color/common_google_signin_btn_text_dark_default"
+        android:layout_marginLeft="0dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/menuMyGrades"
+        android:textColor="@color/cardview_dark_background"
         android:textSize="24sp"
         app:layout_constraintLeft_toLeftOf="@+id/myCoursesTextView"
         app:layout_constraintTop_toBottomOf="@+id/myCoursesTextView" />
@@ -22,23 +35,24 @@
         android:id="@+id/feedbackTextView"
         android:layout_width="154dp"
         android:layout_height="30dp"
-        android:text="Ge feedback"
-        android:textColor="@color/common_google_signin_btn_text_dark_default"
-        android:textSize="24sp"
         android:layout_marginLeft="8dp"
-        app:layout_constraintLeft_toLeftOf="@+id/welcome"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="32dp"
-        app:layout_constraintTop_toBottomOf="@+id/welcome"
-        android:layout_marginStart="8dp" />
+        android:text="@string/giveFeedback"
+        android:textColor="@color/cardview_dark_background"
+        android:textSize="24sp"
+        app:layout_constraintLeft_toLeftOf="@+id/welcome"
+        app:layout_constraintTop_toBottomOf="@+id/welcome" />
 
     <TextView
         android:id="@+id/myCoursesTextView"
         android:layout_width="154dp"
         android:layout_height="31dp"
-        android:layout_marginTop="9dp"
+        android:layout_marginLeft="-4dp"
+        android:layout_marginTop="16dp"
         android:clickable="true"
-        android:text="Mina kurser"
-        android:textColor="@color/common_google_signin_btn_text_dark_default"
+        android:text="@string/menuMyCourses"
+        android:textColor="@color/cardview_dark_background"
         android:textSize="24sp"
         app:layout_constraintLeft_toLeftOf="@+id/feedbackTextView"
         app:layout_constraintTop_toBottomOf="@+id/feedbackTextView" />
@@ -47,56 +61,45 @@
         android:id="@+id/welcome"
         android:layout_width="361dp"
         android:layout_height="0dp"
+        android:layout_marginEnd="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="Välkommen"
+        android:text="@string/welcome"
         android:textAlignment="center"
-        android:textColor="@color/common_google_signin_btn_text_dark_default"
+        android:textColor="@color/cardview_dark_background"
         android:textSize="24sp"
+        app:layout_constraintHorizontal_bias="0.571"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView"
-        app:layout_constraintHorizontal_bias="0.571"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
     <TextView
         android:id="@+id/textView5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hur känner du dig idag?"
-        android:textColor="@android:color/white"
-        android:textSize="24sp"
+        android:layout_marginBottom="80dp"
         android:layout_marginLeft="8dp"
-        app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginRight="8dp"
-        app:layout_constraintRight_toRightOf="parent"
+        android:text="@string/feelingToday"
+        android:textColor="@color/cardview_dark_background"
+        android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="80dp" />
-
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="0dp"
-        android:layout_height="190dp"
-        android:cropToPadding="false"
-        android:scaleType="centerCrop"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/students" />
+        app:layout_constraintRight_toRightOf="parent" />
 
     <ImageButton
         android:id="@+id/negative"
         android:layout_width="70dp"
         android:layout_height="68dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginTop="0dp"
         android:background="@android:color/transparent"
         android:scaleType="fitCenter"
         app:layout_constraintLeft_toLeftOf="@+id/textView5"
-        app:srcCompat="@drawable/scared"
-        android:layout_marginLeft="0dp"
-        android:layout_marginTop="0dp"
-        app:layout_constraintTop_toBottomOf="@+id/textView5" />
+        app:layout_constraintTop_toBottomOf="@+id/textView5"
+        app:srcCompat="@drawable/scared" />
 
     <ImageButton
         android:id="@+id/neutral"
@@ -117,27 +120,24 @@
         android:id="@+id/positive"
         android:layout_width="70dp"
         android:layout_height="68dp"
+        android:layout_marginRight="0dp"
+        android:layout_marginTop="0dp"
         android:background="@android:color/transparent"
         android:scaleType="fitCenter"
-        app:srcCompat="@drawable/cool"
-        android:layout_marginRight="0dp"
         app:layout_constraintRight_toRightOf="@+id/textView5"
-        android:layout_marginTop="0dp"
-        app:layout_constraintTop_toBottomOf="@+id/textView5" />
+        app:layout_constraintTop_toBottomOf="@+id/textView5"
+        app:srcCompat="@drawable/cool" />
 
-    <Button
-        android:id="@+id/scanner"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:text="Start camera"
-        app:layout_constraintLeft_toRightOf="@+id/myGradesTextView"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/myGradesTextView"
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="282dp"
+        android:layout_height="86dp"
+        app:srcCompat="@drawable/portalen"
+        app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="8dp"
-        app:layout_constraintHorizontal_bias="0.507"
-        app:layout_constraintBottom_toBottomOf="@+id/myGradesTextView"
-        android:layout_marginBottom="0dp" />
+        android:layout_marginLeft="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginRight="8dp"
+        app:layout_constraintRight_toRightOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

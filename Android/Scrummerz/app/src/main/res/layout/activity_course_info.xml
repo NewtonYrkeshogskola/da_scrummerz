@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bglogin"
+    android:background="@mipmap/bg"
     tools:context="se.newton.scrummerz.CourseInfo">
 
     <TextView
@@ -15,7 +15,7 @@
         android:layout_marginRight="8dp"
         android:layout_marginTop="8dp"
         android:text="Kursnamn"
-        android:textColor="@android:color/background_light"
+        android:textColor="@color/cardview_dark_background"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintHorizontal_bias="0.5"
@@ -31,7 +31,7 @@
         android:layout_marginRight="0dp"
         android:layout_marginTop="12dp"
         android:text="Spicy jalapeno bacon ipsum dolor amet rump kielbasa pancetta tongue picanha. Cupim pork belly prosciutto jerky sirloin kielbasa brisket beef chuck corned beef jowl tenderloin drumstick ball tip. Andouille ham hock chicken hamburger. Cupim short ribs pig, rump burgdoggen bresaola swine. Venison ham burgdoggen kielbasa drumstick porchetta strip steak chicken boudin bresaola flank picanha turkey. Pancetta turkey ham corned beef bacon. Spare ribs cow beef ribs pork belly andouille bresaola kielbasa shoulder burgdoggen tenderloin pork chop rump."
-        android:textColor="@android:color/background_light"
+        android:textColor="@color/cardview_dark_background"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="@+id/courseName"
         app:layout_constraintRight_toRightOf="@+id/courseName"
@@ -44,7 +44,7 @@
         android:layout_marginLeft="0dp"
         android:layout_marginTop="6dp"
         android:text="Lärare: "
-        android:textColor="@android:color/background_light"
+        android:textColor="@color/cardview_dark_background"
         android:textStyle="bold"
         app:layout_constraintLeft_toLeftOf="@+id/detailsView"
         app:layout_constraintTop_toBottomOf="@+id/detailsView" />
@@ -53,23 +53,23 @@
         android:id="@+id/statusBoldView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="0dp"
         android:layout_marginTop="8dp"
         android:text="Status:"
-        android:textColor="@android:color/background_light"
+        android:textColor="@color/cardview_dark_background"
         android:textStyle="bold"
-        app:layout_constraintTop_toBottomOf="@+id/teacherboldView"
-        android:layout_marginLeft="0dp"
-        app:layout_constraintLeft_toLeftOf="@+id/detailsView" />
+        app:layout_constraintLeft_toLeftOf="@+id/detailsView"
+        app:layout_constraintTop_toBottomOf="@+id/teacherboldView" />
 
     <TextView
         android:id="@+id/teacherView"
         android:layout_width="272dp"
         android:layout_height="19dp"
         android:layout_marginLeft="8dp"
-        android:textColor="@android:color/background_light"
+        android:layout_marginRight="0dp"
+        android:textColor="@color/cardview_dark_background"
         app:layout_constraintBaseline_toBaselineOf="@+id/teacherboldView"
         app:layout_constraintLeft_toRightOf="@+id/teacherboldView"
-        android:layout_marginRight="0dp"
         app:layout_constraintRight_toRightOf="@+id/detailsView" />
 
     <TextView
@@ -77,12 +77,12 @@
         android:layout_width="272dp"
         android:layout_height="19dp"
         android:layout_marginLeft="0dp"
-        android:textColor="@android:color/background_light"
-        app:layout_constraintBaseline_toBaselineOf="@+id/statusBoldView"
         android:layout_marginRight="0dp"
-        app:layout_constraintRight_toRightOf="@+id/detailsView"
+        android:textColor="@color/cardview_dark_background"
+        app:layout_constraintBaseline_toBaselineOf="@+id/statusBoldView"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintLeft_toLeftOf="@+id/teacherView" />
+        app:layout_constraintLeft_toLeftOf="@+id/teacherView"
+        app:layout_constraintRight_toRightOf="@+id/detailsView" />
 
     <ImageView
         android:id="@+id/imageView2"

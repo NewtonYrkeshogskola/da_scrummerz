@@ -2,9 +2,7 @@ package se.newton.scrummerz;
 
 import android.app.ListActivity;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
@@ -40,7 +38,7 @@ public class assignment_grades extends ListActivity {
         courseNameView.setText(courseName);
 
         courseCode = courseNameView.getText().toString();
-        courseCode = courseCode.substring(courseName.indexOf("(") + 1, courseName.indexOf(")"));
+//        courseCode = courseCode.substring(courseName.indexOf("(") + 1, courseName.indexOf(")"));
 
         getUid();
         getGradesForAssignments();
@@ -66,15 +64,10 @@ public class assignment_grades extends ListActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
-                    String courseKey = postSnapshot.getKey().toString();
-//                    Log.i("test", postSnapshot.getKey().toString());
-//                    Log.i("test", postSnapshot.getValue().toString());
+                    String courseKey = postSnapshot.getKey();
                     if (courseKey.equals(courseCode)){
                         for (DataSnapshot childSnapshot: postSnapshot.getChildren()){
-//                        Log.i("test CHILD KEY", childSnapshot.getKey().toString());
-//                        Log.i("test CHILD VALUE", childSnapshot.getValue().toString());
-
-                            gradesOnAssignments.add(childSnapshot.getKey().toString() + "\nBetyg: " +
+                            gradesOnAssignments.add(childSnapshot.getKey() + "\n" + getString(R.string.grades) +
                                     childSnapshot.getValue());
                             arrayAdapter.notifyDataSetChanged();
                         }
@@ -87,16 +80,7 @@ public class assignment_grades extends ListActivity {
 
             }
         });
-
-
-
-
-
-
     }
-
-
-
 
     public void clearAdapter(){
         arrayAdapter.clear();

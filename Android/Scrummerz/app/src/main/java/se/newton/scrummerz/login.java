@@ -130,7 +130,12 @@ public class login extends AppCompatActivity {
                         } else {
                             // Om inloggningen misslyckades, meddela användaren
                             Log.w("Inloggning", "signInWithEmail:failure", task.getException());
+<<<<<<< HEAD
                             Toast.makeText(login.this, "Autensiering misslyckades.", Toast.LENGTH_SHORT).show();
+=======
+                            Toast.makeText(login.this, R.string.authenticationFailed,
+                                    Toast.LENGTH_SHORT).show();
+>>>>>>> origin/android
                             updateUI(null);
                         }
 
@@ -150,7 +155,7 @@ public class login extends AppCompatActivity {
 
         String email = emailField.getText().toString();
         if (TextUtils.isEmpty(email)) {
-            emailField.setError("Required.");
+            emailField.setError(getString(R.string.required));
             valid = false;
         } else {
             emailField.setError(null);
@@ -158,7 +163,7 @@ public class login extends AppCompatActivity {
 
         String password = passwordField.getText().toString();
         if (TextUtils.isEmpty(password)) {
-            passwordField.setError("Required.");
+            passwordField.setError(getString(R.string.required));
             valid = false;
         } else {
             passwordField.setError(null);
@@ -173,9 +178,10 @@ public class login extends AppCompatActivity {
             // Här hanterar vi vad som händer när man är inloggad
             Intent intent = new Intent(login.this, signedInStart.class);
             startActivity(intent);
+            finish();
         } else {
             // Här hanterar vi vad som händer om man inte är inloggad
-            mStatusTextView.setText("Inte inloggad");
+            mStatusTextView.setText(R.string.notLoggedIn);
         }
     }
 

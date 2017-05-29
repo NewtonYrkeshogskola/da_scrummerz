@@ -1,16 +1,17 @@
 package se.newton.scrummerz;
 
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -18,6 +19,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -33,6 +35,7 @@ public class signedInStart extends AppCompatActivity {
     String uid;
     Student student = new Student();
     SharedPreferences studentInfo;
+    RelativeLayout.LayoutParams layoutparams;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +52,7 @@ public class signedInStart extends AppCompatActivity {
         nameTextView = (TextView) findViewById(R.id.welcome);
         myGradesTextView = (TextView) findViewById(R.id.myGradesTextView);
         TextView coursesTextView = (TextView) findViewById(R.id.myCoursesTextView);
-        Button startScanner = (Button) findViewById(R.id.scanner);
+        TextView startScanner = (TextView) findViewById(R.id.scanner);
 
 
         startScanner.setOnClickListener(new View.OnClickListener() {
@@ -80,9 +83,9 @@ public class signedInStart extends AppCompatActivity {
             }
         });
 
-        ImageButton minus = (ImageButton) findViewById(R.id.negative);
-        ImageButton neutral = (ImageButton) findViewById(R.id.neutral);
-        ImageButton plus = (ImageButton) findViewById(R.id.positive);
+        final ImageButton minus = (ImageButton) findViewById(R.id.negative);
+        final ImageButton neutral = (ImageButton) findViewById(R.id.neutral);
+        final ImageButton plus = (ImageButton) findViewById(R.id.positive);
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd", Locale.getDefault());
         String currentDate = sdf.format(new Date());
@@ -90,12 +93,18 @@ public class signedInStart extends AppCompatActivity {
         final DatabaseReference dateData = mRoot.child("feelings").child(classRef).child(currentDate).child(uid);
         dateData.keepSynced(true);
 
-
         minus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dateData.setValue(-1);
-                Toast.makeText(signedInStart.this, "Tack för din röst!", Toast.LENGTH_LONG).show();
+                minus.setScaleX(1.15f);
+                minus.setScaleY(1.15f);
+
+                neutral.setScaleX(0.70f);
+                neutral.setScaleY(0.70f);
+
+                plus.setScaleX(0.70f);
+                plus.setScaleY(0.70f);
             }
         });
 
@@ -103,7 +112,14 @@ public class signedInStart extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 dateData.setValue(0);
-                Toast.makeText(signedInStart.this, "Tack för din röst!", Toast.LENGTH_LONG).show();
+                minus.setScaleX(0.70f);
+                minus.setScaleY(0.70f);
+
+                neutral.setScaleX(1.15f);
+                neutral.setScaleY(1.15f);
+
+                plus.setScaleX(0.70f);
+                plus.setScaleY(0.70f);
             }
         });
 
@@ -111,16 +127,40 @@ public class signedInStart extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 dateData.setValue(1);
-                Toast.makeText(signedInStart.this, "Tack för din röst!", Toast.LENGTH_LONG).show();
+                minus.setScaleX(0.70f);
+                minus.setScaleY(0.70f);
+
+                neutral.setScaleX(0.70f);
+                neutral.setScaleY(0.70f);
+
+                plus.setScaleX(1.15f);
+                plus.setScaleY(1.15f);
             }
         });
+
+        setNotifications();
+
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        String welcomeText = "Välkommen " + studentInfo.getString("studentName", "");
+        String welcomeText = getString(R.string.welcome) + " " + studentInfo.getString("studentName", "");
         nameTextView.setText(welcomeText);
+    }
+
+    public void setNotifications () {
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, 14);
+        calendar.set(Calendar.MINUTE, 59);
+
+        Intent notificationIntent = new Intent(getApplicationContext(), Notification_reciever.class);
+
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 100, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
     }
 
 }

@@ -93,15 +93,15 @@ public class activity_courses extends AppCompatActivity {
                         if (body.equals("finished")) {
                             Drawable id = getResources().getDrawable(R.drawable.finished);
                             viewHolder.setImage(id);
-                            ((TextView)viewHolder.itemView.findViewById(R.id.Item_category)).setText("Kursen är färdig");
+                            ((TextView)viewHolder.itemView.findViewById(R.id.Item_category)).setText(R.string.courseFinished);
                         } else if (body.equals("comming")) {
                             Drawable id = getResources().getDrawable(R.drawable.future);
                             viewHolder.setImage(id);
-                            ((TextView)viewHolder.itemView.findViewById(R.id.Item_category)).setText("Kursen är inte påbörjad");
+                            ((TextView)viewHolder.itemView.findViewById(R.id.Item_category)).setText(R.string.courseNotStarted);
                         } else if (body.equals("progress")) {
                             Drawable id = getResources().getDrawable(R.drawable.ongoing);
                             viewHolder.setImage(id);
-                            ((TextView)viewHolder.itemView.findViewById(R.id.Item_category)).setText("Kursen pågår");
+                            ((TextView)viewHolder.itemView.findViewById(R.id.Item_category)).setText(R.string.courseActive);
                         }
 
                         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -168,9 +168,9 @@ public class activity_courses extends AppCompatActivity {
 
         public void setBody(String body) {
             TextView itemBody = (TextView) mView.findViewById(R.id.Item_category);
-            if (Objects.equals(body, "progress")) itemBody.setText("Kursen är påbörjad");
-            if (Objects.equals(body, "finished")) itemBody.setText("Kursen är avslutad");
-            if (Objects.equals(body, "comming"))  itemBody.setText("Kursen är ännu inte startad");
+            if (Objects.equals(body, "progress")) itemBody.setText(R.string.courseActive);
+            if (Objects.equals(body, "finished")) itemBody.setText(R.string.courseFinished);
+            if (Objects.equals(body, "comming"))  itemBody.setText(R.string.courseNotStarted);
         }
 
         void setImage (Drawable image) {
@@ -186,7 +186,6 @@ public class activity_courses extends AppCompatActivity {
             userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
         } catch (NullPointerException ignored){}
     }
-
 
     public void getMyClass(String user){
         DatabaseReference localRef = dbRef.child("users").child("students").child(user).child("details");
