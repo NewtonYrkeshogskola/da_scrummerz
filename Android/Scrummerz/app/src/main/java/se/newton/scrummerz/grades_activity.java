@@ -29,7 +29,7 @@ public class grades_activity extends ListActivity {
 
     DatabaseReference dbRef;
 
-    String userId, grade, courseCode, course;
+    String userId, grade;
     SharedPreferences preferences;
     ArrayList grades = new ArrayList<String>();
     protected static ArrayAdapter<String> arrayAdapter = null;
@@ -79,31 +79,12 @@ public class grades_activity extends ListActivity {
 
                 for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
 
-                    courseCode = postSnapshot.getKey();
                     grade = postSnapshot.getValue().toString();
 
                     Courses courses = dataSnapshot.getValue(Courses.class);
                     grades.add(postSnapshot.getKey() + "\nSlutbetyg på denna kurs: " + grade);
                     arrayAdapter.notifyDataSetChanged();
 
-/*
-                    DatabaseReference courseRef = dbRef.child("coursesByClass").child(myClass).child(courseCode).child("details");
-                    courseRef.addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot dataSnapshot) {
-                            Courses courses = dataSnapshot.getValue(Courses.class);
-                            grades.add(courses.getName() + " (" + courses.getCourseCode() + ")"
-                                    + "\nSlutbetyg på denna kurs: " + grade);
-                            arrayAdapter.notifyDataSetChanged();
-                        }
-
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
-
-                        }
-                    });
-
-                    grades.add(course + "\nSlutbetyg på denna kurs: " + grade);//*/
                 }
             }
 

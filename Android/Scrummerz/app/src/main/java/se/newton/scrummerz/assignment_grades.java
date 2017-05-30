@@ -3,8 +3,10 @@ package se.newton.scrummerz;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -30,22 +32,18 @@ public class assignment_grades extends ListActivity {
         setContentView(R.layout.activity_assignment_grades);
         Intent intent = getIntent();
 
+
         dbref = FirebaseDatabase.getInstance().getReference();
 
         //Changes the header with the current course with the correct name
         TextView courseNameView = (TextView) findViewById(R.id.courseName);
         courseName = intent.getStringExtra("courseNameWithGrades");
+        courseCode = courseName.substring(courseName.indexOf("(") + 1, courseName.indexOf(")"));
         courseNameView.setText(courseName);
 
-        courseCode = courseNameView.getText().toString();
-
         getUid();
-        getGradesForAssignments();
-
         arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, gradesOnAssignments);
         getListView().setAdapter(arrayAdapter);
-        clearAdapter();
-        arrayAdapter.notifyDataSetChanged();
 
     }
 
@@ -56,21 +54,23 @@ public class assignment_grades extends ListActivity {
         }
     }
 
-    public void getGradesForAssignments(){
-        DatabaseReference  localRef = dbref.child("grades").child(userId).child("assignments");
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        DatabaseReference  localRef = dbref.child("grades")
+                                           .child(userId)
+                                           .child("assignments")
+                                           .child(courseCode);
 
         localRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
-                    String courseKey = postSnapshot.getKey();
-                    if (courseKey.equals(courseCode)){
-                        for (DataSnapshot childSnapshot: postSnapshot.getChildren()){
-                            gradesOnAssignments.add(childSnapshot.getKey() + "\n" + getString(R.string.grades) +
-                                    childSnapshot.getValue());
-                            arrayAdapter.notifyDataSetChanged();
-                        }
-                    }
+                    String assignmentGrade = postSnapshot.getKey() + "\n" +
+                            "Betyg: " + postSnapshot.getValue().toString();
+                    gradesOnAssignments.add(assignmentGrade);
+                    arrayAdapter.notifyDataSetChanged();
                 }
             }
 
@@ -83,6 +83,13 @@ public class assignment_grades extends ListActivity {
 
     public void clearAdapter(){
         arrayAdapter.clear();
+        arrayAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        clearAdapter();
         arrayAdapter.notifyDataSetChanged();
     }
 }
