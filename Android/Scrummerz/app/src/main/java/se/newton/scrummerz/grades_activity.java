@@ -22,6 +22,8 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import se.newton.scrummerz.model.Courses;
+
 public class grades_activity extends ListActivity {
 
 
@@ -69,10 +71,7 @@ public class grades_activity extends ListActivity {
     public void getMyGrades(String user) {
         DatabaseReference gradesRef = dbRef.child("grades").child(userId).child("final");
         final String myClass = preferences.getString("studentClass", "");
-<<<<<<< HEAD
-        Log.i("grade", myClass);
-=======
->>>>>>> origin/android
+
 
         gradesRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -81,12 +80,11 @@ public class grades_activity extends ListActivity {
 //                Log.i("test NOW DO THIS GRADE", dataSnapshot.getValue().toString());
 
                 for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
-<<<<<<< HEAD
 
-                    course = postSnapshot.getKey();
-                    grade = postSnapshot.getValue().toString();
-                    Log.i("grade", course + " " + grade);
-=======
+                    //course = postSnapshot.getKey();
+                    //grade = postSnapshot.getValue().toString();
+                    //Log.i("grade", course + " " + grade);
+
                     courseCode = postSnapshot.getKey();
                     grade = postSnapshot.getValue().toString();
 
@@ -98,25 +96,24 @@ public class grades_activity extends ListActivity {
                     Log.i("test NOW DO THIS GRADE", postSnapshot.getKey());
                     Log.i("test NOW DO THIS GRADE", postSnapshot.getValue().toString());
 
+/*
+                    DatabaseReference courseRef = dbRef.child("coursesByClass").child(myClass).child(courseCode).child("details");
+                    courseRef.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            Courses courses = dataSnapshot.getValue(Courses.class);
+                            grades.add(courses.getName() + " (" + courses.getCourseCode() + ")"
+                                    + "\nSlutbetyg på denna kurs: " + grade);
+                            arrayAdapter.notifyDataSetChanged();
+                        }
 
-//                    DatabaseReference courseRef = dbRef.child("coursesByClass").child(myClass).child(courseCode).child("details");
-//                    courseRef.addValueEventListener(new ValueEventListener() {
-//                        @Override
-//                        public void onDataChange(DataSnapshot dataSnapshot) {
-//                            Courses courses = dataSnapshot.getValue(Courses.class);
-//                            grades.add(courses.getName() + " (" + courses.getCourseCode() + ")"
-//                                    + "\nSlutbetyg på denna kurs: " + grade);
-//                            arrayAdapter.notifyDataSetChanged();
-//                        }
-//
-//                        @Override
-//                        public void onCancelled(DatabaseError databaseError) {
-//
-//                        }
-//                    });
->>>>>>> origin/android
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
 
-                    grades.add(course + "\nSlutbetyg på denna kurs: " + grade);
+                        }
+                    });
+
+                    grades.add(course + "\nSlutbetyg på denna kurs: " + grade);//*/
                 }
             }
 
