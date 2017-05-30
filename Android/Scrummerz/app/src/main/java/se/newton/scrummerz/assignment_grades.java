@@ -38,7 +38,6 @@ public class assignment_grades extends ListActivity {
         courseNameView.setText(courseName);
 
         courseCode = courseNameView.getText().toString();
-//        courseCode = courseCode.substring(courseName.indexOf("(") + 1, courseName.indexOf(")"));
 
         getUid();
         getGradesForAssignments();

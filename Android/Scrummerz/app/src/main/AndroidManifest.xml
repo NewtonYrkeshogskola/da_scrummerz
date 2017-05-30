@@ -26,15 +26,33 @@
             android:name=".login"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_login"
+            android:screenOrientation="portrait"
             android:theme="@style/FullscreenTheme" />
-        <activity android:name=".signedInStart" />
-        <activity android:name=".activity_courses" />
-        <activity android:name=".CourseInfo" />
-        <activity android:name=".grades_activity" />
-        <activity android:name=".assignment" />
-        <activity android:name=".assignment_grades" />
-        <activity android:name=".scanner" />
+        <activity
+            android:name=".signedInStart"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity_courses"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".CourseInfo"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".grades_activity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".assignment"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".assignment_grades"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".scanner"
+            android:screenOrientation="portrait" />
+
         <receiver android:name=".Notification_reciever" />
+
+        <activity android:name=".assignment_info"></activity>
     </application>
 
 </manifest>

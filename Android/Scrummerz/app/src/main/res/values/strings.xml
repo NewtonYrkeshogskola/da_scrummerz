@@ -22,7 +22,7 @@
     <string name="email">E-postadress</string>
     <string name="password">Lösenord</string>
     <string name="goToLogin">Gå till inloggningen</string>
-    <string name="giveFeedback" >Ge feedback</string>
+    <string name="giveFeedback">Ge feedback</string>
     <string name="menuMyCourses">Mina kurser</string>
     <string name="menuMyGrades">Mina betyg</string>
     <string name="menuRegisterAttendance">Registrera närvaro</string>

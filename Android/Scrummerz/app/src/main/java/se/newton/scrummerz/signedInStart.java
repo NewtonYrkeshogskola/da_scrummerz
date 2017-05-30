@@ -35,7 +35,6 @@ public class signedInStart extends AppCompatActivity {
     String uid;
     Student student = new Student();
     SharedPreferences studentInfo;
-    RelativeLayout.LayoutParams layoutparams;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

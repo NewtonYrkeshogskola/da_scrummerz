@@ -76,14 +76,8 @@ public class grades_activity extends ListActivity {
         gradesRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-//                Log.i("test NOW DO THIS GRADE", dataSnapshot.getKey());
-//                Log.i("test NOW DO THIS GRADE", dataSnapshot.getValue().toString());
 
                 for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
-
-                    //course = postSnapshot.getKey();
-                    //grade = postSnapshot.getValue().toString();
-                    //Log.i("grade", course + " " + grade);
 
                     courseCode = postSnapshot.getKey();
                     grade = postSnapshot.getValue().toString();
@@ -91,10 +85,6 @@ public class grades_activity extends ListActivity {
                     Courses courses = dataSnapshot.getValue(Courses.class);
                     grades.add(postSnapshot.getKey() + "\nSlutbetyg på denna kurs: " + grade);
                     arrayAdapter.notifyDataSetChanged();
-
-
-                    Log.i("test NOW DO THIS GRADE", postSnapshot.getKey());
-                    Log.i("test NOW DO THIS GRADE", postSnapshot.getValue().toString());
 
 /*
                     DatabaseReference courseRef = dbRef.child("coursesByClass").child(myClass).child(courseCode).child("details");
