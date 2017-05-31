@@ -25,14 +25,21 @@
 
 <body ng-app="LoggedIn" ng-controller="AdminUserCtrl">
 
-    <div>
-        E-mail: <input type="text" ng-model="email"> Lösenord: <input type="text" ng-model="password"><br><br>
-        <button ng-click="createUser()">Skapa användare</button> <br><br>
-        <button ng-click="deleteUser()">Radera användare</button>
 
-        <p ng-if="message">Meddelande: <strong>{{ message }}</strong></p>
-        <p ng-if="error">Fel: <strong>{{ error }}</strong></p>
-    </div>
+    <div class="row">
+        <div class="col-sm-4"> </div>
+        <div class="col-sm-4">
+            <div>
+                <h2>Skapa ny användare</h2>
+                E-mail: <input type="text" ng-model="email"> Lösenord: <input type="text" ng-model="password"><br><br>
+                <button ng-click="createUser()">Skapa användare</button> 
+                <button ng-click="deleteUser()">Radera användare</button>
+
+                <p ng-if="message">Meddelande: <strong>{{ message }}</strong></p>
+                <p ng-if="error">Fel: <strong>{{ error }}</strong></p>
+            </div>
+        </div>
+        <div class="col-sm-4"> </div>    </div>
 
 </body>
 
