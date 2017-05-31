@@ -23,14 +23,14 @@
     <script type="text/javascript" src="js/admincontroller.js"></script>
 </head>
 
-<body ng-app="LoggedIn" ng-controller="AdminUserCtrl">
+<body ng-app="LoggedIn" ng-controller="AdminUserCtrl" ng-cloak>
 
 
     <div class="row">
         <div class="col-sm-4"> </div>
         <div class="col-sm-4">
             <div>
-                <h2>Skapa ny användare</h2>
+                <h2>Lägg till elev</h2>
                 E-mail: <input type="text" ng-model="email"> Lösenord: <input type="text" ng-model="password"><br><br>
                 <button ng-click="createUser()">Skapa användare</button> 
                 <button ng-click="deleteUser()">Radera användare</button>
