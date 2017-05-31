@@ -216,7 +216,7 @@ app.controller("gradesCtrl", ["$scope", "$firebaseObject", "$firebaseArray", '$f
                 ref.child('coursesByClass').child(klass).once('value', function (snapshot) {
                     snapshot.forEach(function (childSnapshot) {
                         var isFinished = childSnapshot.child("details").child("status").val();
-                        var userExists = childSnapshot.child("feedback").child(userId).val();
+                        var userExists = childSnapshot.child("feedback").child('studentsVoted').child(userId).val();
                         if (isFinished === 'finished' && userExists === null) {
                             var childKey = childSnapshot.key;
                             //console.log(childSnapshot.key);
@@ -523,7 +523,7 @@ app.controller("gradesCtrl", ["$scope", "$firebaseObject", "$firebaseArray", '$f
                         var comment1 = $scope.model.comment1;
                         var comment2 = $scope.model.comment2;
                         var comment3 = $scope.model.comment3;
-                        firebase.database().ref().child('coursesByClass').child(klass).child(finishedCourseFeedback).child('feedback').child(userId).update({
+                        firebase.database().ref().child('coursesByClass').child(klass).child(finishedCourseFeedback).child('feedback').push({
                             radio1,
                             radio2,
                             radio3,
@@ -533,6 +533,9 @@ app.controller("gradesCtrl", ["$scope", "$firebaseObject", "$firebaseArray", '$f
                             comment1,
                             comment2,
                             comment3
+                        });
+                        firebase.database().ref().child('coursesByClass').child(klass).child(finishedCourseFeedback).child('feedback').child('studentsVoted').update({
+                            [userId]: true
                         });
                     }
                 }
