@@ -540,29 +540,26 @@ app.controller("gradesCtrl", ["$scope", "$firebaseObject", "$firebaseArray", '$f
                     }
                 }
 
-                $scope.dateWeeklyFeedback = new Date();
-                $scope.myDate = new Date($scope.dateWeeklyFeedback.getFullYear(),
-                    $scope.dateWeeklyFeedback.getMonth(),
-                    $scope.dateWeeklyFeedback.getDate());
-                $scope.myDate = $filter('date')($scope.myDate, 'yyyyMMdd');
-                var dateWeeklyFeedback = $scope.myDate;
-                console.log(dateWeeklyFeedback)
-
 
                 //kontrollera att kursen är pågående och att studenten inte lämnat sin feedback. skapa array av avslutade kurser utan feedback
                 ref.child('coursesByClass').child(klass).once('value', function (snapshot) {
                     snapshot.forEach(function (childSnapshot) {
                         var isFinished = childSnapshot.child("details").child("status").val();
-                        var userExists = childSnapshot.child("weeklyFeedback").child(userId).val();
-                        var dateExists = childSnapshot.child("weeklyFeedback").child(dateWeeklyFeedback).val();
-                        console.log(dateExists);
-                        if (isFinished === 'progress' && userExists === null ) {
-                            var childKey = childSnapshot.key;
-                            console.log(childSnapshot.key);
-                            $scope.notRatedWeekly.push({
-                                key: childKey
-                            })
-                            console.log($scope.notRatedWeekly);
+                        var courseKey = childSnapshot.key;
+                        if (isFinished === 'progress') {
+                            ref.child('coursesByClass').child(klass).child(courseKey).child('weeklyFeedback').once('value', function (snapshot) {
+                                snapshot.forEach(function (childSnapshot) {
+                                    var feedbackKey = childSnapshot.child('active').val();
+                                    var studentKey = childSnapshot.child('studentsVoted').child(userId).val();
+                                    if (feedbackKey === true && studentKey === null) {
+                                        var childKey = childSnapshot.key;
+                                        $scope.notRatedWeekly.push({
+                                            key: courseKey,
+                                            week: childKey
+                                        })
+                                    }
+                                });
+                            });
                         }
                     });
                 });
@@ -615,6 +612,10 @@ app.controller("gradesCtrl", ["$scope", "$firebaseObject", "$firebaseArray", '$f
 
                 $scope.modelWeekly = {};
                 $scope.onSubmitWeekly = function (activeCourseWeeklyFeedback, formWeekly) {
+                    var courseArray = activeCourseWeeklyFeedback.split(' ');
+                    var course = courseArray[0];
+                    var week = courseArray[1];
+                    console.log(course + ' ' + week);
                     location.reload();
                     // First we broadcast an event so all fields validate themselves
                     $scope.$broadcast('schemaFormValidate');
@@ -624,10 +625,14 @@ app.controller("gradesCtrl", ["$scope", "$firebaseObject", "$firebaseArray", '$f
                         var commentw1 = $scope.modelWeekly.commentw1;
                         var commentw2 = $scope.modelWeekly.commentw2;
                         var commentw3 = $scope.modelWeekly.commentw3;
-                        firebase.database().ref().child('coursesByClass').child(klass).child(activeCourseWeeklyFeedback).child('weeklyFeedback').child(userId).update({
+                       
+                        firebase.database().ref().child('coursesByClass').child(klass).child(course).child('weeklyFeedback').child(week).push({
                             commentw1,
                             commentw2,
                             commentw3
+                        });
+                        firebase.database().ref().child('coursesByClass').child(klass).child(course).child('weeklyFeedback').child(week).child('studentsVoted').update({
+                            [userId]: true
                         });
                     }
                 }
@@ -639,3 +644,7 @@ app.controller('FormController', function ($scope) {
 
 
 });
+/*var childKey = childSnapshot.key;
+$scope.notRatedWeekly.push({
+    key: childKey
+})*/
