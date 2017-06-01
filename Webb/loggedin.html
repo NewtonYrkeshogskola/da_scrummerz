@@ -60,7 +60,6 @@
                 <a href="betyg.html"><img src="images/betyg.svg" alt="Mina betyg"></a>
             </div>
         </div>
-        <div class="col-sm-1"> </div>
     </div>
     <div class="row">
         <div class="col-sm-1"> </div>
@@ -81,18 +80,21 @@
                     <img ng-if="s.key === userId && s.grade === 1" src="images/cool.png" width="30px" alt="Smiley for happy mood">
                 </div>
             </center>
+
             <center>
                 <h4 class="text-center"><strong>Anmäl din närvaro: </strong></h4>
-                <form>
+                <form name="myForm">
                     <label for="chooseCourse">Välj kurs: </label>
-                    <select id="chooseCourse" ng-model="courseAttended" required>
+                    <select name="kurs" id="chooseCourse" ng-model="courseAttended" required>
                     <option ng-repeat="course in myCourses" ng-show="{{course.details.status === 'progress'}}">{{course.details.courseCode}}</option>
                 </select>
                     <label for="codeInput">Närvarokod: </label>
-                    <input type="text" id="codeInput" placeholder="ange koden här" ng-model="attendanceCode" required><br><br>
-                    <button type="button" class="btn btn-success" ng-click="attendance(courseAttended, attendanceCode)">I'm here!</button>
+                    <input name="kod" type="text" id="codeInput" placeholder="ange koden här" ng-model="attendanceCode" required><br><br>
+                    <button ng-disabled="myForm.kurs.$invalid || myForm.kod.$invalid" type="button" class="btn btn-success" ng-click="attendance(courseAttended, attendanceCode)">I'm here!</button>
                 </form>
                 <center>
+
+    
         </div>
 
         <div class="col-sm-5 divmargin well well-sm">
@@ -159,9 +161,9 @@
     </div>
     <div class="row">
         <div class="col-sm-1"> </div>
-        <div class="col-sm-5 divmargin well well-sm" ng-controller="gradesCtrl">
+        <div ng-show="notRatedWeekly.length != 0" class="col-sm-5 divmargin well well-sm" ng-controller="gradesCtrl">
             <h4 class="text-center">Veckovis feedback för dina pågående kurser</h4>
-            <label for="selectFinishedCourse">Välj en pågående kurs och ge din feedback</label><br>
+            <label for="selectFinishedCourse">Välj en pågående kurs och ge din feedback*</label><br>
             <select name="selectFinishedCourse" ng-model="activeCourseWeeklyFeedback">
                         <option ng-repeat="course in notRatedWeekly" ng-model="activeCourseWeeklyFeedback">{{course.key}} {{course.week}}</option>
                     </select>
