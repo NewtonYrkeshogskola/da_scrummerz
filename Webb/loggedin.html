@@ -23,6 +23,8 @@
     <script type="text/javascript" src="bower_components/objectpath/lib/ObjectPath.js"></script>
     <script type="text/javascript" src="bower_components/angular-schema-form/dist/schema-form.min.js"></script>
     <script type="text/javascript" src="bower_components/angular-schema-form/dist/bootstrap-decorator.min.js"></script>
+    <script src="bower_components/chart.js/dist/Chart.min.js"></script>
+    <script src="bower_components/angular-chart.js/dist/angular-chart.min.js"></script>
     <script type="text/javascript" src="js/loggedin.js"></script>
     <script type="text/javascript" src="js/database.js"></script>
     <script type="text/javascript" src="js/controllers.js"></script>
@@ -155,17 +157,17 @@
         </div>
         <div class="col-sm-1"> </div>
     </div>
-     <div class="row">
-                <div class="col-sm-1"> </div>
-                <div class="col-sm-5 divmargin well well-sm" ng-controller="gradesCtrl">
-                    <h4 class="text-center">Veckovis feedback för dina pågående kurser</h4>
-                    <label for="selectFinishedCourse">Välj en pågående kurs och ge din feedback</label><br>
-                    <select name="selectFinishedCourse" ng-model="activeCourseWeeklyFeedback">
+    <div class="row">
+        <div class="col-sm-1"> </div>
+        <div class="col-sm-5 divmargin well well-sm" ng-controller="gradesCtrl">
+            <h4 class="text-center">Veckovis feedback för dina pågående kurser</h4>
+            <label for="selectFinishedCourse">Välj en pågående kurs och ge din feedback</label><br>
+            <select name="selectFinishedCourse" ng-model="activeCourseWeeklyFeedback">
                         <option ng-repeat="course in notRatedWeekly" ng-model="activeCourseWeeklyFeedback">{{course.key}} {{course.week}}</option>
                     </select>
-                    <form name="weeklyForm" sf-schema="schemaWeekly" sf-form="formWeekly" sf-model="modelWeekly" ng-submit="onSubmitWeekly(activeCourseWeeklyFeedback, weeklyForm)"></form>
-                </div>
-            </div>
+            <form name="weeklyForm" sf-schema="schemaWeekly" sf-form="formWeekly" sf-model="modelWeekly" ng-submit="onSubmitWeekly(activeCourseWeeklyFeedback, weeklyForm)"></form>
+        </div>
+    </div>
 </body>
 
 </html>

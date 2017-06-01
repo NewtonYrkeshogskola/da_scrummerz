@@ -1,4 +1,4 @@
-var app = angular.module('LoggedIn', ['firebase', 'ngAnimate', 'schemaForm']);
+var app = angular.module('LoggedIn', ['firebase', 'ngAnimate', 'schemaForm', 'chart.js']);
 var grades = [];
 
 
@@ -640,11 +640,7 @@ app.controller("gradesCtrl", ["$scope", "$firebaseObject", "$firebaseArray", '$f
         })
     }
 ]);
-app.controller('FormController', function ($scope) {
-
-
+app.controller("DoughnutCtrl", function ($scope) {
+  $scope.labels = ["Download Sales", "In-Store Sales", "Mail-Order Sales"];
+  $scope.data = [300, 500, 100, 150, 300];
 });
-/*var childKey = childSnapshot.key;
-$scope.notRatedWeekly.push({
-    key: childKey
-})*/

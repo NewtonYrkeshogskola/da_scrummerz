@@ -77,12 +77,13 @@ app.controller("AdminUserCtrl", ["$scope", "$firebaseObject", "$firebaseArray", 
             $scope.string = $scope.selectedCourse + "/" + date + "/" + $scope.random;
         }
 
-        $scope.activatePresence = function () {
+        $scope.activatePresence = function (presenceName) {
             var localDate = new Date();
             $scope.time = localDate.getHours() + ":" + localDate.getMinutes();
             firebase.database().ref().child('coursesByClass').child($scope.selectedClass).child($scope.selectedCourse).child(date).child($scope.random).update({
                 active: true,
-                created: $scope.time
+                created: $scope.time,
+                name: presenceName
             });
             alert("Nu är närvaron aktiverad. Du kan nu registera dig som närvarande.")
 
