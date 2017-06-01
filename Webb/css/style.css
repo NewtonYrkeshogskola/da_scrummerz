@@ -1,4 +1,4 @@
-body{
+  body{
     background-image: url('../images/students.png');
     background-size: cover;
     background-attachment: fixed;
@@ -8,6 +8,10 @@ body{
     background-image: url('../images/students.jpeg');
     background-size: cover;
     background-repeat: no-repeat;
+}
+
+#doughnut{
+  max-width: 200px;
 }
 
 #start-main {

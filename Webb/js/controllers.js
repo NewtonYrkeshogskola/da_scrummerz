@@ -640,31 +640,3 @@ app.controller("gradesCtrl", ["$scope", "$firebaseObject", "$firebaseArray", '$f
         })
     }
 ]);
-app.controller("DoughnutCtrl", function ($scope, $filter) {
-   var ref = firebase.database().ref();
-    $scope.today = new Date();
-    $scope.myDate = new Date($scope.today.getFullYear(),
-        $scope.today.getMonth(),
-        $scope.today.getDate());
-    $scope.myDate = $filter('date')($scope.myDate, 'yyyyMMdd');
-    var date = $scope.myDate;
-    $scope.ones = 0;
-    $scope.zeros = 0;
-    $scope.minusOnes = 0;
-    ref.child('feelings').child('APPS1').child(date).on('value', function (snapshot) {
-        snapshot.forEach(function (childSnapshot) {
-            var feelingData = childSnapshot.val();
-            if (feelingData === 1) {
-                $scope.ones++
-            }
-            else if (feelingData === 0) {
-                $scope.zeros++
-            }
-            else {
-                $scope.minusOnes++
-            }
-             $scope.labels = ["GOOD", "NEUTRAL", "BAD"];
-             $scope.data = [$scope.ones, $scope.zeros, $scope.minusOnes];
-        });
-    });
-});
