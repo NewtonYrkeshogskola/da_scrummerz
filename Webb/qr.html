@@ -36,10 +36,10 @@
       <br> Ange kurs:
       <select class="styled-select" id="chooseCourse" ng-model="selectedCourse" ng-change="updateString()" required>
     <option ng-repeat="course in myCourses" ng-show="{{course.details.status === 'progress'}}">{{course.details.courseCode}}</option><input ng-hide="true"/></select> <br><br>
-<<<<<<< Updated upstream
+
     <label for="presenceName">Ange namn på tillfället</label>
     <input type="text" id="presenceName" ng-model="presenceName" required>
-    <button class="button-qr-activate" ng-click="activatePresence(presenceName)">Aktivera närvaro</button> 
+    <button class="button-qr-activate" ng-click="activatePresence(presenceName)">Aktivera närvaro</button>
     <button class="button-qr-deactivate" ng-click="deActivatePresence()">Sluta ta närvaro</button>
     <br>
 
@@ -56,7 +56,6 @@
             <center>
                 <h1 ng-hide="selectedCourse == 'NONE'"> Kod för manuell inmatning <br><br>{{random}} <br><br> Kurs: {{selectedCourse}}<br><br> Namn: {{presenceName}}</h1>
             </center>
-=======
 
 
       <button class="button-qr-activate" ng-click="activatePresence()">Aktivera närvaro</button>
@@ -66,7 +65,7 @@
       <h3 ng-hide="selectedCourse == 'NONE'">Studenter som checkat in</h3>
       <h5 ng-repeat="students in studentsLoggedIn" ng-hide="selectedCourse == 'NONE'">{{students}}
     </h5>
->>>>>>> Stashed changes
+
     </div>
     <div class="col-sm-6">
       <div id="qr" ng-hide="selectedCourse == 'NONE'">
