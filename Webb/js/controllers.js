@@ -223,6 +223,7 @@ app.controller("gradesCtrl", ["$scope", "$firebaseObject", "$firebaseArray", '$f
                             $scope.finishedNotRated.push({
                                 key: childKey
                             })
+                            console.log($scope.finishedNotRated + ' hej');
                         }
                     });
                 });
@@ -230,7 +231,7 @@ app.controller("gradesCtrl", ["$scope", "$firebaseObject", "$firebaseArray", '$f
                     "type": "object",
                     "properties": {
                         "radios": {
-                            "title": "Allmänt sett, vilket är ditt omdöme om kursen?",
+                            "title": "Allmänt sett, vilket är ditt omdöme om kursen?*",
                             "type": "number",
                             "enum": [
                                 1,
@@ -241,7 +242,7 @@ app.controller("gradesCtrl", ["$scope", "$firebaseObject", "$firebaseArray", '$f
                             ]
                         },
                         "radios2": {
-                            "title": "Hur tycker du att kursens innehåll överensstämmer med lärandemålen?",
+                            "title": "Hur tycker du att kursens innehåll överensstämmer med lärandemålen?*",
                             "type": "number",
                             "enum": [
                                 1,
@@ -252,7 +253,7 @@ app.controller("gradesCtrl", ["$scope", "$firebaseObject", "$firebaseArray", '$f
                             ]
                         },
                         "radios3": {
-                            "title": "Vad tycker du om kurslitteraturen?",
+                            "title": "Vad tycker du om kurslitteraturen?*",
                             "type": "number",
                             "enum": [
                                 1,
@@ -263,7 +264,7 @@ app.controller("gradesCtrl", ["$scope", "$firebaseObject", "$firebaseArray", '$f
                             ]
                         },
                         "radios4": {
-                            "title": "Kursen har givit mig god översikt av området",
+                            "title": "Kursen har givit mig god översikt av området*",
                             "type": "number",
                             "enum": [
                                 1,
@@ -274,7 +275,7 @@ app.controller("gradesCtrl", ["$scope", "$firebaseObject", "$firebaseArray", '$f
                             ]
                         },
                         "radios5": {
-                            "title": "Kursen har fördjupat min förståelse för området",
+                            "title": "Kursen har fördjupat min förståelse för området*",
                             "type": "number",
                             "enum": [
                                 1,
@@ -285,7 +286,7 @@ app.controller("gradesCtrl", ["$scope", "$firebaseObject", "$firebaseArray", '$f
                             ]
                         },
                         "radios6": {
-                            "title": "Kursen har hjälpt (kommer att hjälpa) mig lösa problem inom området",
+                            "title": "Kursen har hjälpt (kommer att hjälpa) mig lösa problem inom området*",
                             "type": "number",
                             "enum": [
                                 1,
@@ -296,19 +297,19 @@ app.controller("gradesCtrl", ["$scope", "$firebaseObject", "$firebaseArray", '$f
                             ]
                         },
                         "comment1": {
-                            "title": "Ge förslag till moment i kursen som behöver förbättras och på vilket sätt",
+                            "title": "Ge förslag till moment i kursen som behöver förbättras och på vilket sätt*",
                             "type": "string",
-                            "minLength": 20
+                            "minLength": 5
                         },
                         "comment2": {
-                            "title": "Vilka moment i kursen är OK som de är och berätta gärna varför?",
+                            "title": "Vilka moment i kursen är OK som de är och berätta gärna varför?*",
                             "type": "string",
-                            "minLength": 20
+                            "minLength": 5
                         },
                         "comment3": {
-                            "title": "Övriga kommentarer och /eller synpunkter:",
+                            "title": "Övriga kommentarer och /eller synpunkter:*",
                             "type": "string",
-                            "minLength": 20
+                            "minLength": 5
                         }
                     },
                     "required": [
@@ -568,19 +569,19 @@ app.controller("gradesCtrl", ["$scope", "$firebaseObject", "$firebaseArray", '$f
                     "properties": {
 
                         "commentw1": {
-                            "title": "Ge förslag till moment i kursen som behöver förbättras och på vilket sätt",
+                            "title": "Ge förslag till moment i kursen som behöver förbättras och på vilket sätt*",
                             "type": "string",
-                            "minLength": 20
+                            "minLength": 5
                         },
                         "commentw2": {
-                            "title": "Vilka moment i kursen är OK som de är och berätta gärna varför?",
+                            "title": "Vilka moment i kursen är OK som de är och berätta gärna varför?*",
                             "type": "string",
-                            "minLength": 20
+                            "minLength": 5
                         },
                         "commentw3": {
-                            "title": "Övriga kommentarer och /eller synpunkter:",
+                            "title": "Övriga kommentarer och /eller synpunkter:*",
                             "type": "string",
-                            "minLength": 20
+                            "minLength": 5
                         }
                     },
                     "required": [
