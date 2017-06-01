@@ -87,10 +87,17 @@ app.controller("AdminUserCtrl", ["$scope", "$firebaseObject", "$firebaseArray", 
             });
             alert("Nu är närvaron aktiverad. Du kan nu registera dig som närvarande.")
 
+            $scope.studentCount = 0;
             var checkedStudents = firebase.database().ref().child('coursesByClass').child($scope.myClass).child($scope.selectedCourse).child(date).child($scope.random).child("students")
             checkedStudents.on('value', function (snapshot) {
                 $scope.studentsLoggedIn = snapshot.val();
             });
+            checkedStudents.on('child_added', function(snapshot){
+                $scope.studentCount++
+            });
+
+
+            
         }
         $scope.deActivatePresence = function () {
 
@@ -103,7 +110,7 @@ app.controller("AdminUserCtrl", ["$scope", "$firebaseObject", "$firebaseArray", 
 ]);
 
 app.controller("DoughnutCtrl", function ($scope, $filter) {
-   var ref = firebase.database().ref();
+    var ref = firebase.database().ref();
     $scope.today = new Date();
     $scope.myDate = new Date($scope.today.getFullYear(),
         $scope.today.getMonth(),
@@ -125,8 +132,8 @@ app.controller("DoughnutCtrl", function ($scope, $filter) {
             else {
                 $scope.minusOnes++
             }
-             $scope.labels = ["GOOD", "NEUTRAL", "BAD"];
-             $scope.data = [$scope.ones, $scope.zeros, $scope.minusOnes];
+            $scope.labels = ["GOOD", "NEUTRAL", "BAD"];
+            $scope.data = [$scope.ones, $scope.zeros, $scope.minusOnes];
         });
     });
 });
