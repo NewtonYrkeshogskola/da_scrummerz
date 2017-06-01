@@ -37,35 +37,15 @@
       <select class="styled-select" id="chooseCourse" ng-model="selectedCourse" ng-change="updateString()" required>
     <option ng-repeat="course in myCourses" ng-show="{{course.details.status === 'progress'}}">{{course.details.courseCode}}</option><input ng-hide="true"/></select> <br><br>
 
-    <label for="presenceName">Ange namn på tillfället</label>
-    <input type="text" id="presenceName" ng-model="presenceName" required>
-    <button class="button-qr-activate" ng-click="activatePresence(presenceName)">Aktivera närvaro</button>
-    <button class="button-qr-deactivate" ng-click="deActivatePresence()">Sluta ta närvaro</button>
-    <br>
-
-    <h3 ng-hide="selectedCourse == 'NONE'">Studenter som checkat in</h3>
-    <h5 ng-repeat="students in studentsLoggedIn" ng-hide="selectedCourse == 'NONE'">{{students}}
-    </h5>
-        </div>
-        <div class="col-sm-6">
-            <div id="qr" ng-hide="selectedCourse == 'NONE'">
-                <qr text="string" size=900></qr>
-            </div>
-        </div>
-        <div class="col-sm-3"> </div>
-            <center>
-                <h1 ng-hide="selectedCourse == 'NONE'"> Kod för manuell inmatning <br><br>{{random}} <br><br> Kurs: {{selectedCourse}}<br><br> Namn: {{presenceName}}</h1>
-            </center>
-
-
-      <button class="button-qr-activate" ng-click="activatePresence()">Aktivera närvaro</button>
+      <label for="presenceName">Ange namn på tillfället</label>
+      <input type="text" id="presenceName" ng-model="presenceName" required>
+      <button class="button-qr-activate" ng-click="activatePresence(presenceName)">Aktivera närvaro</button>
       <button class="button-qr-deactivate" ng-click="deActivatePresence()">Sluta ta närvaro</button>
       <br>
 
       <h3 ng-hide="selectedCourse == 'NONE'">Studenter som checkat in</h3>
       <h5 ng-repeat="students in studentsLoggedIn" ng-hide="selectedCourse == 'NONE'">{{students}}
     </h5>
-
     </div>
     <div class="col-sm-6">
       <div id="qr" ng-hide="selectedCourse == 'NONE'">
@@ -74,63 +54,75 @@
     </div>
     <div class="col-sm-3"> </div>
     <center>
-      <h1 ng-hide="selectedCourse == 'NONE'"> Kod för manuell inmatning <br><br>{{random}} <br><br> Kurs: {{selectedCourse}}</h1>
+      <h1 ng-hide="selectedCourse == 'NONE'"> Kod för manuell inmatning <br><br>{{random}} <br><br> Kurs: {{selectedCourse}}<br><br> Namn: {{presenceName}}</h1>
     </center>
+    </h5>
+
   </div>
 
+<h5>
+  Antal närvarande studenter
+</h5>
 
   <style>
-  .chart rect {
-    fill: steelblue;
-  }
+    .chart rect {
+      fill: steelblue;
+    }
 
-  .chart text {
-    fill: white;
-    font: 10px sans-serif;
-    text-anchor: end;
-  }
-
+    .chart text {
+      fill: white;
+      font: 10px sans-serif;
+      text-anchor: end;
+    }
   </style>
   <svg class="chart"></svg>
   <script src="https://d3js.org/d3.v4.min.js">
   </script>
   <script>
-
-  var width = 420,
+    var width = 420,
       barHeight = 20;
 
-  var x = d3.scaleLinear()
+    var x = d3.scaleLinear()
       .range([0, width]);
 
-  var chart = d3.select(".chart")
+    var chart = d3.select(".chart")
       .attr("width", width);
 
-  d3.tsv("data.tsv", type, function(error, data) {
-    x.domain([0, d3.max(data, function(d) { return d.value; })]);
+    d3.tsv("data.tsv", type, function(error, data) {
+      x.domain([0, d3.max(data, function(d) {
+        return d.value;
+      })]);
 
-    chart.attr("height", barHeight * data.length);
+      chart.attr("height", barHeight * data.length);
 
-    var bar = chart.selectAll("g")
+      var bar = chart.selectAll("g")
         .data(data)
-      .enter().append("g")
-        .attr("transform", function(d, i) { return "translate(0," + i * barHeight + ")"; });
+        .enter().append("g")
+        .attr("transform", function(d, i) {
+          return "translate(0," + i * barHeight + ")";
+        });
 
-    bar.append("rect")
-        .attr("width", function(d) { return x(d.value); })
+      bar.append("rect")
+        .attr("width", function(d) {
+          return x(d.value);
+        })
         .attr("height", barHeight - 1);
 
-    bar.append("text")
-        .attr("x", function(d) { return x(d.value) - 3; })
+      bar.append("text")
+        .attr("x", function(d) {
+          return x(d.value) - 3;
+        })
         .attr("y", barHeight / 2)
         .attr("dy", ".35em")
-        .text(function(d) { return d.value; });
-  });
+        .text(function(d) {
+          return d.value;
+        });
+    });
 
-  function type(d) {
-    d.value = +d.value; // coerce to number
-    return d;
-  }
-
+    function type(d) {
+      d.value = +d.value; // coerce to number
+      return d;
+    }
   </script>
 
 </body>
