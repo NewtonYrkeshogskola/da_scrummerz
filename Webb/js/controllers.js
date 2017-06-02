@@ -133,8 +133,7 @@ app.controller('personCtrl', ["$scope", "$firebaseObject", "$firebaseArray", '$f
                             snapshot.forEach(function (childSnapshot) {
                                 childKey = childSnapshot.key;
                                 childData = childSnapshot.val();
-
-                                // For each child under each 
+ 
                                 $scope.globalCourseNews.push({
                                     key: courseKey,
                                     childKey: childKey,

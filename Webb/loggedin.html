@@ -99,27 +99,25 @@
 
         <div class="col-sm-5 divmargin well well-sm">
             <h4 class="text-center">Nyheter</h4>
-            <div class="panel panel-default">
+            <div ng-repeat="news in classNews" class="panel panel-default">
                 <div ng-click="value1 = !value1" ng-class="{ active: value1 }" class="panel-heading">Information för {{user.myClass}}</div>
-                <div ng-repeat="news in classNews" class="panel-body animate-hide" ng-show="value1">
+                <div  class="panel-body animate-hide" ng-show="value1">
                     <p><strong>{{news.title}}</strong></p>
                     <p><samp>{{news.description}}</samp></p>
                     <p><samp>{{news.author}}</samp></p>
                 </div>
             </div>
-            <div class="panel panel-default">
+            <div  ng-repeat="news in generalNews" class="panel panel-default">
                 <div ng-click="value2 = !value2" ng-class="{ active: value2 }" class="panel-heading">Allmän info</div>
-                <div ng-repeat="news in generalNews" class="panel-body animate-hide" ng-show="value2">
+                <div  class="panel-body animate-hide" ng-show="value2">
                     <p><strong>{{news.title}}</strong></p>
                     <p><samp>{{news.description}}</samp></p>
                     <p><samp>{{news.author}}</samp></p>
                 </div>
             </div>
-            <div class="panel panel-default">
-                <div ng-click="value3 = !value3" ng-class="{ active: value3 }" class="panel-heading">Kurs info</div>
-                <div ng-repeat="news in globalCourseNews" class="panel-body animate-hide" ng-show="value3">
-                    <p>{{news.key}}</p>
-                    <p><strong>{{news.news.title}}</strong></p>
+            <div ng-repeat="news in globalCourseNews" class="panel panel-default">
+                <div ng-click="value3 = !value3" ng-class="{ active: value3 }" class="panel-heading">{{news.key}} - {{news.news.title}}</div>
+                <div  class="panel-body animate-hide" ng-show="value3">
                     <p><samp>{{news.news.description}}</samp></p>
                     <p><samp>{{news.news.author}}</samp></p>
                 </div>
