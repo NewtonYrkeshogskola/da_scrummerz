@@ -100,6 +100,7 @@ app.controller("AdminUserCtrl", ["$scope", "$firebaseObject", "$firebaseArray", 
                 $scope.studentCount++;
                 globalCount = $scope.studentCount;
                 $scope.$broadcast('UpdateCount');
+                $scope.$broadcast('UpdateChart');
             });
 
             $scope.myJson = {
@@ -170,7 +171,8 @@ app.controller('MainController', function ($scope, $timeout) {
         $scope.pupilCount = globalCount;
     });
 
-    // mimick your promise
+    $scope.$on('UpdateChart', function (event) {
+        // mimick your promise
     (function () {
         $scope.data = {};
         $scope.data.valuesOne = [$scope.pupilCount];
@@ -189,6 +191,9 @@ app.controller('MainController', function ($scope, $timeout) {
             backgroundColor: '#00baf2'
         }]
     };
+    });
+
+    
     
 
     // // automatically wraps code in $apply
