@@ -9,15 +9,16 @@
 
     <TextView
         android:id="@+id/courseNameView"
-        android:layout_width="326dp"
+        android:layout_width="329dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="27dp"
         android:layout_marginRight="8dp"
         android:layout_marginStart="27dp"
         android:layout_marginTop="16dp"
         android:text="Coursename"
         android:textColor="@color/cardview_dark_background"
-        android:textSize="30sp"
+        android:textSize="26sp"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -28,24 +29,25 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="586dp"
-        android:layout_marginTop="-165dp"
         android:text="Uppgifter:"
         android:textSize="18sp"
         app:layout_constraintLeft_toLeftOf="@+id/courseNameView"
-        app:layout_constraintTop_toBottomOf="@+id/courseNameView" />
+        app:layout_constraintTop_toBottomOf="@+id/courseNameView"
+        android:layout_marginStart="586dp" />
 
     <ListView
         android:id="@+id/@android:id/list"
-        android:layout_width="wrap_content"
-        android:layout_height="443dp"
-        android:layout_marginBottom="0dp"
-        android:layout_marginLeft="0dp"
-        android:layout_marginRight="0dp"
-        android:layout_marginTop="8dp"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="16dp"
+        android:background="@color/common_google_signin_btn_text_dark_default"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/assignmentsTxtView"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintTop_toBottomOf="@+id/courseNameView"
+        app:layout_constraintVertical_bias="0.0"
+        tools:layout_editor_absoluteX="-6dp"
+        tools:layout_editor_absoluteY="79dp" />
 </android.support.constraint.ConstraintLayout>

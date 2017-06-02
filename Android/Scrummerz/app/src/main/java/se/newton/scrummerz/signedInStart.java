@@ -1,6 +1,8 @@
 package se.newton.scrummerz;
 
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -10,7 +12,6 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -18,6 +19,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -33,7 +35,6 @@ public class signedInStart extends AppCompatActivity {
     String uid;
     Student student = new Student();
     SharedPreferences studentInfo;
-    RelativeLayout.LayoutParams layoutparams;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,8 +104,6 @@ public class signedInStart extends AppCompatActivity {
 
                 plus.setScaleX(0.70f);
                 plus.setScaleY(0.70f);
-
-                Toast.makeText(signedInStart.this, "Tack för din röst!", Toast.LENGTH_LONG).show();
             }
         });
 
@@ -120,7 +119,6 @@ public class signedInStart extends AppCompatActivity {
 
                 plus.setScaleX(0.70f);
                 plus.setScaleY(0.70f);
-                Toast.makeText(signedInStart.this, "Tack för din röst!", Toast.LENGTH_LONG).show();
             }
         });
 
@@ -136,16 +134,32 @@ public class signedInStart extends AppCompatActivity {
 
                 plus.setScaleX(1.15f);
                 plus.setScaleY(1.15f);
-                Toast.makeText(signedInStart.this, "Tack för din röst!", Toast.LENGTH_LONG).show();
             }
         });
+
+        setNotifications();
+
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        String welcomeText = "Välkommen " + studentInfo.getString("studentName", "");
+        String welcomeText = getString(R.string.welcome) + " " + studentInfo.getString("studentName", "");
         nameTextView.setText(welcomeText);
+    }
+
+    public void setNotifications () {
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, 14);
+        calendar.set(Calendar.MINUTE, 59);
+
+        Intent notificationIntent = new Intent(getApplicationContext(), Notification_reciever.class);
+
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 100, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+        alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
     }
 
 }

@@ -5,7 +5,9 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -31,12 +33,9 @@ public class assignment extends ListActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_assignment);
+        TextView courseNameView = (TextView) findViewById(R.id.courseNameView);
+
         Intent intent = getIntent();
-
-
-        TextView courseNameView;
-
-        courseNameView = (TextView) findViewById(R.id.courseNameView);
         courseNameView.setText(intent.getStringExtra("courseName"));
         classKey = intent.getStringExtra("classKey");
         courseKey = intent.getStringExtra("courseKey");
@@ -52,6 +51,18 @@ public class assignment extends ListActivity {
 
     }
 
+    @Override
+    protected void onListItemClick(ListView l, View v, int position, long id) {
+        Intent intent = new Intent(assignment.this, assignment_info.class);
+        String assignmentName = l.getItemAtPosition(position).toString();
+        assignmentName = assignmentName.substring(0, assignmentName.indexOf("Slutdatum") - 1);
+        intent.putExtra("assignmentName", assignmentName);
+        intent.putExtra("classKey", classKey);
+        intent.putExtra("courseKey", courseKey);
+        l.getItemAtPosition(position);
+        startActivity(intent);
+    }
+
     public void getUid() {
         try {
             userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
@@ -62,6 +73,7 @@ public class assignment extends ListActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        clearAdapter();
 
         final DatabaseReference assignMentRef = dbRef.child("coursesByClass")
                                                .child(classKey)
@@ -72,34 +84,17 @@ public class assignment extends ListActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (final DataSnapshot postSnapshot : dataSnapshot.getChildren()){
-                    String key = postSnapshot.getKey();
-
-                    Log.i("test THIS", " " + postSnapshot.getValue().toString());
                     Assignment assignment = postSnapshot.getValue(Assignment.class);
-                    Log.i("test THIS IS THE ONE", "" + assignment.getDuedate());
-
+                    String year, month, day;
+                    year = assignment.getDuedate().toString().substring(0, 4);
+                    month = assignment.getDuedate().toString().substring(4, 6);
+                    day = assignment.getDuedate().toString().substring(6);
 
                     String assignmentTxt = postSnapshot.getKey() + "\n" +
-                            assignment.getDuedate() + "\n" + assignment.getInfo();
+                            "Slutdatum: " + year + "-" + month + "-" + day;
                     assignments.add(assignmentTxt);
+                    arrayAdapter.notifyDataSetChanged();
 
-
-//                    assignMentRef.child(key).addValueEventListener(new ValueEventListener() {
-//                        @Override
-//                        public void onDataChange(DataSnapshot dataSnapshot) {
-//                            for (DataSnapshot postSnapshot : dataSnapshot.getChildren()){
-//
-//
-//                            }
-//
-//
-//                        }
-//
-//                        @Override
-//                        public void onCancelled(DatabaseError databaseError) {
-//
-//                        }
-//                    });
                 }
             }
 
@@ -115,6 +110,12 @@ public class assignment extends ListActivity {
     public void clearAdapter(){
         arrayAdapter.clear();
         arrayAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    protected void onResume() {
+        clearAdapter();
+        super.onResume();
     }
 
 }
