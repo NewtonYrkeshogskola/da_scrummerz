@@ -99,6 +99,7 @@ app.controller("AdminUserCtrl", ["$scope", "$firebaseObject", "$firebaseArray", 
             checkedStudents.on('child_added', function (snapshot) {
                 $scope.studentCount++;
                 globalCount = $scope.studentCount;
+                $scope.$broadcast('UpdateCount');
             });
 
             $scope.myJson = {
@@ -165,7 +166,9 @@ app.controller('MainController', function ($scope, $timeout) {
 
     $scope.pupilCount = globalCount;
 
-    $scope.update   
+    $scope.$on('UpdateCount', function (event) {
+        $scope.pupilCount = globalCount;
+    });
 
     // mimick your promise
     (function () {
@@ -186,12 +189,13 @@ app.controller('MainController', function ($scope, $timeout) {
             backgroundColor: '#00baf2'
         }]
     };
+    
 
     // // automatically wraps code in $apply
     // $timeout(function () {
 
     //     // wont reflect changes in aValues because its an object
-    //     $scope.data.valuesOne = [5];
+    //     $scope.data.valuesOne = [$scope.pupilCount];
 
     //     // must force the reflection of the changes
     //     $scope.aValues = [$scope.data.valuesOne, $scope.data.valuesTwo];
