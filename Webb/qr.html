@@ -55,7 +55,7 @@
 
       </h5>
 
-      Antal incheckade : {{studentCount}}
+      
     </div>
     <div class="col-sm-6">
       <div id="qr" ng-hide="selectedCourse == 'NONE'">
@@ -64,12 +64,12 @@
     </div>
     <div class="col-sm-3"> </div>
     <center>
-      <h1 ng-hide="selectedCourse == 'NONE'"> Kod för manuell inmatning <br><br>{{random}} <br><br> Kurs: {{selectedCourse}}<br><br> Namn: {{presenceName}}</h1>
+      <h1 ng-hide="selectedCourse == 'NONE'"> Kod för manuell inmatning <br><br>{{random}} <br><br> Kurs: {{selectedCourse}}<br><br> Antal incheckade : {{studentCount}}</h1>
     </center>
     </h5>
 
   </div>
-  <div ng-controller="MainController">
+  <div ng-hide="selectedCourse == 'NONE'" ng-controller="MainController">
     <div zingchart id="chart-1" zc-json="myJson" zc-width="100%" zc-height="200px" zc-values="aValues"></div>
 
   </div>

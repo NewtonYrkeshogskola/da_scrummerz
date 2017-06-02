@@ -110,38 +110,21 @@ app.controller("AdminUserCtrl", ["$scope", "$firebaseObject", "$firebaseArray", 
                 title: {
                     backgroundColor: "transparent",
                     fontColor: "black",
-                    text: "Inloggade studenter",
-                    scaleX: {
-                        lineColor: "transparent",
-                        tick: {
-                            visible: false
-                        },
-                        labels: ["Elever"],
-                        item: {
-                            fontColor: "#e8e8e8",
-                            fontSize: 16
-                        }
-                    }
+                    text: "Inloggade studenter"
                 },
                 backgroundColor: "white",
                 series: [
                     {
-                        values: [globalTotal],
-                        rules: [
-                            {
-                                rule: "%i === 1",
-                                backgroundColor: "#4DC0CF"
-                            }
-                        ]
+                        values: [globalCount],
+                        rules: [{
+                            backgroundColor: "#3CB371"
+                        }]
                     },
                     {
-                        values: [1],
-                        rules: [
-                            {
-                                rule: "%i === 1",
-                                backgroundColor: "#E71D36"
-                            }
-                        ]
+                        values: [globalTotal],
+                        rules: [{
+                            backgroundColor: "#4DC0CF"
+                        }]
                     }
                 ]
             };
@@ -200,7 +183,8 @@ app.controller('MainController', function ($scope, $timeout) {
         // mimick your promise
         (function () {
             $scope.data = {};
-            $scope.data.valuesOne = [$scope.pupilCount, $scope.pupiltotal];
+            $scope.data.valuesOne = [$scope.pupilCount];
+            $scope.data.valuesTwo = [$scope.pupiltotal];
             $scope.aValues = [$scope.data.valuesOne, $scope.data.valuesTwo];
         })();
     });
