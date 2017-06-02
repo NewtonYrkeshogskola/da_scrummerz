@@ -1,4 +1,4 @@
-var app = angular.module('LoggedIn', ['firebase', 'ngAnimate']);
+var app = angular.module('LoggedIn', ['firebase', 'ngAnimate', 'schemaForm', 'chart.js']);
 var grades = [];
 
 
@@ -17,6 +17,7 @@ app.controller('personCtrl', ["$scope", "$firebaseObject", "$firebaseArray", '$f
         $scope.auth = Auth;
         $scope.globalGrades = [];
         $scope.globalAssignments = [];
+        $scope.globalCourseNews = [];
 
 
         $scope.auth.$onAuthStateChanged(function (firebaseUser) {
@@ -66,24 +67,29 @@ app.controller('personCtrl', ["$scope", "$firebaseObject", "$firebaseArray", '$f
                 //attendance code should have following structure: courseCode/date(format:yyyymmdd)/code, ex: YAPP-APP/20170523/randomnumber
                 //function checks if the last part of the code ('code') exists and if the user already reported his/her attendance
                 $scope.attendance = function (courseAttended, attendanceCode) {
-                    /*var pathParts = pathToFirebase.split("/");
-                    var kursPath = pathParts[0];
-                    var datePath = pathParts[1];
-                    var codePath = pathParts[2];*/
-                    var pathToAttendance = firebase.database().ref().child('coursesByClass').child(klass).child(courseAttended).child(date).child(attendanceCode);
+
+                    var pathToInfo = firebase.database().ref().child('coursesByClass').child(klass).child(courseAttended).child(date).child(attendanceCode);
                     var pathToCode = firebase.database().ref().child('coursesByClass').child(klass).child(courseAttended).child(date);
                     pathToCode.once('value', function (snapshot) {
                         if (snapshot.hasChild(attendanceCode)) {
-                            pathToAttendance.once('value', function (childSnapshot) {
-                                if (childSnapshot.hasChild(userId)) {
-                                    alert("Du har redan anmält din närvaro. Tack!");
+
+                            pathToInfo.once('value', function (childSnapshot) {
+                                var statusValue = childSnapshot.child("active").val();
+                                if (statusValue === true) {
+                                    if (childSnapshot.child("students").hasChild(userId)) {
+                                        alert("Du har redan anmält din närvaro. Tack!");
+                                    }
+                                    else {
+                                        firebase.database().ref().child('coursesByClass').child(klass).child(courseAttended).child(date).child(attendanceCode).child("students").update({
+                                            [userId]: $scope.user.Name
+                                        });
+                                        alert('Din närvaro är registrerad. Tack!')
+                                    }
                                 }
                                 else {
-                                    firebase.database().ref().child('coursesByClass').child(klass).child(courseAttended).child(date).child(attendanceCode).update({
-                                        [userId]: true
-                                    });
-                                    alert('Din närvaro är registrerad. Tack!')
+                                    alert('Tillfället är inte längre aktivt');
                                 }
+
                             });
                         }
                         else {
@@ -91,31 +97,7 @@ app.controller('personCtrl', ["$scope", "$firebaseObject", "$firebaseArray", '$f
                         }
                     })
                 }
-                /*!!!!!!!!!!! DO NOT DELETE THIS. WE MAY NEED THIS LATER*/
-                /*$scope.giveFeedbackToTheFinishedCourse = function (kurs, q1, q2, q3, q4, q5, q6, q7) {
-                     firebase.database().ref().child('finishedCourseFeedback').child(kurs).child(q1).update({
-                         q1
-                     });
-                      firebase.database().ref().child('finishedCourseFeedback').child(kurs).child(q2).update({
-                         q2
-                     });
-                      firebase.database().ref().child('finishedCourseFeedback').child(kurs).child(q3).update({
-                         q3
-                     });
-                      firebase.database().ref().child('finishedCourseFeedback').child(kurs).child(q4).update({
-                         q4
-                     });
-                      firebase.database().ref().child('finishedCourseFeedback').child(kurs).child(q5).update({
-                         q5
-                     });
-                      firebase.database().ref().child('finishedCourseFeedback').child(kurs).child(q6).update({
-                         q6
-                     });
-                      firebase.database().ref().child('finishedCourseFeedback').child(kurs).child(q7).update({
-                         q7
-                     });
-                    alert(kurs + " " + q1 + " " + q2 + " " + q3 + " " + q4 + " " + q5 + " " + q6 + " " + q7);
-                }*/
+
                 // Loop through all active assignments under personal node and push to globalAssignments
                 ref.child('coursesByClass').child(klass).once('value', function (snapshot) {
                     snapshot.forEach(function (childSnapshot) {
@@ -134,103 +116,78 @@ app.controller('personCtrl', ["$scope", "$firebaseObject", "$firebaseArray", '$f
                                     childKey: childKey,
                                     assignment: childData
                                 })
+                                console.log($scope.globalActiveAssignments);
                             })
                         });
                     });
                 });
+                $scope.classNews = $firebaseObject(ref.child('newsByClass/' + klass));
+                $scope.generalNews = $firebaseObject(ref.child('generalNews'));
 
+                ref.child('coursesByClass').child(klass).once('value', function (snapshot) {
+                    snapshot.forEach(function (childSnapshot) {
+                        var childKey
+                        var childData
+                        var courseKey = childSnapshot.key;
 
+                        ref.child('coursesByClass').child(klass).child(courseKey).child('news').once('value', function (snapshot) {
+                            snapshot.forEach(function (childSnapshot) {
+                                childKey = childSnapshot.key;
+                                childData = childSnapshot.val();
+
+                                $scope.globalCourseNews.push({
+                                    key: courseKey,
+                                    childKey: childKey,
+                                    news: childData
+                                })
+                            })
+                        });
+                    });
+                });
             });
         });
     }
 ]);
 
-app.controller("AdminUserCtrl", ["$scope", "$firebaseObject", "$firebaseArray", '$filter', "Auth",
+app.controller('teacherCtrl', ["$scope", "$firebaseObject", "$firebaseArray", '$filter', "Auth",
 
     function ($scope, $firebaseObject, $firebaseArray, $filter, Auth) {
-        // Top level variables
-        $scope.auth = Auth;
         var ref = firebase.database().ref();
-        var userId;
-        var firebaseUser;
-        var user;
-
+        $scope.auth = Auth;
         $scope.auth.$onAuthStateChanged(function (firebaseUser) {
-            userId = firebaseUser.uid;
+            var userId = firebaseUser.uid;
             $scope.firebaseUser = firebaseUser;
-            firebaseUser = firebaseUser;
-            $scope.user = $firebaseObject(ref.child('users').child('students/' + userId).child('details'));
-            user = $scope.user;
+            //$scope.coursesByTeacher = [];
 
+
+            $scope.user = $firebaseObject(ref.child('users').child('teachers/' + userId).child('details'));
+            $scope.userId = firebaseUser.uid;
             $scope.user.$loaded().then(function () {
-                $scope.myClass = $scope.user.myClass;
-                $scope.myCourses = $firebaseObject(ref.child('coursesByClass/' + $scope.myClass));
-            })
+                $scope.coursesByTeacher = $firebaseArray(ref.child('users').child('teachers/' + userId).child('myCourses'));
+                 $scope.writeNews = function (selectedCourse, newsName, newsDescription) {
+                     firebase.database().ref().child('coursesByClass').child('APPS1').child(selectedCourse).child('news').push({
+                         author: $scope.user.Name,
+                         description: newsDescription,
+                         title: newsName
+                     });
+                     alert(selectedCourse+ ' ' + newsName+ ' ' +  newsDescription);
+                 }
 
+                /* ref.child('users').child('teachers').child(userId).child('myCourses').once('value', function (snapshot) {
+ 
+                     snapshot.forEach(function (childSnapshot) {
+ 
+                         var childKey = childSnapshot.key;
+                         var childData = childSnapshot.val();
+                         $scope.coursesByTeacher.push({
+                             key: childKey,
+                             grade: childData
+                         })
+                         console.log($scope.coursesByTeacher);
+                     });
+                 });*/
+            });
         });
-
-
-        $scope.createUser = function () {
-            $scope.message = null;
-            $scope.error = null;
-            // Create a new user
-            Auth.$createUserWithEmailAndPassword($scope.email, $scope.password)
-                .then(function (firebaseUser) {
-                    $scope.message = "Användare skapad med UID: " + firebaseUser.uid;
-                }).catch(function (error) {
-                    $scope.error = error;
-                });
-        };
-
-        $scope.deleteUser = function () {
-            $scope.message = null;
-            $scope.error = null;
-            // Delete the currently signed-in user
-            Auth.$deleteUser().then(function () {
-                $scope.message = "Användare raderad";
-            }).catch(function (error) {
-                $scope.error = error;
-            });
-        };
-
-        // Get date for QR code
-        $scope.date = new Date();
-        $scope.myDate = new Date($scope.date.getFullYear(),
-            $scope.date.getMonth(),
-            $scope.date.getDate());
-        $scope.myDate = $filter('date')($scope.myDate, 'yyyyMMdd');
-        var date = $scope.myDate;
-
-        // get a random code for the QR
-        $scope.random = Math.floor((Math.random() * 100000) + 1);
-
-        $scope.selectedCourse = "NONE"
-
-        //generate QR code
-        $scope.string = null;
-
-        $scope.updateString = function () {
-            $scope.random = Math.floor((Math.random() * 100000) + 1);
-            $scope.string = $scope.selectedCourse + "/" + date + "/" + $scope.random;
-        }
-
-        $scope.activatePresence = function () {
-            var localDate = new Date();
-            $scope.time = localDate.getHours() + ":" + localDate.getMinutes();
-            firebase.database().ref().child('coursesByClass').child($scope.myClass).child($scope.selectedCourse).child(date).child($scope.random).update({
-                active: true,
-                created: $scope.time
-            });
-            alert("Nu är närvaron aktiverad. Du kan nu registera dig som närvarande.")
-        }
-        $scope.deActivatePresence = function () {
-
-            firebase.database().ref().child('coursesByClass').child($scope.myClass).child($scope.selectedCourse).child(date).child($scope.random).update({
-                active: false
-            });
-            alert("Närvaron är nu stängd för nya registreringar")
-        }
-
     }
 ]);
 
@@ -249,6 +206,8 @@ app.controller("gradesCtrl", ["$scope", "$firebaseObject", "$firebaseArray", '$f
             $scope.user = $firebaseObject(ref.child('users').child('students/' + userId).child('details'));
             $scope.globalGrades = [];
             $scope.globalAssignments = [];
+            $scope.finishedNotRated = [];
+            $scope.notRatedWeekly = [];
 
             // This will be executed after the user has been loaded
             $scope.user.$loaded().then(function () {
@@ -293,6 +252,431 @@ app.controller("gradesCtrl", ["$scope", "$firebaseObject", "$firebaseArray", '$f
                         });
                     });
                 });
+
+                //kontrollera att kursen är avslutad och att studenten inte lämnat sin feedback. skapa array av avslutade kurser utan feedback
+                ref.child('coursesByClass').child(klass).once('value', function (snapshot) {
+                    snapshot.forEach(function (childSnapshot) {
+                        var isFinished = childSnapshot.child("details").child("status").val();
+                        var userExists = childSnapshot.child("feedback").child('studentsVoted').child(userId).val();
+                        if (isFinished === 'finished' && userExists === null) {
+                            var childKey = childSnapshot.key;
+                            //console.log(childSnapshot.key);
+                            $scope.finishedNotRated.push({
+                                key: childKey
+                            })
+                        }
+                    });
+                });
+                $scope.schema = {
+                    "type": "object",
+                    "properties": {
+                        "radios": {
+                            "title": "Allmänt sett, vilket är ditt omdöme om kursen?*",
+                            "type": "number",
+                            "enum": [
+                                1,
+                                2,
+                                3,
+                                4,
+                                5
+                            ]
+                        },
+                        "radios2": {
+                            "title": "Hur tycker du att kursens innehåll överensstämmer med lärandemålen?*",
+                            "type": "number",
+                            "enum": [
+                                1,
+                                2,
+                                3,
+                                4,
+                                5
+                            ]
+                        },
+                        "radios3": {
+                            "title": "Vad tycker du om kurslitteraturen?*",
+                            "type": "number",
+                            "enum": [
+                                1,
+                                2,
+                                3,
+                                4,
+                                5
+                            ]
+                        },
+                        "radios4": {
+                            "title": "Kursen har givit mig god översikt av området*",
+                            "type": "number",
+                            "enum": [
+                                1,
+                                2,
+                                3,
+                                4,
+                                5
+                            ]
+                        },
+                        "radios5": {
+                            "title": "Kursen har fördjupat min förståelse för området*",
+                            "type": "number",
+                            "enum": [
+                                1,
+                                2,
+                                3,
+                                4,
+                                5
+                            ]
+                        },
+                        "radios6": {
+                            "title": "Kursen har hjälpt (kommer att hjälpa) mig lösa problem inom området*",
+                            "type": "number",
+                            "enum": [
+                                1,
+                                2,
+                                3,
+                                4,
+                                5
+                            ]
+                        },
+                        "comment1": {
+                            "title": "Ge förslag till moment i kursen som behöver förbättras och på vilket sätt*",
+                            "type": "string",
+                            "minLength": 5
+                        },
+                        "comment2": {
+                            "title": "Vilka moment i kursen är OK som de är och berätta gärna varför?*",
+                            "type": "string",
+                            "minLength": 5
+                        },
+                        "comment3": {
+                            "title": "Övriga kommentarer och /eller synpunkter:*",
+                            "type": "string",
+                            "minLength": 5
+                        }
+                    },
+                    "required": [
+                        "radios",
+                        "radios2",
+                        "radios3",
+                        "radios4",
+                        "radios5",
+                        "radios6",
+                        "comment1",
+                        "comment2",
+                        "comment3"
+                    ]
+                };
+
+                $scope.form = [
+                    {
+                        "key": "radios",
+                        "type": "radios-inline",
+                        "titleMap": [
+                            {
+                                "value": 1,
+                                "name": 1
+                            },
+                            {
+                                "value": 2,
+                                "name": 2
+                            },
+                            {
+                                "value": 3,
+                                "name": 3
+                            },
+                            {
+                                "value": 4,
+                                "name": 4
+                            },
+                            {
+                                "value": 5,
+                                "name": 5
+                            },
+
+                        ]
+                    },
+                    {
+                        "key": "radios2",
+                        "type": "radios-inline",
+                        "titleMap": [
+                            {
+                                "value": 1,
+                                "name": 1
+                            },
+                            {
+                                "value": 2,
+                                "name": 2
+                            },
+                            {
+                                "value": 3,
+                                "name": 3
+                            },
+                            {
+                                "value": 4,
+                                "name": 4
+                            },
+                            {
+                                "value": 5,
+                                "name": 5
+                            }
+
+                        ]
+                    },
+                    {
+                        "key": "radios3",
+                        "type": "radios-inline",
+                        "titleMap": [
+                            {
+                                "value": 1,
+                                "name": 1
+                            },
+                            {
+                                "value": 2,
+                                "name": 2
+                            },
+                            {
+                                "value": 3,
+                                "name": 3
+                            },
+                            {
+                                "value": 4,
+                                "name": 4
+                            },
+                            {
+                                "value": 5,
+                                "name": 5
+                            },
+
+                        ]
+                    },
+                    {
+                        "key": "radios4",
+                        "type": "radios-inline",
+                        "titleMap": [
+                            {
+                                "value": 1,
+                                "name": 1
+                            },
+                            {
+                                "value": 2,
+                                "name": 2
+                            },
+                            {
+                                "value": 3,
+                                "name": 3
+                            },
+                            {
+                                "value": 4,
+                                "name": 4
+                            },
+                            {
+                                "value": 5,
+                                "name": 5
+                            }
+
+                        ]
+                    },
+                    {
+                        "key": "radios5",
+                        "type": "radios-inline",
+                        "titleMap": [
+                            {
+                                "value": 1,
+                                "name": 1
+                            },
+                            {
+                                "value": 2,
+                                "name": 2
+                            },
+                            {
+                                "value": 3,
+                                "name": 3
+                            },
+                            {
+                                "value": 4,
+                                "name": 4
+                            },
+                            {
+                                "value": 5,
+                                "name": 5
+                            },
+
+                        ]
+                    },
+                    {
+                        "key": "radios6",
+                        "type": "radios-inline",
+                        "titleMap": [
+                            {
+                                "value": 1,
+                                "name": 1
+                            },
+                            {
+                                "value": 2,
+                                "name": 2
+                            },
+                            {
+                                "value": 3,
+                                "name": 3
+                            },
+                            {
+                                "value": 4,
+                                "name": 4
+                            },
+                            {
+                                "value": 5,
+                                "name": 5
+                            }
+
+                        ]
+                    },
+                    {
+                        "key": "comment1",
+                        "type": "textarea"
+                    },
+                    {
+                        "key": "comment2",
+                        "type": "textarea"
+                    },
+                    {
+                        "key": "comment3",
+                        "type": "textarea"
+                    },
+                    {
+                        "type": "submit",
+                        "style": "btn-info",
+                        "title": "Ge feedback"
+                    }
+                ];
+
+                $scope.model = {};
+                $scope.onSubmit = function (finishedCourseFeedback, form) {
+                    location.reload();
+                    // First we broadcast an event so all fields validate themselves
+                    $scope.$broadcast('schemaFormValidate');
+
+                    // Then we check if the form is valid
+                    if (form.$valid) {
+                        var radio1 = $scope.model.radios;
+                        var radio2 = $scope.model.radios2;
+                        var radio3 = $scope.model.radios3;
+                        var radio4 = $scope.model.radios4;
+                        var radio5 = $scope.model.radios5;
+                        var radio6 = $scope.model.radios6;
+                        var comment1 = $scope.model.comment1;
+                        var comment2 = $scope.model.comment2;
+                        var comment3 = $scope.model.comment3;
+                        firebase.database().ref().child('coursesByClass').child(klass).child(finishedCourseFeedback).child('feedback').push({
+                            radio1,
+                            radio2,
+                            radio3,
+                            radio4,
+                            radio5,
+                            radio6,
+                            comment1,
+                            comment2,
+                            comment3
+                        });
+                        firebase.database().ref().child('coursesByClass').child(klass).child(finishedCourseFeedback).child('feedback').child('studentsVoted').update({
+                            [userId]: true
+                        });
+                    }
+                }
+
+
+                //kontrollera att kursen är pågående och att studenten inte lämnat sin feedback. skapa array av avslutade kurser utan feedback
+                ref.child('coursesByClass').child(klass).once('value', function (snapshot) {
+                    snapshot.forEach(function (childSnapshot) {
+                        var isFinished = childSnapshot.child("details").child("status").val();
+                        var courseKey = childSnapshot.key;
+                        if (isFinished === 'progress') {
+                            ref.child('coursesByClass').child(klass).child(courseKey).child('weeklyFeedback').once('value', function (snapshot) {
+                                snapshot.forEach(function (childSnapshot) {
+                                    var feedbackKey = childSnapshot.child('active').val();
+                                    var studentKey = childSnapshot.child('studentsVoted').child(userId).val();
+                                    if (feedbackKey === true && studentKey === null) {
+                                        var childKey = childSnapshot.key;
+                                        $scope.notRatedWeekly.push({
+                                            key: courseKey,
+                                            week: childKey
+                                        })
+                                    }
+                                });
+                            });
+                        }
+                    });
+                });
+                $scope.schemaWeekly = {
+                    "type": "object",
+                    "properties": {
+
+                        "commentw1": {
+                            "title": "Ge förslag till moment i kursen som behöver förbättras och på vilket sätt*",
+                            "type": "string",
+                            "minLength": 5
+                        },
+                        "commentw2": {
+                            "title": "Vilka moment i kursen är OK som de är och berätta gärna varför?*",
+                            "type": "string",
+                            "minLength": 5
+                        },
+                        "commentw3": {
+                            "title": "Övriga kommentarer och /eller synpunkter:*",
+                            "type": "string",
+                            "minLength": 5
+                        }
+                    },
+                    "required": [
+                        "commentw1",
+                        "commentw2",
+                        "commentw3"
+                    ]
+                };
+
+                $scope.formWeekly = [
+                    {
+                        "key": "commentw1",
+                        "type": "textarea"
+                    },
+                    {
+                        "key": "commentw2",
+                        "type": "textarea"
+                    },
+                    {
+                        "key": "commentw3",
+                        "type": "textarea"
+                    },
+                    {
+                        "type": "submit",
+                        "style": "btn-info",
+                        "title": "Ge feedback"
+                    }
+                ];
+
+                $scope.modelWeekly = {};
+                $scope.onSubmitWeekly = function (activeCourseWeeklyFeedback, formWeekly) {
+                    var courseArray = activeCourseWeeklyFeedback.split(' ');
+                    var course = courseArray[0];
+                    var week = courseArray[1];
+                    console.log(course + ' ' + week);
+                    location.reload();
+                    // First we broadcast an event so all fields validate themselves
+                    $scope.$broadcast('schemaFormValidate');
+
+                    // Then we check if the form is valid
+                    if (formWeekly.$valid) {
+                        var commentw1 = $scope.modelWeekly.commentw1;
+                        var commentw2 = $scope.modelWeekly.commentw2;
+                        var commentw3 = $scope.modelWeekly.commentw3;
+
+                        firebase.database().ref().child('coursesByClass').child(klass).child(course).child('weeklyFeedback').child(week).push({
+                            commentw1,
+                            commentw2,
+                            commentw3
+                        });
+                        firebase.database().ref().child('coursesByClass').child(klass).child(course).child('weeklyFeedback').child(week).child('studentsVoted').update({
+                            [userId]: true
+                        });
+                    }
+                }
             })
         })
     }

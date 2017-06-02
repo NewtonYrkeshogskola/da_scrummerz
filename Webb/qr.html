@@ -4,49 +4,75 @@
 
 
 <head>
-    <title>Lärare - Generera närvaro</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no" />
-    <link rel="stylesheet" type="text/css" href="css/style.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/3.9.0/firebase.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/3.9.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/3.9.0/firebase-database.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/3.9.0/firebase-auth.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-animate.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/3.6.6/firebase.js"></script>
-    <script src="https://cdn.firebase.com/libs/angularfire/2.3.0/angularfire.min.js"></script>
-    <script type="text/javascript" src="js/database.js"></script>
-    <script src="js/qrcode.min.js"></script>
-    <script src="js/angular-qr.min.js"></script>
-    <script type="text/javascript" src="js/qrcontrollers.js"></script>
+
+  <title>Lärare - Generera närvaro</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no" />
+  <link rel="stylesheet" type="text/css" href="css/style.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/3.9.0/firebase.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/3.9.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/3.9.0/firebase-database.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/3.9.0/firebase-auth.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-animate.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/3.6.6/firebase.js"></script>
+  <script src="https://cdn.firebase.com/libs/angularfire/2.3.0/angularfire.min.js"></script>
+  <script src="bower_components/chart.js/dist/Chart.min.js"></script>
+  <script src="bower_components/angular-chart.js/dist/angular-chart.min.js"></script>
+  <script src="https://code.highcharts.com/highcharts.js"></script>
+  <script src="https://code.highcharts.com/modules/exporting.js"></script>
+  <script src="https://cdn.zingchart.com/zingchart.min.js"></script>
+  <script src="https://cdn.zingchart.com/angular/zingchart-angularjs.js"></script>
+  <script type="text/javascript" src="js/database.js"></script>
+  <script src="js/qrcode.min.js"></script>
+  <script src="js/angular-qr.min.js"></script>
+  <script type="text/javascript" src="js/admincontroller.js"></script>
 </head>
 
-<body ng-app="LoggedIn" ng-controller="AdminUserCtrl as ctrl">
+<body ng-app="LoggedIn" ng-controller="AdminUserCtrl as ctrl" ng-cloak>
 
-    <div class="row">
-        <div class="col-sm-3">
-            Inloggad som {{user.Name}} <br> Ange klass:
-    <select class="styled-select" id="chooseCourse" ng-model="selectedCourse" ng-change="updateString()" required>
-    <option ng-repeat="course in myCourses" ng-show="{{course.details.status === 'progress'}}">{{course.details.courseCode}}</option><input ng-hide="true"/> <br><br>
-    <button class="button-qr-activate" ng-click="activatePresence()">Aktivera närvaro</button> 
-    <button class="button-qr-deactivate" ng-click="deActivatePresence()">Sluta ta närvaro</button>
-    <br>
-        </div>
-        <div class="col-sm-6">
-            <div id="qr" ng-hide="selectedCourse == 'NONE'">
-                <qr text="string" size=900></qr>
-            </div>
-        </div>
-        <div class="col-sm-3"> </div>
-            <center>
-                <h1 ng-hide="selectedCourse == 'NONE'"> Kod för manuell inmatning <br><br>{{random}} <br><br> Kurs: {{selectedCourse}}</h1>
-                {{string}}
-            </center>
+  <div class="row">
+    <div class="col-sm-3">
+      Inloggad som {{user.Name}} <br> Ange klass:
+      <select class="styled-select" id="chooseCourse" ng-model="selectedClass" ng-change="updateString()" required>
+    <option>{{myClass}}</option><input ng-hide="true"/></select>
+      <br> Ange kurs:
+      <select class="styled-select" id="chooseCourse" ng-model="selectedCourse" ng-change="updateString()" required>
+    <option ng-repeat="course in myCourses" ng-show="{{course.details.status === 'progress'}}">{{course.details.courseCode}}</option><input ng-hide="true"/></select>      <br><br>
+
+      <label for="presenceName">Ange namn på tillfället</label>
+      <input type="text" id="presenceName" ng-model="presenceName" required>
+      <button class="button-qr-activate" ng-click="activatePresence(presenceName)">Aktivera närvaro</button>
+      <button class="button-qr-deactivate" ng-click="deActivatePresence()">Sluta ta närvaro</button>
+      <br>
+
+      <h3 ng-hide="selectedCourse == 'NONE'">Studenter som checkat in</h3>
+      <h5 ng-repeat="students in studentsLoggedIn" ng-hide="selectedCourse == 'NONE'">{{students}}
+      </h5>
+
+      </h5>
+
+      
     </div>
+    <div class="col-sm-6">
+      <div id="qr" ng-hide="selectedCourse == 'NONE'">
+        <qr text="string" size=900></qr>
+      </div>
+    </div>
+    <div class="col-sm-3"> </div>
+    <center>
+      <h1 ng-hide="selectedCourse == 'NONE'"> Kod för manuell inmatning <br><br>{{random}} <br><br> Kurs: {{selectedCourse}}<br><br> Antal incheckade : {{studentCount}}</h1>
+    </center>
+    </h5>
+
+  </div>
+  <div ng-hide="selectedCourse == 'NONE'" ng-controller="MainController">
+    <div zingchart id="chart-1" zc-json="myJson" zc-width="100%" zc-height="200px" zc-values="aValues"></div>
+
+  </div>
 </body>
 
 </html>

@@ -18,12 +18,19 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-animate.js"></script>
     <script src="https://www.gstatic.com/firebasejs/3.6.6/firebase.js"></script>
     <script src="https://cdn.firebase.com/libs/angularfire/2.3.0/angularfire.min.js"></script>
+     <script type="text/javascript" src="bower_components/angular-sanitize/angular-sanitize.min.js"></script>
+    <script type="text/javascript" src="bower_components/tv4/tv4.js"></script>
+    <script type="text/javascript" src="bower_components/objectpath/lib/ObjectPath.js"></script>
+    <script type="text/javascript" src="bower_components/angular-schema-form/dist/schema-form.min.js"></script>
+    <script type="text/javascript" src="bower_components/angular-schema-form/dist/bootstrap-decorator.min.js"></script>
+    <script src="bower_components/chart.js/dist/Chart.min.js"></script>
+    <script src="bower_components/angular-chart.js/dist/angular-chart.min.js"></script>
     <script type="text/javascript" src="js/loggedin.js"></script>
     <script type="text/javascript" src="js/controllers.js"></script>
     <script type="text/javascript" src="js/database.js"></script>
 </head>
 
-<body ng-app="LoggedIn">
+<body ng-app="LoggedIn" ng-cloak>
     <div ng-controller="personCtrl as ctrl">
         <nav class="navbar navbar-inverse">
             <div class="container-fluid">
@@ -53,6 +60,7 @@
                         <p><em>BESKRIVNING: </em><samp>{{course.details.description}}</samp></p>
                         <p><em>KURSKOD: </em><samp>{{course.details.courseCode}}</samp></p>
                         <p><em>LÄRARE: </em><samp>{{course.details.teacher}}</samp></p>
+                        <a href="{{course.details.coursePlan}}" target="_blank">Kursplan</a>
                     </div>
                 </div>
             </div>
@@ -66,6 +74,7 @@
                         <p><em>BESKRIVNING: </em><samp>{{course.details.description}}</samp></p>
                         <p><em>KURSKOD: </em><samp>{{course.details.courseCode}}</samp></p>
                         <p><em>LÄRARE: </em><samp>{{course.details.teacher}}</samp></p>
+                        <a href="{{course.details.coursePlan}}" target="_blank">Kursplan</a>
                     </div>
                     <a href="betyg.html">Se betyg för dina kurser</a>
                 </div>

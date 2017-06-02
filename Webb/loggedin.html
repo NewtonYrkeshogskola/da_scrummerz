@@ -18,13 +18,20 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-animate.js"></script>
     <script src="https://www.gstatic.com/firebasejs/3.6.6/firebase.js"></script>
     <script src="https://cdn.firebase.com/libs/angularfire/2.3.0/angularfire.min.js"></script>
+    <script type="text/javascript" src="bower_components/angular-sanitize/angular-sanitize.min.js"></script>
+    <script type="text/javascript" src="bower_components/tv4/tv4.js"></script>
+    <script type="text/javascript" src="bower_components/objectpath/lib/ObjectPath.js"></script>
+    <script type="text/javascript" src="bower_components/angular-schema-form/dist/schema-form.min.js"></script>
+    <script type="text/javascript" src="bower_components/angular-schema-form/dist/bootstrap-decorator.min.js"></script>
+    <script src="bower_components/chart.js/dist/Chart.min.js"></script>
+    <script src="bower_components/angular-chart.js/dist/angular-chart.min.js"></script>
     <script type="text/javascript" src="js/loggedin.js"></script>
     <script type="text/javascript" src="js/database.js"></script>
     <script type="text/javascript" src="js/controllers.js"></script>
 
 </head>
 
-<body ng-app="LoggedIn" ng-controller="personCtrl as ctrl">
+<body ng-app="LoggedIn" ng-controller="personCtrl as ctrl" ng-cloak>
     <nav class="navbar navbar-inverse">
         <div class="container-fluid">
             <div class="navbar-header">
@@ -53,7 +60,6 @@
                 <a href="betyg.html"><img src="images/betyg.svg" alt="Mina betyg"></a>
             </div>
         </div>
-        <div class="col-sm-1"> </div>
     </div>
     <div class="row">
         <div class="col-sm-1"> </div>
@@ -74,28 +80,46 @@
                     <img ng-if="s.key === userId && s.grade === 1" src="images/cool.png" width="30px" alt="Smiley for happy mood">
                 </div>
             </center>
+
             <center>
                 <h4 class="text-center"><strong>Anmäl din närvaro: </strong></h4>
-                <form>
+                <form name="myForm">
                     <label for="chooseCourse">Välj kurs: </label>
-                    <select id="chooseCourse" ng-model="courseAttended" required>
+                    <select name="kurs" id="chooseCourse" ng-model="courseAttended" required>
                     <option ng-repeat="course in myCourses" ng-show="{{course.details.status === 'progress'}}">{{course.details.courseCode}}</option>
                 </select>
                     <label for="codeInput">Närvarokod: </label>
-                    <input type="text" id="codeInput" placeholder="ange koden här" ng-model="attendanceCode" required><br><br>
-                    <button type="button" class="btn btn-success" ng-click="attendance(courseAttended, attendanceCode)">I'm here!</button>
+                    <input name="kod" type="text" id="codeInput" placeholder="ange koden här" ng-model="attendanceCode" required><br><br>
+                    <button ng-disabled="myForm.kurs.$invalid || myForm.kod.$invalid" type="button" class="btn btn-success" ng-click="attendance(courseAttended, attendanceCode)">I'm here!</button>
                 </form>
                 <center>
+
+    
         </div>
 
         <div class="col-sm-5 divmargin well well-sm">
-            <h4 class="text-center">Pågående kurser</h4>
-            <div ng-repeat="course in myCourses" class="panel panel-default" ng-show="{{course.details.status === 'progress'}}">
-                <div ng-click="value = !value" ng-class="{ active: value }" class="panel-heading">{{course.details.name}}</div>
-                <div class="panel-body animate-hide" ng-show="value">
-                    <p><em>BESKRIVNING: </em><samp>{{course.details.description}}</samp></p>
-                    <p><em>KURSKOD: </em><samp>{{course.details.courseCode}}</samp></p>
-                    <p><em>LÄRARE: </em><samp>{{course.details.teacher}}</samp></p>
+            <h4 class="text-center">Nyheter</h4>
+            <div ng-repeat="news in classNews" class="panel panel-default">
+                <div ng-click="value1 = !value1" ng-class="{ active: value1 }" class="panel-heading">Information för {{user.myClass}}</div>
+                <div  class="panel-body animate-hide" ng-show="value1">
+                    <p><strong>{{news.title}}</strong></p>
+                    <p><samp>{{news.description}}</samp></p>
+                    <p><samp>{{news.author}}</samp></p>
+                </div>
+            </div>
+            <div  ng-repeat="news in generalNews" class="panel panel-default">
+                <div ng-click="value2 = !value2" ng-class="{ active: value2 }" class="panel-heading">Allmän info</div>
+                <div  class="panel-body animate-hide" ng-show="value2">
+                    <p><strong>{{news.title}}</strong></p>
+                    <p><samp>{{news.description}}</samp></p>
+                    <p><samp>{{news.author}}</samp></p>
+                </div>
+            </div>
+            <div ng-repeat="news in globalCourseNews" class="panel panel-default">
+                <div ng-click="value3 = !value3" ng-class="{ active: value3 }" class="panel-heading">{{news.key}} - {{news.news.title}}</div>
+                <div  class="panel-body animate-hide" ng-show="value3">
+                    <p><samp>{{news.news.description}}</samp></p>
+                    <p><samp>{{news.news.author}}</samp></p>
                 </div>
             </div>
         </div>
@@ -103,7 +127,7 @@
     </div>
     <div class="row">
         <div class="col-sm-1"> </div>
-        <div class="col-sm-10 divmargin well well-sm">
+        <div class="col-sm-5 divmargin well well-sm">
             <h4 class="text-center">Aktuella uppgifter från dina pågående kurser</h4>
             <p>Här visas de uppgifter som dina pågående kurser har</p>
             <div>
@@ -118,8 +142,32 @@
                     </div>
                 </div>
             </div>
-            <div class="col-sm-1"> </div>
         </div>
+        <div class="col-sm-5 divmargin well well-sm">
+            <h4 class="text-center">Pågående kurser</h4>
+            <div ng-repeat="course in myCourses" class="panel panel-default" ng-show="{{course.details.status === 'progress'}}">
+                <div ng-click="value = !value" ng-class="{ active: value }" class="panel-heading">{{course.details.name}}</div>
+                <div class="panel-body animate-hide" ng-show="value">
+                    <p><em>BESKRIVNING: </em><samp>{{course.details.description}}</samp></p>
+                    <p><em>KURSKOD: </em><samp>{{course.details.courseCode}}</samp></p>
+                    <p><em>LÄRARE: </em><samp>{{course.details.teacher}}</samp></p>
+                    <a href="{{course.details.coursePlan}}" target="_blank">Kursplan</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-1"> </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-1"> </div>
+        <div ng-show="notRatedWeekly.length != 0" class="col-sm-5 divmargin well well-sm" ng-controller="gradesCtrl">
+            <h4 class="text-center">Veckovis feedback för dina pågående kurser</h4>
+            <label for="selectFinishedCourse">Välj en pågående kurs och ge din feedback*</label><br>
+            <select name="selectFinishedCourse" ng-model="activeCourseWeeklyFeedback">
+                        <option ng-repeat="course in notRatedWeekly" ng-model="activeCourseWeeklyFeedback">{{course.key}} {{course.week}}</option>
+                    </select>
+            <form name="weeklyForm" sf-schema="schemaWeekly" sf-form="formWeekly" sf-model="modelWeekly" ng-submit="onSubmitWeekly(activeCourseWeeklyFeedback, weeklyForm)"></form>
+        </div>
+    </div>
 </body>
 
 </html>

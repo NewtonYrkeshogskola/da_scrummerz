@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="sv">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Logged in</title>
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/3.9.0/firebase.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/3.9.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/3.9.0/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/3.9.0/firebase-auth.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-animate.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/3.6.6/firebase.js"></script>
+    <script src="https://cdn.firebase.com/libs/angularfire/2.3.0/angularfire.min.js"></script>
+    <script type="text/javascript" src="bower_components/angular-sanitize/angular-sanitize.min.js"></script>
+    <script type="text/javascript" src="bower_components/tv4/tv4.js"></script>
+    <script type="text/javascript" src="bower_components/objectpath/lib/ObjectPath.js"></script>
+    <script type="text/javascript" src="bower_components/angular-schema-form/dist/schema-form.min.js"></script>
+    <script type="text/javascript" src="bower_components/angular-schema-form/dist/bootstrap-decorator.min.js"></script>
+    <script src="bower_components/chart.js/dist/Chart.min.js"></script>
+    <script src="bower_components/angular-chart.js/dist/angular-chart.min.js"></script>
+    <script type="text/javascript" src="js/teacherloggedin.js"></script>
+    <script type="text/javascript" src="js/database.js"></script>
+    <script type="text/javascript" src="js/controllers.js"></script>
+
+</head>
+
+<body ng-app="LoggedIn" ng-controller="teacherCtrl" ng-cloak>
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="teacherLoggedIn.html">Studentportalen</a>
+            </div>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="#"><span class="glyphicon glyphicon-user "></span> Lärare: {{user.Name}}</a></li>
+                <li><a href="#" id="quickstart-sign-in" data-toggle="modal" data-target="#login-modal"><span class="glyphicon glyphicon-log-out"></span> Logga ut</a></li>
+            </ul>
+        </div>
+    </nav>
+     <h1 class="text-center whiteText">Välkommen {{user.Name}}</h1>
+    <div class="row">
+        <div class="col-sm-1"></div>
+        <div class="col-sm-10  well well-sm">
+            <h3 class="text-center">Mina kurser</h3>
+            <div ng-repeat="course in coursesByTeacher" class="panel panel-default">
+                <div ng-click="value = !value" ng-class="{ active: value }" class="panel-heading">{{course.$id}}</div>
+                <div class="panel-body animate-hide" ng-show="value">
+                    <br>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-1"></div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-1"></div>
+        <div class="col-sm-5 well well-sm">
+            <h4 class="text-center">Skapa nyheter</h4>
+            <form name="newsForm">
+                <label for="selectedCourse">Välj en kurs:*</label><br>
+                <select name="selectedCourse" ng-model="selectedCourse"class="form-control"  required>
+        <option ng-repeat="course in coursesByTeacher">{{course.$id}}</option>
+    </select><br><br>
+                <label for="newsName">Titel:*</label><br>
+                <input type="text" name="newsName" class="form-control" ng-model="newsName" required><br><br>
+                <label for="newsDescription">Beskrivning:*</label><br>
+                <textarea name="text" cols="40" rows="5" ng-model="newsDescription" class="form-control" width="100%"required></textarea><br>
+                <button ng-disabled="newsForm.selectedCourse.$invalid || newsForm.newsName.$invalid || newsForm.text.$invalid" class="btn btn-lg btn-success"
+                    ng-click="writeNews(selectedCourse, newsName, newsDescription)">Publicera nyhet</button>
+            </form>
+        </div>
+        <div class="col-sm-5"></div>
+        <div class="col-sm-1"></div>
+    </div>
+</body> 
+
+</html>
