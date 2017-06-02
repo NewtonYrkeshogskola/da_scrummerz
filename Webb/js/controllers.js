@@ -116,6 +116,7 @@ app.controller('personCtrl', ["$scope", "$firebaseObject", "$firebaseArray", '$f
                                     childKey: childKey,
                                     assignment: childData
                                 })
+                                console.log($scope.globalActiveAssignments);
                             })
                         });
                     });
@@ -133,7 +134,7 @@ app.controller('personCtrl', ["$scope", "$firebaseObject", "$firebaseArray", '$f
                             snapshot.forEach(function (childSnapshot) {
                                 childKey = childSnapshot.key;
                                 childData = childSnapshot.val();
- 
+
                                 $scope.globalCourseNews.push({
                                     key: courseKey,
                                     childKey: childKey,
@@ -148,6 +149,47 @@ app.controller('personCtrl', ["$scope", "$firebaseObject", "$firebaseArray", '$f
     }
 ]);
 
+app.controller('teacherCtrl', ["$scope", "$firebaseObject", "$firebaseArray", '$filter', "Auth",
+
+    function ($scope, $firebaseObject, $firebaseArray, $filter, Auth) {
+        var ref = firebase.database().ref();
+        $scope.auth = Auth;
+        $scope.auth.$onAuthStateChanged(function (firebaseUser) {
+            var userId = firebaseUser.uid;
+            $scope.firebaseUser = firebaseUser;
+            //$scope.coursesByTeacher = [];
+
+
+            $scope.user = $firebaseObject(ref.child('users').child('teachers/' + userId).child('details'));
+            $scope.userId = firebaseUser.uid;
+            $scope.user.$loaded().then(function () {
+                $scope.coursesByTeacher = $firebaseArray(ref.child('users').child('teachers/' + userId).child('myCourses'));
+                 $scope.writeNews = function (selectedCourse, newsName, newsDescription) {
+                     firebase.database().ref().child('coursesByClass').child('APPS1').child(selectedCourse).child('news').push({
+                         author: $scope.user.Name,
+                         description: newsDescription,
+                         title: newsName
+                     });
+                     alert(selectedCourse+ ' ' + newsName+ ' ' +  newsDescription);
+                 }
+
+                /* ref.child('users').child('teachers').child(userId).child('myCourses').once('value', function (snapshot) {
+ 
+                     snapshot.forEach(function (childSnapshot) {
+ 
+                         var childKey = childSnapshot.key;
+                         var childData = childSnapshot.val();
+                         $scope.coursesByTeacher.push({
+                             key: childKey,
+                             grade: childData
+                         })
+                         console.log($scope.coursesByTeacher);
+                     });
+                 });*/
+            });
+        });
+    }
+]);
 
 app.controller("gradesCtrl", ["$scope", "$firebaseObject", "$firebaseArray", '$filter', "Auth",
     function ($scope, $firebaseObject, $firebaseArray, $filter, Auth) {
@@ -222,7 +264,6 @@ app.controller("gradesCtrl", ["$scope", "$firebaseObject", "$firebaseArray", '$f
                             $scope.finishedNotRated.push({
                                 key: childKey
                             })
-                            console.log($scope.finishedNotRated + ' hej');
                         }
                     });
                 });

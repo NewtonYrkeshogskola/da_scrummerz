@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="sv">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Välkommen till studentportalen!</title>
+  <link rel="stylesheet" type="text/css" href="css/style.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <!-- Import and configure the Firebase SDK -->
+  <!-- These scripts are made available when the app is served or deployed on Firebase Hosting -->
+  <!-- If you do not serve/host your project using Firebase Hosting see https://firebase.google.com/docs/web/setup -->
+  <script src="https://www.gstatic.com/firebasejs/3.9.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/3.9.0/firebase-auth.js"></script>
+  <script src="/__/firebase/init.js"></script>
+  <script type="text/javascript" src="js/indexteacher.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/3.9.0/firebase.js"></script>
+  <script type="text/javascript" src="js/database.js"></script>
+</head>
+
+<body id="startbody" ng-cloak>
+  <nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="#">Studentportalen</a>
+      </div>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="#" data-toggle="modal" data-target="#login-modal"><span class="glyphicon glyphicon-log-in"></span> Logga in</a></li>
+      </ul>
+    </div>
+  </nav>
+  <div class="container-fluid">
+    <div class="row" id="front-row">
+      <div class="col-sm-3 side"></div>
+      <div class="col-sm-6" id="start-main">
+        <h1>Välkommen till studentportalen</h1>
+
+        <p>Logga in som lärare för att sköta de kurser du är ansvarig för.<br>
+
+
+          <center><a href="#" data-toggle="modal" data-target="#login-modal"><img src="images/login.png" width="120px" alt="Knapp för att logga in"></a>
+          </center>
+
+        </p>
+
+      </div>
+      <div class="col-sm-3 side"></div>
+    </div>
+  </div>
+
+  <footer>Made by da_scrummerz &copy;</footer>
+  <div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+      <div class="loginmodal-container">
+        <h1 id="modal-dialog-h1">Logga in till Studentportalen</h1><br>
+        <label for="user">E-mail*</label><br>
+        <input type="email" name="user" id="email" required><br><br>
+        <label for="pass">Lösenord*</label><br>
+        <input type="password" name="pass" id="password" required><br><br>
+        <button name="login" id="quickstart-sign-in" value="Logga in">Logga in</button>
+        <div class="login-help">
+          <a onclick="document.getElementById('login-modal').style.display='none'" data-toggle="modal" data-target="#password-modal">Glömt lösenord?</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="password-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+    style="display: none;">
+    <div class="modal-dialog">
+      <div class="loginmodal-container">
+        <h1>Glömt lösenord</h1><br>
+        <label for="user">E-mail*</label><br>
+        <input type="email" name="user" id="emailRestore" required><br><br>
+        <button id="quickstart-password-reset">Skicka nytt lösenord</button>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>
