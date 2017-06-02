@@ -1,6 +1,6 @@
-var app = angular.module('LoggedIn', ['firebase', 'ngAnimate', "ja.qr", 'chart.js']);
+var app = angular.module('LoggedIn', ['firebase', 'ngAnimate', "ja.qr", 'chart.js', 'zingchart-angularjs']);
 var grades = [];
-
+var globalCount = 0;
 
 app.factory("Auth", ["$firebaseAuth",
     function ($firebaseAuth) {
@@ -87,17 +87,42 @@ app.controller("AdminUserCtrl", ["$scope", "$firebaseObject", "$firebaseArray", 
             });
             alert("Nu är närvaron aktiverad. Du kan nu registera dig som närvarande.")
 
+            var data = [23, 42]; //antal inloggade studenter
+
+
+
             $scope.studentCount = 0;
             var checkedStudents = firebase.database().ref().child('coursesByClass').child($scope.myClass).child($scope.selectedCourse).child(date).child($scope.random).child("students")
             checkedStudents.on('value', function (snapshot) {
                 $scope.studentsLoggedIn = snapshot.val();
             });
-            checkedStudents.on('child_added', function(snapshot){
-                $scope.studentCount++
+            checkedStudents.on('child_added', function (snapshot) {
+                $scope.studentCount++;
+                globalCount = $scope.studentCount;
             });
 
+            $scope.myJson = {
+                type: "bar",
+                title: {
+                    backgroundColor: "transparent",
+                    fontColor: "black",
+                    text: "Hello world"
+                },
+                backgroundColor: "white",
+                series: [{
+                    values: [1, 2, 3, 4],
+                    backgroundColor: "#4DC0CF"
+                }]
+            };
 
-            
+            $scope.addValues = function () {
+                var val = Math.floor((Math.random() * 10));
+                console.log(val);
+                $scope.myJson.series[0].values.push(val);
+            }
+
+
+
         }
         $scope.deActivatePresence = function () {
 
@@ -125,15 +150,55 @@ app.controller("DoughnutCtrl", function ($scope, $filter) {
             var feelingData = childSnapshot.val();
             if (feelingData === 1) {
                 $scope.ones++
-            }
-            else if (feelingData === 0) {
+            } else if (feelingData === 0) {
                 $scope.zeros++
-            }
-            else {
+            } else {
                 $scope.minusOnes++
             }
             $scope.labels = ["GOOD", "NEUTRAL", "BAD"];
             $scope.data = [$scope.ones, $scope.zeros, $scope.minusOnes];
         });
     });
+});
+
+app.controller('MainController', function ($scope, $timeout) {
+
+    $scope.pupilCount = globalCount;
+
+    $scope.update   
+
+    // mimick your promise
+    (function () {
+        $scope.data = {};
+        $scope.data.valuesOne = [$scope.pupilCount];
+        $scope.aValues = [$scope.data.valuesOne, $scope.data.valuesTwo];
+    })();
+
+    $scope.myJson = {
+        type: "bar",
+        title: {
+            backgroundColor: "transparent",
+            fontColor: "black",
+            text: "Närvarande elever"
+        },
+        backgroundColor: "white",
+        series: [{
+            backgroundColor: '#00baf2'
+        }]
+    };
+
+    // // automatically wraps code in $apply
+    // $timeout(function () {
+
+    //     // wont reflect changes in aValues because its an object
+    //     $scope.data.valuesOne = [5];
+
+    //     // must force the reflection of the changes
+    //     $scope.aValues = [$scope.data.valuesOne, $scope.data.valuesTwo];
+
+    //     // will reflect changes with one line, not the above two lines
+    //     //$scope.aValues[0] = [5];
+
+    // }, 1500);
+
 });

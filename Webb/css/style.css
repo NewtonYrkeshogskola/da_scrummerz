@@ -14,6 +14,10 @@
   max-width: 200px;
 }
 
+#chart{
+  background-color: white;
+}
+
 #start-main {
     background: rgba(0, 0, 0, 0.35);
 }

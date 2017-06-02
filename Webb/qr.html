@@ -22,6 +22,10 @@
     <script src="https://cdn.firebase.com/libs/angularfire/2.3.0/angularfire.min.js"></script>
     <script src="bower_components/chart.js/dist/Chart.min.js"></script>
     <script src="bower_components/angular-chart.js/dist/angular-chart.min.js"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src = "https://cdn.zingchart.com/zingchart.min.js" ></script>  
+<script src = "https://cdn.zingchart.com/angular/zingchart-angularjs.js" ></script>  
     <script type="text/javascript" src="js/database.js"></script>
     <script src="js/qrcode.min.js"></script>
     <script src="js/angular-qr.min.js"></script>
@@ -70,38 +74,18 @@
   Antal närvarande studenter 
 </h5>
 
-  <style>
-    .chart div {
-      font: 10px sans-serif;
-      background-color: steelblue;
-      text-align: right;
-      padding: 3px;
-      margin: 1px;
-      color: white;
-    }
-  </style>
-  <div class="chart"></div>
-  <script src="https://d3js.org/d3.v4.min.js">
-  </script>
+<!--<div class="row" ng-controller="ctrl" id="chart">
+    <div class="col-md-4">
 
-  <script>
-    var data = [23, 42]; //antal inloggade studenter
-
-    var x = d3.scaleLinear()
-      .domain([0, d3.max(data)])
-      .range([0, 420]);
-
-    d3.select(".chart")
-      .selectAll("div")
-      .data(data)
-      .enter().append("div")
-      .style("width", function(d) {
-        return x(d) + "px";
-      })
-      .text(function(d) {
-        return d;
-      });
-  </script>
+        
+        </canvas>
+    </div>
+</div>-->
+<div ng-controller="MainController">
+    ANTAL ELEVER: {{pupilCount}}
+    <div zingchart id="chart-1" zc-json="myJson" zc-width="100%" zc-height="568px" zc-values="aValues"></div>
+    
+</div>
 </body>
 
 </html>
