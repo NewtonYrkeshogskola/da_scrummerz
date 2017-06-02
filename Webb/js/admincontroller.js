@@ -1,6 +1,7 @@
 var app = angular.module('LoggedIn', ['firebase', 'ngAnimate', "ja.qr", 'chart.js', 'zingchart-angularjs']);
 var grades = [];
 var globalCount = 0;
+var globalTotal = 35;
 
 app.factory("Auth", ["$firebaseAuth",
     function ($firebaseAuth) {
@@ -87,7 +88,7 @@ app.controller("AdminUserCtrl", ["$scope", "$firebaseObject", "$firebaseArray", 
             });
             alert("Nu är närvaron aktiverad. Du kan nu registera dig som närvarande.")
 
-            var data = [23, 42]; //antal inloggade studenter
+            var data = [35]; //antal inloggade studenter
 
 
 
@@ -99,29 +100,51 @@ app.controller("AdminUserCtrl", ["$scope", "$firebaseObject", "$firebaseArray", 
             checkedStudents.on('child_added', function (snapshot) {
                 $scope.studentCount++;
                 globalCount = $scope.studentCount;
+                globalTotal--;
                 $scope.$broadcast('UpdateCount');
                 $scope.$broadcast('UpdateChart');
             });
 
             $scope.myJson = {
-                type: "bar",
+                type: "hbar",
                 title: {
                     backgroundColor: "transparent",
                     fontColor: "black",
-                    text: "Hello world"
+                    text: "Inloggade studenter",
+                    scaleX: {
+                        lineColor: "transparent",
+                        tick: {
+                            visible: false
+                        },
+                        labels: ["Elever"],
+                        item: {
+                            fontColor: "#e8e8e8",
+                            fontSize: 16
+                        }
+                    }
                 },
                 backgroundColor: "white",
-                series: [{
-                    values: [1, 2, 3, 4],
-                    backgroundColor: "#4DC0CF"
-                }]
+                series: [
+                    {
+                        values: [globalTotal],
+                        rules: [
+                            {
+                                rule: "%i === 1",
+                                backgroundColor: "#4DC0CF"
+                            }
+                        ]
+                    },
+                    {
+                        values: [1],
+                        rules: [
+                            {
+                                rule: "%i === 1",
+                                backgroundColor: "#E71D36"
+                            }
+                        ]
+                    }
+                ]
             };
-
-            $scope.addValues = function () {
-                var val = Math.floor((Math.random() * 10));
-                console.log(val);
-                $scope.myJson.series[0].values.push(val);
-            }
 
 
 
@@ -166,48 +189,20 @@ app.controller("DoughnutCtrl", function ($scope, $filter) {
 app.controller('MainController', function ($scope, $timeout) {
 
     $scope.pupilCount = globalCount;
+    $scope.pupiltotal = globalTotal;
 
     $scope.$on('UpdateCount', function (event) {
         $scope.pupilCount = globalCount;
+        $scope.pupiltotal = globalTotal;
     });
 
     $scope.$on('UpdateChart', function (event) {
         // mimick your promise
-    (function () {
-        $scope.data = {};
-        $scope.data.valuesOne = [$scope.pupilCount];
-        $scope.aValues = [$scope.data.valuesOne, $scope.data.valuesTwo];
-    })();
-
-    $scope.myJson = {
-        type: "bar",
-        title: {
-            backgroundColor: "transparent",
-            fontColor: "black",
-            text: "Närvarande elever"
-        },
-        backgroundColor: "white",
-        series: [{
-            backgroundColor: '#00baf2'
-        }]
-    };
+        (function () {
+            $scope.data = {};
+            $scope.data.valuesOne = [$scope.pupilCount, $scope.pupiltotal];
+            $scope.aValues = [$scope.data.valuesOne, $scope.data.valuesTwo];
+        })();
     });
-
-    
-    
-
-    // // automatically wraps code in $apply
-    // $timeout(function () {
-
-    //     // wont reflect changes in aValues because its an object
-    //     $scope.data.valuesOne = [$scope.pupilCount];
-
-    //     // must force the reflection of the changes
-    //     $scope.aValues = [$scope.data.valuesOne, $scope.data.valuesTwo];
-
-    //     // will reflect changes with one line, not the above two lines
-    //     //$scope.aValues[0] = [5];
-
-    // }, 1500);
 
 });
