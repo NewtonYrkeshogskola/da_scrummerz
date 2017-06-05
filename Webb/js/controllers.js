@@ -164,14 +164,14 @@ app.controller('teacherCtrl', ["$scope", "$firebaseObject", "$firebaseArray", '$
             $scope.userId = firebaseUser.uid;
             $scope.user.$loaded().then(function () {
                 $scope.coursesByTeacher = $firebaseArray(ref.child('users').child('teachers/' + userId).child('myCourses'));
-                 $scope.writeNews = function (selectedCourse, newsName, newsDescription) {
-                     firebase.database().ref().child('coursesByClass').child('APPS1').child(selectedCourse).child('news').push({
-                         author: $scope.user.Name,
-                         description: newsDescription,
-                         title: newsName
-                     });
-                     alert(selectedCourse+ ' ' + newsName+ ' ' +  newsDescription);
-                 }
+                $scope.writeNews = function (selectedCourse, newsName, newsDescription) {
+                    firebase.database().ref().child('coursesByClass').child('APPS1').child(selectedCourse).child('news').push({
+                        author: $scope.user.Name,
+                        description: newsDescription,
+                        title: newsName
+                    });
+                    alert(selectedCourse + ' ' + newsName + ' ' + newsDescription);
+                }
 
                 /* ref.child('users').child('teachers').child(userId).child('myCourses').once('value', function (snapshot) {
  
@@ -190,6 +190,35 @@ app.controller('teacherCtrl', ["$scope", "$firebaseObject", "$firebaseArray", '$
         });
     }
 ]);
+
+app.controller("DoughnutCtrl", function ($scope, $filter) {
+    var ref = firebase.database().ref();
+    $scope.today = new Date();
+    $scope.myDate = new Date($scope.today.getFullYear(),
+        $scope.today.getMonth(),
+        $scope.today.getDate());
+    $scope.myDate = $filter('date')($scope.myDate, 'yyyyMMdd');
+    var date = $scope.myDate;
+    $scope.ones = 0;
+    $scope.zeros = 0;
+    $scope.minusOnes = 0;
+    $scope.totalVotes = 0;
+    ref.child('feelings').child('APPS1').child(date).on('value', function (snapshot) {
+        snapshot.forEach(function (childSnapshot) {
+            $scope.totalVotes++
+            var feelingData = childSnapshot.val();
+            if (feelingData === 1) {
+                $scope.ones++
+            } else if (feelingData === 0) {
+                $scope.zeros++
+            } else {
+                $scope.minusOnes++
+            }
+            $scope.labels = ["Bra", "Neutralt", "Dåligt"];
+            $scope.data = [$scope.ones, $scope.zeros, $scope.minusOnes];
+        });
+    });
+});
 
 app.controller("gradesCtrl", ["$scope", "$firebaseObject", "$firebaseArray", '$filter', "Auth",
     function ($scope, $firebaseObject, $firebaseArray, $filter, Auth) {

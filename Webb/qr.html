@@ -44,7 +44,7 @@
     <option ng-repeat="course in myCourses" ng-show="{{course.details.status === 'progress'}}">{{course.details.courseCode}}</option><input ng-hide="true"/></select>      <br><br>
 
       <label for="presenceName">Ange namn på tillfället</label>
-      <input type="text" id="presenceName" ng-model="presenceName" required>
+      <input type="text" id="presenceName" ng-model="presenceName" required><br><br>
       <button class="button-qr-activate" ng-click="activatePresence(presenceName)">Aktivera närvaro</button>
       <button class="button-qr-deactivate" ng-click="deActivatePresence()">Sluta ta närvaro</button>
       <br>
