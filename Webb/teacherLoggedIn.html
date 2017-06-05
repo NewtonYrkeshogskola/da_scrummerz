@@ -28,6 +28,8 @@
     <script type="text/javascript" src="js/teacherloggedin.js"></script>
     <script type="text/javascript" src="js/database.js"></script>
     <script type="text/javascript" src="js/controllers.js"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
 
 </head>
 
@@ -43,7 +45,7 @@
             </ul>
         </div>
     </nav>
-     <h1 class="text-center whiteText">Välkommen {{user.Name}}</h1>
+    <h1 class="text-center whiteText">Välkommen {{user.Name}}</h1>
 
     <div class="row">
         <div class="col-sm-1"></div>
@@ -51,29 +53,44 @@
             <h4 class="text-center">Skapa nyheter</h4>
             <form name="newsForm">
                 <label for="selectedCourse">Välj en kurs:*</label><br>
-                <select name="selectedCourse" ng-model="selectedCourse"class="form-control"  required>
+                <select name="selectedCourse" ng-model="selectedCourse" class="form-control" required>
         <option ng-repeat="course in coursesByTeacher">{{course.$id}}</option>
     </select><br><br>
                 <label for="newsName">Titel:*</label><br>
                 <input type="text" name="newsName" class="form-control" ng-model="newsName" required><br><br>
                 <label for="newsDescription">Beskrivning:*</label><br>
-                <textarea name="text" cols="40" rows="5" ng-model="newsDescription" class="form-control" width="100%"required></textarea><br>
+                <textarea name="text" cols="40" rows="5" ng-model="newsDescription" class="form-control" width="100%" required></textarea><br>
                 <button ng-disabled="newsForm.selectedCourse.$invalid || newsForm.newsName.$invalid || newsForm.text.$invalid" class="btn btn-lg btn-success"
                     ng-click="writeNews(selectedCourse, newsName, newsDescription)">Publicera nyhet</button>
             </form>
         </div>
         <div class="col-sm-5">
-         <div class="well well-sm">
-            <h3 class="text-center">Mina kurser</h3>
-            <a href="qr.html"><button class="btn btn-lg btn-success">Ta närvaro</button></a> <br><br>
-            <div ng-repeat="course in coursesByTeacher" class="panel panel-default">
-                <div  class="panel-heading">{{course.$id}}</div>
-                <div class="panel-body animate-hide" ng-show="value">
-                    <br>
+
+            <div class="well well-sm">
+                <h3 class="text-center">Klassens humör</h3>
+                <div id="doughnut" ng-controller="DoughnutCtrl">
+                    <canvas id="doughnut" class="chart chart-doughnut" chart-data="data" chart-labels="labels">
+                    </canvas>
                 </div>
+            </div>
+
+
+            <div class="well well-sm">
+                <h3 class="text-center">Mina kurser</h3>
+                <a href="qr.html"><button class="btn btn-lg btn-success">Ta närvaro</button></a> <br><br>
+                <div ng-repeat="course in coursesByTeacher" class="panel panel-default">
+                    <div class="panel-heading">{{course.$id}}</div>
+                    <div class="panel-body animate-hide" ng-show="value">
+                        <br>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="col-sm-1"></div>
     </div>
-</body> 
+
+</body>
 
 </html>
+
+
