@@ -161,5 +161,4 @@ app.controller('MainController', function ($scope, $timeout) {
             $scope.aValues = [$scope.data.valuesOne, $scope.data.valuesTwo];
         })();
     });
-
 });

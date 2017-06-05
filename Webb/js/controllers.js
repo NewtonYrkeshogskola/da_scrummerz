@@ -203,21 +203,21 @@ app.controller("DoughnutCtrl", function ($scope, $filter) {
     $scope.zeros = 0;
     $scope.minusOnes = 0;
     $scope.totalVotes = 0;
-        ref.child('feelings').child('APPS1').child(date).on('value', function (snapshot) {
-            snapshot.forEach(function (childSnapshot) {
-                $scope.totalVotes++
-                var feelingData = childSnapshot.val();
-                if (feelingData === 1) {
-                    $scope.ones++
-                } else if (feelingData === 0) {
-                    $scope.zeros++
-                } else {
-                    $scope.minusOnes++
-                }
-                $scope.labels = ["Bra", "Neutralt", "Dåligt"];
-                $scope.data = [$scope.ones, $scope.zeros, $scope.minusOnes];
-            });
+    ref.child('feelings').child('APPS1').child(date).on('value', function (snapshot) {
+        snapshot.forEach(function (childSnapshot) {
+            $scope.totalVotes++
+            var feelingData = childSnapshot.val();
+            if (feelingData === 1) {
+                $scope.ones++
+            } else if (feelingData === 0) {
+                $scope.zeros++
+            } else {
+                $scope.minusOnes++
+            }
+            $scope.labels = ["Bra", "Neutralt", "Dåligt"];
+            $scope.data = [$scope.ones, $scope.zeros, $scope.minusOnes];
         });
+    });
 });
 
 app.controller("gradesCtrl", ["$scope", "$firebaseObject", "$firebaseArray", '$filter', "Auth",
