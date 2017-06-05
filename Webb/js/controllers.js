@@ -202,8 +202,10 @@ app.controller("DoughnutCtrl", function ($scope, $filter) {
     $scope.ones = 0;
     $scope.zeros = 0;
     $scope.minusOnes = 0;
+    $scope.totalVotes = 0;
         ref.child('feelings').child('APPS1').child(date).on('value', function (snapshot) {
             snapshot.forEach(function (childSnapshot) {
+                $scope.totalVotes++
                 var feelingData = childSnapshot.val();
                 if (feelingData === 1) {
                     $scope.ones++

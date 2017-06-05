@@ -68,13 +68,14 @@
 
             <div class="well well-sm">
                 <h3 class="text-center">Klassens humör</h3>
+                <center>
                 <div id="doughnut" ng-controller="DoughnutCtrl">
                     <canvas id="doughnut" class="chart chart-doughnut" chart-data="data" chart-labels="labels">
                     </canvas>
+                    <br>Antal elever som röstat idag: {{totalVotes}}
                 </div>
+                </center>
             </div>
-
-
             <div class="well well-sm">
                 <h3 class="text-center">Mina kurser</h3>
                 <a href="qr.html"><button class="btn btn-lg btn-success">Ta närvaro</button></a> <br><br>
@@ -92,5 +93,3 @@
 </body>
 
 </html>
-
-
